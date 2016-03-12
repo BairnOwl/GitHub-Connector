@@ -50,12 +50,12 @@ def pull_requests(repo, user_arg):
     url = url_base + '/repos/' + repo + '/pulls'
     while url is not None:
    
-        print url
+        print(url)
         resp = make_request(url)
         data = json.loads(resp.text)
         num_pr += len(data)
 
-        
+        print(data)
 
         for pullr in data:
             
@@ -80,16 +80,16 @@ def pull_requests(repo, user_arg):
                 elif pullr['state'] == 'open':
                     num_open_td += 1
 
-                print '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(pullr['id'],
-                                                       pullr['number'],
-                                                       pullr['head']['label'],
-                                                       pullr['state'],
-                                                       pullr['user']['login'],
-                                                       pullr['created_at'],
-                                                       pullr['updated_at'],
-                                                       pullr['closed_at'],
-                                                       pullr['merged_at'],
-                                                       pullr['html_url'])
+                #print '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(pullr['id'],
+                                                       #pullr['number'],
+                                                       # pullr['head']['label'],
+                                                       # pullr['state'],
+                                                       # pullr['user']['login'],
+                                                       # pullr['created_at'],
+                                                       # pullr['updated_at'],
+                                                       # pullr['closed_at'],
+                                                       # pullr['merged_at'],
+                                                       # pullr['html_url'])
                 
                 pr_resp = make_request(pullr['url'])
                 pr_data = json.loads(pr_resp.text)
@@ -106,21 +106,21 @@ def pull_requests(repo, user_arg):
         else:
             break
 
-    print 'pull requests for {}:'.format(repo)
-    print '   total: {}:'.format(num_pr)
-    print '   num open: {}:'.format(num_open)
-    print '   num closed: {}:'.format(num_closed)
+    print('pull requests for {}:'.format(repo))
+    # print '   total: {}:'.format(num_pr)
+    # print '   num open: {}:'.format(num_open)
+    # print '   num closed: {}:'.format(num_closed)
 
-    print 'pull requests for {} by {}:'.format(repo, user_arg)
-    print '   total: {}:'.format(num_pr_td)
-    print '   num open: {}:'.format(num_open_td)
-    print '   num closed: {}:'.format(num_closed_td)
+    # print 'pull requests for {} by {}:'.format(repo, user_arg)
+    # print '   total: {}:'.format(num_pr_td)
+    # print '   num open: {}:'.format(num_open_td)
+    # print '   num closed: {}:'.format(num_closed_td)
 
-    print 'num_comments: {}'.format(num_comments)
-    print 'num_commits: {}'.format(num_commits)
-    print 'num_additions: {}'.format(num_additions)
-    print 'num_deletions: {}'.format(num_deletions)
-    print 'num_changed_files: {}'.format(num_changed_files)
+    # print 'num_comments: {}'.format(num_comments)
+    # print 'num_commits: {}'.format(num_commits)
+    # print 'num_additions: {}'.format(num_additions)
+    # print 'num_deletions: {}'.format(num_deletions)
+    # print 'num_changed_files: {}'.format(num_changed_files)
 
 def open_pull_requests(repo, user_arg):
     
@@ -149,16 +149,16 @@ def open_pull_requests(repo, user_arg):
                 if pullr['state'] != 'open':
                     continue
 
-                print '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(pullr['id'],
-                                                       pullr['number'],
-                                                       pullr['head']['label'],
-                                                       pullr['state'],
-                                                       pullr['user']['login'],
-                                                       pullr['created_at'],
-                                                       pullr['updated_at'],
-                                                       pullr['closed_at'],
-                                                       pullr['merged_at'],
-                                                       pullr['html_url'])
+                # print '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(pullr['id'],
+                #                                        pullr['number'],
+                #                                        pullr['head']['label'],
+                #                                        pullr['state'],
+                #                                        pullr['user']['login'],
+                #                                        pullr['created_at'],
+                #                                        pullr['updated_at'],
+                #                                        pullr['closed_at'],
+                #                                        pullr['merged_at'],
+                #                                        pullr['html_url'])
                 
         if 'next' in resp.links:
             #break
