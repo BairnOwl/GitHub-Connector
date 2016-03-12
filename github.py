@@ -5,7 +5,7 @@ import requests
 
 
 url_base = 'https://api.github.com'
-token = ' 1d085d84e031f0b958c2645395754a0d72b73491'
+token = '494c0d35fd160eb1192a0a3e5ec5555b5fed19c7'
 
 def main():
 
@@ -54,6 +54,8 @@ def pull_requests(repo, user_arg):
         resp = make_request(url)
         data = json.loads(resp.text)
         num_pr += len(data)
+
+        
 
         for pullr in data:
             
