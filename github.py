@@ -129,7 +129,7 @@ def open_pull_requests(repo, user_arg):
         #print url
         resp = make_request(url)
         data = json.loads(resp.text)
-        num_pr += len(data)
+        # num_pr += len(data)
 
         for pullr in data:
             
