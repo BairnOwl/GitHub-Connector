@@ -5,7 +5,7 @@ import requests
 
 
 url_base = 'https://api.github.com'
-token = '7d5155f33d5e5e87f7e6cc6c57aaaed3ff331226'
+token = '41c1d1248e27c6782adafc44f0c8e901d307203e'
 
 def main():
 
@@ -50,12 +50,10 @@ def pull_requests(repo, user_arg):
     url = url_base + '/repos/' + repo + '/pulls'
     while url is not None:
    
-        print(url)
+        print url
         resp = make_request(url)
         data = json.loads(resp.text)
         num_pr += len(data)
-
-        print(data)
 
         for pullr in data:
             
@@ -106,7 +104,7 @@ def pull_requests(repo, user_arg):
         else:
             break
 
-    print('pull requests for {}:'.format(repo))
+    print 'pull requests for {}:'.format(repo)
     print '   total: {}:'.format(num_pr)
     print '   num open: {}:'.format(num_open)
     print '   num closed: {}:'.format(num_closed)
@@ -129,7 +127,7 @@ def open_pull_requests(repo, user_arg):
         #print url
         resp = make_request(url)
         data = json.loads(resp.text)
-        num_pr += len(data)
+        #num_pr += len(data)
 
         for pullr in data:
             
@@ -144,7 +142,7 @@ def open_pull_requests(repo, user_arg):
                 continue;
        
             if user == user_arg or user_arg == 'ANY':
-                num_pr_td += 1
+                #num_pr_td += 1
                 
                 if pullr['state'] != 'open':
                     continue
