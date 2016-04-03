@@ -8,7 +8,6 @@ url_base = 'https://api.github.com'
 token = 'c87b3f964765b9de7ca59aa2702295efc08256ed'
 
 def main():
-
     if len(sys.argv) < 3:
         return
 
@@ -53,6 +52,7 @@ def pull_requests(repo, user_arg):
         print url
         resp = make_request(url)
         data = json.loads(resp.text)
+        print data
         num_pr += len(data)
 
         for pullr in data:
