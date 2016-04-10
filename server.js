@@ -14,7 +14,7 @@ app.get('/', function(request, response){
 });
 
 app.get('/data', function(request, response) {
-	var url = 'https://api.github.com/repos/Teradata/presto/pulls';
+	var url = 'https://api.github.com/repos/prestodb/presto/pulls';
 
 	req.open('GET', url, true);
 
