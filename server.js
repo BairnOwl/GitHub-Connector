@@ -18,7 +18,7 @@ app.get('/data', function(request, response) {
 
 	req.open('GET', url, true);
 
-	var token = ''; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){

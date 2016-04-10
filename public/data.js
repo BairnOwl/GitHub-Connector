@@ -1,3 +1,8 @@
+function handleInput() {
+    var input_url = document.getElementById("input_url").value;
+    alert(input_url);
+}
+
 window.addEventListener('load', function(){
 	var req = new XMLHttpRequest();
 
@@ -22,6 +27,8 @@ window.addEventListener('load', function(){
             }
         }
     };
+
+    input_form.addEventListener('submit', handleInput, false);
 
     req.open('GET', '/data', true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
