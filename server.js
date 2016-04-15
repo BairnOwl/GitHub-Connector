@@ -42,7 +42,6 @@ app.post('/data/:inputurl', function(request, response) {
 
 	req.send(null); 
 });
-});
 
 app.get('/', function(request, response){
 	response.render('home.html');
