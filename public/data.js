@@ -1,6 +1,19 @@
 function handleInput() {
-    var input_url = document.getElementById("input_url").value;
-    alert(input_url);
+    //e.preventDefault();
+    var inputurl = document.getElementById("input_url").value;
+    alert(inputurl);
+    sendMessage(inputurl);
+}
+
+function sendMessage(inputurl) {
+    var fd = new FormData(document.getElementById('input_form'));
+    fd.append("company", inputurl);
+    var req = new XMLHttpRequest();
+    // req.open('GET', '/data', true);
+    // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // req.send();
+    req.open('POST', '/' + inputurl, true);;
+    req.send(fd);
 }
 
 window.addEventListener('load', function(){
@@ -30,6 +43,7 @@ window.addEventListener('load', function(){
 
     input_form.addEventListener('submit', handleInput, false);
 
+    var input = 'data';
     req.open('GET', '/data', true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send();

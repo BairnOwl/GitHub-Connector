@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var url;
 
 var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
@@ -9,13 +10,50 @@ app.use(express.static('public'));
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var req = new XMLHttpRequest();
 
+// function getDataInput(url, response) {
+// 	req.open('GET', url, true);
+
+// 	var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+
+// 	req.setRequestHeader('Authorization', 'token ' + token);
+// 	req.addEventListener('load', function(e){
+// 		if (req.status == 200) {
+// 			var data = JSON.parse(req.responseText);
+// 			response.json(data);
+// 		}
+// 	}, false);
+
+// 	req.send(null);
+// }
+
+app.post('/:inputurl', function(request, response){
+	console.log(request.params.inputurl);
+	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
+	console.log(url, response);
+	// req.open('GET', url, true);
+
+	// var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+
+	// req.setRequestHeader('Authorization', 'token ' + token);
+	// req.addEventListener('load', function(e){
+	// 	if (req.status == 200) {
+	// 		var data = JSON.parse(req.responseText);
+	// 		response.json(data);
+	// 	}
+	// }, false);
+
+	// req.send(null);
+	//console.log("server: " + url);
+});
+
 app.get('/', function(request, response){
 	response.render('home.html');
 });
 
 app.get('/data', function(request, response) {
+	//console.log('post' + request.params.data);
 	var url = 'https://api.github.com/repos/Teradata/presto/pulls';
-
+	//getDataInput(url, res);
 	req.open('GET', url, true);
 
 	var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
