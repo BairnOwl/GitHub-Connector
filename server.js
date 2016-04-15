@@ -56,7 +56,7 @@ app.get('/data', function(request, response) {
 	//getDataInput(url, res);
 	req.open('GET', url, true);
 
-	var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -69,6 +69,6 @@ app.get('/data', function(request, response) {
 	req.send(null); 
 });
 
-app.listen(8080, function(){
+app.listen(process.env.PORT, function(){
     console.log('- Server listening on port 8080');
 });
