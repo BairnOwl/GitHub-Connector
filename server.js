@@ -14,11 +14,11 @@ app.get('/', function(request, response){
 });
 
 app.get('/data', function(request, response) {
-	var url = 'https://api.github.com/repos/prestodb/presto/pulls';
+	var url = 'https://api.github.com/repos/Teradata/presto/pulls';
 
 	req.open('GET', url, true);
 
-	var token = '30151d9b304a70704c20bf735dbf9f668d55545d'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = 'b374d191d5773a2bf81d1d2b2a9425f3e185bb00'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -31,6 +31,10 @@ app.get('/data', function(request, response) {
 	req.send(null); 
 });
 
-app.listen(process.env.PORT, function(){
+// app.listen(process.env.PORT, function(){
+//     console.log('- Server listening on port 8080');
+// });
+
+app.listen(8080, function(){
     console.log('- Server listening on port 8080');
 });
