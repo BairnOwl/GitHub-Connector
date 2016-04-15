@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/BairnOwl/GitHub-Connector/issues"
   },
-  "homepage": "https://github.com/BairnOwl/GitHub-Connector"
+  "homepage": "https://github.com/BairnOwl/GitHub-Connector",
+  "engines": {
+    "node": "5.5.0"
+  },
+  "dependencies": {
+    "express": "4.13.4"
+  }
 }

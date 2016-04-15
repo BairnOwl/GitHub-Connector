@@ -5,7 +5,9 @@ import requests
 
 
 url_base = 'https://api.github.com'
-token = '6bc1718a48214946898aefd96d93dfde0d869cb8'
+
+token = '30151d9b304a70704c20bf735dbf9f668d55545d'
+
 
 def main():
     if len(sys.argv) < 3:
