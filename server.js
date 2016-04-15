@@ -28,18 +28,17 @@ var req = new XMLHttpRequest();
 
 app.post('/data/:inputurl', function(request, response) {
 	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
-	console.log(url);
-
 	req.open('GET', url, true);
 
-	var token = 'b971c66a6876555d225ac25abed8dc177af18c61'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
-			
 			response.json(data);
+		} else {
+			console.log(req.status);
 		}
 	}, false);
 
