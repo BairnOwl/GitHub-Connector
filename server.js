@@ -57,10 +57,10 @@ app.get('/data', function(request, response) {
 	//getDataInput(url, res);
 	req.open('GET', url, true);
 
-	var token = // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '';// PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
-	// req.setRequestHeader('state', 'closed');
+	//req.setRequestHeader('state', 'closed');
 	// req.setRequestHeader('per_page', 100);
 	// req.params.state = "closed";
 	console.log(req);
