@@ -57,7 +57,7 @@ app.get('/data', function(request, response) {
 	//getDataInput(url, res);
 	req.open('GET', url, true);
 
-	var token = '';// PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '3d5943bd7a782110eca24500e3e01b2510eadf3a';// PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	//req.setRequestHeader('state', 'closed');
@@ -94,10 +94,10 @@ app.get('/data', function(request, response) {
 // 	req.send(null); 
 // });
 
-// app.listen(process.env.PORT, function(){
-//     console.log('- Server listening on port 8080');
-// });
-
-app.listen(8080, function(){
+app.listen(process.env.PORT, function(){
     console.log('- Server listening on port 8080');
 });
+
+// app.listen(8080, function(){
+//     console.log('- Server listening on port 8080');
+// });
