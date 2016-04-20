@@ -37,8 +37,6 @@ app.post('/data/:inputurl', function(request, response) {
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
 			response.json(data);
-		} else {
-			console.log(req.status);
 		}
 	}, false);
 
