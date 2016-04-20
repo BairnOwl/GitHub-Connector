@@ -7,6 +7,7 @@ app.engine('html', engines.hogan); // tell Express to run .html files through Ho
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
+
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var req = new XMLHttpRequest();
 
@@ -14,7 +15,7 @@ app.post('/data/:inputurl', function(request, response) {
 	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
 	req.open('GET', url, true);
 
-	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '9141159415600108ee9ff5df842e0724f5df05b3'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -34,10 +35,10 @@ app.get('/', function(request, response){
 app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
-	var params = 'client_id=' + 'f112d8966964169f6ebb';
+	var params = 'f112d8966964169f6ebb';
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
-            console.log("all good");
+            response.send(req.responseText);
         }
 	};
 
@@ -47,11 +48,15 @@ app.get('/login', function(request, response) {
 
 });
 
-// app.listen(process.env.PORT, function(){
-//     console.log('- Server listening on port 8080');
-// });
+app.get('/home', function(request, response) {
+	console.log('home!!');
+});
 
-app.listen(8080, function(){
+app.listen(process.env.PORT, function(){
     console.log('- Server listening on port 8080');
 });
+
+// app.listen(8080, function(){
+//     console.log('- Server listening on port 8080');
+// });
 
