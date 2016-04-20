@@ -30,7 +30,7 @@ app.post('/data/:inputurl', function(request, response) {
 	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
 	req.open('GET', url, true);
 
-	var token = '3d2467451ef8202803a0aef4ebcc5a5fc81fd1b1'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -101,10 +101,10 @@ app.get('/', function(request, response){
 // 	req.send(null); 
 // });
 
-// app.listen(process.env.PORT, function(){
-//     console.log('- Server listening on port 8080');
-// });
-
-app.listen(8080, function(){
+app.listen(process.env.PORT, function(){
     console.log('- Server listening on port 8080');
 });
+
+// app.listen(8080, function(){
+//     console.log('- Server listening on port 8080');
+// });
