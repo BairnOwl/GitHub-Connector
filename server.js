@@ -26,13 +26,46 @@ var req = new XMLHttpRequest();
 // 	req.send(null);
 // }
 
-app.post('/data/:inputurl', function(request, response) {
+app.post('/:inputurl', function(request, response){
+	console.log(request.params.inputurl);
 	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
+	console.log(url, response);
+	// req.open('GET', url, true);
+
+	// var token = 'f73a348b548c80c4675caad03698cc47fc74703f'; 	// PUT YOUR PERSONAL TOKEN HERE!!!
+
+	// req.setRequestHeader('Authorization', 'token ' + token);
+	// req.addEventListener('load', function(e){
+	// 	if (req.status == 200) {
+	// 		var data = JSON.parse(req.responseText);
+	// 		response.json(data);
+	// 	}
+	// }, false);
+
+	// req.send(null);
+	//console.log("server: " + url);
+});
+
+app.get('/', function(request, response){
+	response.render('home.html');
+});
+
+app.get('/data', function(request, response) {
+
+	//console.log('post' + request.params.data);
+	var url = 'https://api.github.com/repos/Teradata/presto/pulls';
+	//getDataInput(url, res);
 	req.open('GET', url, true);
 
-	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '';// PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
+	//req.setRequestHeader('state', 'closed');
+	// req.setRequestHeader('per_page', 100);
+	// req.params.state = "closed";
+	console.log(req);
+
+
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
@@ -40,46 +73,8 @@ app.post('/data/:inputurl', function(request, response) {
 		}
 	}, false);
 
-	req.send(null); 
-});
-
-app.get('/', function(request, response){
-	response.render('home.html');
-});
-
-// app.get('/data', function(request, response) {
-
-// 	//console.log('post' + request.params.data);
-// 	var url = 'https://api.github.com/repos/Teradata/presto/pulls';
-// 	//getDataInput(url, res);
-// =======
-// >>>>>>> linda
-// 	req.open('GET', url, true);
-
-// 	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
-
-// 	req.setRequestHeader('Authorization', 'token ' + token);
-// 	// req.setRequestHeader('state', 'closed');
-// 	// req.setRequestHeader('per_page', 100);
-// 	// req.params.state = "closed";
-// 	console.log(req);
-
-
-// 	req.addEventListener('load', function(e){
-// 		if (req.status == 200) {
-// 			var data = JSON.parse(req.responseText);
-// 			response.json(data);
-// 		} else {
-// 			console.log(req.status);
-// 		}
-// 	}, false);
-
-// 	// req.send(null); 
-// 	req.send();
-// });
-
-app.get('/', function(request, response){
-	response.render('home.html');
+	// req.send(null); 
+	req.send();
 });
 
 // app.get('/data', function(request, response) {
@@ -99,10 +94,10 @@ app.get('/', function(request, response){
 // 	req.send(null); 
 // });
 
-app.listen(process.env.PORT, function(){
-    console.log('- Server listening on port 8080');
-});
-
-// app.listen(8080, function(){
+// app.listen(process.env.PORT, function(){
 //     console.log('- Server listening on port 8080');
 // });
+
+app.listen(8080, function(){
+    console.log('- Server listening on port 8080');
+});
