@@ -1,12 +1,15 @@
 var express = require('express');
 var app = express();
 var url;
+var bodyParser = require('body-parser');
 
 var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var req = new XMLHttpRequest();
@@ -15,7 +18,7 @@ app.post('/data/:inputurl', function(request, response) {
 	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
 	req.open('GET', url, true);
 
-	var token = '9141159415600108ee9ff5df842e0724f5df05b3'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -35,7 +38,7 @@ app.get('/', function(request, response){
 app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
-	var params = 'f112d8966964169f6ebb';
+	var params = 'client_id=f112d8966964169f6ebb';
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
             response.send(req.responseText);
@@ -48,12 +51,29 @@ app.get('/login', function(request, response) {
 
 });
 
-app.get('/home', function(request, response) {
-	console.log('home!!');
+app.post('/session', function(request, response) {
+	var code = request.body['authenticity_token'];
+
+	var req = new XMLHttpRequest();
+
+	var params = 'client_id=f112d8966964169f6ebb&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874&code=' + code;
+	req.onreadystatechange = function() {
+		console.log(req.readyState);
+		console.log(req.status);
+		if (req.readyState == 4 && req.status == 200) {
+            console.log(req.responseText);
+        } else {
+        	console.log(req);
+        }
+	};
+
+	req.open('POST', 'https://github.com/login/oauth/access_token', true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(params);
 });
 
 app.listen(process.env.PORT, function(){
-    console.log('- Server listening on port 8080');
+    console.log('- Server listening on port ' + process.env.PORT);
 });
 
 // app.listen(8080, function(){
