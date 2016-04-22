@@ -41,9 +41,11 @@ app.get('/login', function(request, response) {
         }
 	};
 
+
 	req.open('GET', 'https://github.com/login/oauth/authorize', true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(params);
+
 
 });
 
