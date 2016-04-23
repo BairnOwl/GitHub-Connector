@@ -86,7 +86,7 @@ app.get('/login', function(request, response) {
 //var url = 'https://gitbuddy.herokuapp.com/home?';
 
 app.get('/home', function(request, response) {
-	alert('in get code');
+	response.render('home.html');
 	var code = request.param('code');
 	// var state = request.param('state');
 	// var headers = request.headers;
