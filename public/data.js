@@ -28,29 +28,39 @@ function sendMessage(org, repo) {
             var display = '<div class="pull-request">' +
                 '<table border="1" style="width:100%">' +
                   '<tr>' +
+                    '<td>id</td>' +
                     '<td>state</td>' +
+                    '<td>number</td>' +
+                    '<td>head label</td>' +
+                    '<td>user login</td>' +
+                    '<td>created_at</td>' +
+                    '<td>updated at</td>' +
                     '<td>closed_at</td>' +
+                    '<td>merged at</td>' +
                     '<td>comments_url</td>' +      
                     '<td>commits_url</td>' +
-                    '<td>created_at</td>' +
                     '<td>diff_url</td>' +
                     '<td>html_url</td>' +
-                    '<td>id</td>' +
                     '<td>issue_url</td>' +
                   '</tr>';
 
             for (var i in data) {
             	// console.log(data[i]);
                 display = display + '<tr>' +
-                    '<td>' + data[i].state + '</td>' +
-                    '<td>' + data[i].closed_at + '</td>' +
-                    '<td>' + data[i].comments_url + '</td>' +      
-                    '<td>' + data[i].commits_url + '</td>' +
-                    '<td>' + data[i].created_at + '</td>' +
-                    '<td>' + data[i].diff_url + '</td>' +
-                    '<td>' + data[i].html_url + '</td>' +
                     '<td>' + data[i].id + '</td>' +
-                    '<td>' + data[i].issue_url + '</td>' +
+                    '<td>' + data[i].state + '</td>' +
+                    '<td>' + data[i].number + '</td>' +
+                    '<td>' + data[i].head.label + '</td>' +
+                    '<td>' + data[i].user.login + '</td>' +
+                    '<td>' + data[i].created_at + '</td>' +
+                    '<td>' + data[i].updated_at + '</td>' +
+                    '<td>' + data[i].closed_at + '</td>' +
+                    '<td>' + data[i].merged_at + '</td>' +
+                    '<td><a href=\"' + data[i].comments_url + '\">Comments</a></td>' +      
+                    '<td><a href=\"' + data[i].commits_url + '\">Commits</a></td>' +
+                    '<td><a href=\"' + data[i].diff_url + '\">Diffs</a></td>' +
+                    '<td><a href=\"' + data[i].html_url + '\">HTML</a></td>' +
+                    '<td><a href=\"' + data[i].issue_url + '\">Issues</a></td>' +
                   '</tr>';
 
             	// $('#results').append('<div class="pull-request"><ul>' +
