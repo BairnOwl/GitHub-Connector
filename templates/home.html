@@ -10,23 +10,24 @@
 </head>
 <body>
 	<header>
-		<h1>Gitbuddy</h1>
+		<p id="title">Gitbuddy</p>
 	</header>
 	<div id="user_input">
 	<div id="search_bar">
 		<form id="input_form">
-			<input type="text" list="input_content" name = "url" id="org_url" placeholder="organization" class="form-control" />
+			<input type="text" list="input_content" name = "url" id="org_url" placeholder="organization" class="form-control input" />
 				<datalist id="input_content">
 					<option value="Teradata">
 				</datalist>	
-			<input type="text" list="input_content" name = "url" id="repo_url" placeholder="repo" class="form-control">
+			<input type="text" list="input_content" name = "url" id="repo_url" placeholder="repo" class="form-control input">
 				<datalist id="input_content">
 					<option value="presto">
 				</datalist>	
-			
-			 <input type="radio" name="status" value="open" checked> Open
-			 <input type="radio" name="status" value="closed" checked> Closed
+			<div class="radio">
+			 <input type="radio" name="status" value="open" checked> Open <br>
+			 <input type="radio" name="status" value="closed" checked> Closed <br>
 			 <input type="radio" name="status" value="both" checked> Both
+			</div>
 
 			<input type="range" id="time-range">
 			
