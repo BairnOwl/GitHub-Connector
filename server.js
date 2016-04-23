@@ -10,6 +10,7 @@ app.use(express.static('public'));
 
 var finalhandler = require('finalhandler');
 var http = require('http');
+var https = require('https');
 var Router = require('router');
 
 var router = Router();
@@ -35,7 +36,8 @@ app.post('/data/:org/:repo', function(request, response) {
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls';
 	req.open('GET', url, true);
 
-	var token = '7945af0ad083b6b928eb995e4874d74999dd6642'; // PUT YOUR PERSONAL TOKEN HERE!!!
+
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -49,6 +51,7 @@ app.post('/data/:org/:repo', function(request, response) {
 });
 
 app.get('/', function(request, response){
+	//console.log('in /');
 	response.render('home.html');
 });
 
@@ -56,7 +59,7 @@ app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
 	var random = randomString(32, chars);
-	//var uri = '';
+	//var uri = 'localhost:8080/home';
 	console.log("random: " + random);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
 		random + 'scope=user,public_repo';
@@ -68,7 +71,7 @@ app.get('/login', function(request, response) {
 
 	req.onreadystatechange = function() {
 		console.log('in req');
-		//console.log(req.responseText);
+		//console.log(req.param);
 		if (req.readyState == 4 && req.status == 200) {
 			var code = req.responseText;
             console.log("response: " + req.responseText);
@@ -81,24 +84,45 @@ app.get('/login', function(request, response) {
 
 });
 
+//var url = 'https://gitbuddy.herokuapp.com/home?';
+
 app.get('/home', function(request, response) {
-	console.log('in get code');
 	var code = request.param('code');
-	//console.log("req body: " + req.params('state'));
-	console.log("code: " + code);
+	var state = request.param('state');
+	response.render('dummy.html', {code: code, state: state});
+	// var headers = request.headers;
+	// console.log('state: ' + state);
+	// console.log("code: " + code);
+	// headers.host = 'github.com';
+	
 	// var req = new XMLHttpRequest();
 
-	// var params = '?client_id=f112d8966964169f6ebb&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874&code=' + code;
-	// req.onreadystatechange = function() {
-	// 	//console.log(req.readyState);
-	// 	//console.log(req.status);
-	// 	if (req.readyState == 4 && req.status == 200) {
-	// 		console.log(req.responseText.access_token);
- //            console.log(req.responseText);
- //        } else {
- //        	//console.log(req);
- //        }
-	// };
+	// var params = '?client_id=f112d8966964169f6ebb' + 
+	// 			 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
+	// 			 '&code=' + code;
+
+	// var opts = {
+	// 	hostname:'github.com',
+	// 	port:'8080',
+	// 	path: params,
+	// 	headers: headers,
+	// 	method: 'POST'
+	// }
+	// var req = https.request(opts, function(response){
+	// 	console.log('in http');
+	// 	response.setEncoding('utf8');
+	// 	console.log(response.param('access_toke'));
+	// });
+	// // req.onreadystatechange = function() {
+	// // 	//console.log(req.readyState);
+	// // 	//console.log(req.status);
+	// // 	if (req.readyState == 4 && req.status == 200) {
+	// // 		console.log(req.responseText.access_token);
+ // //            console.log(req.responseText);
+ // //        } else {
+ // //        	//console.log(req);
+ // //        }
+	// // };
 
 	// req.open('POST', 'https://github.com/login/oauth/access_token', true);
  //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
