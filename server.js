@@ -50,7 +50,6 @@ app.post('/data/:org/:repo', function(request, response) {
 });
 
 app.get('/', function(request, response){
-	//console.log('in /');
 	response.render('home.html');
 });
 
