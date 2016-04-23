@@ -14,11 +14,16 @@ app.use(bodyParser.json());
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var req = new XMLHttpRequest();
 
-app.post('/data/:inputurl', function(request, response) {
-	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
+app.post('/data/:org/:repo', function(request, response) {
+	var org = request.params.org;
+	var repo = request.params.repo;
+
+	console.log(org);
+	console.log(repo);
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls';
 	req.open('GET', url, true);
 
-	var token = '806fdde6fe4ffe6022e0f513452583ab6e543c8f'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -52,18 +57,19 @@ app.get('/login', function(request, response) {
 });
 
 app.post('/session', function(request, response) {
+	//console.log(request.body);
 	var code = request.body['authenticity_token'];
-	console.log(code);
+	//console.log(code);
 	var req = new XMLHttpRequest();
 
 	var params = 'client_id=f112d8966964169f6ebb&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874&code=' + code;
 	req.onreadystatechange = function() {
-		console.log(req.readyState);
-		console.log(req.status);
+		//console.log(req.readyState);
+		//console.log(req.status);
 		if (req.readyState == 4 && req.status == 200) {
-            console.log(req.responseText);
+            //console.log(req.responseText);
         } else {
-        	console.log(req);
+        	//console.log(req);
         }
 	};
 
