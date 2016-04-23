@@ -20,20 +20,28 @@ body {
 	text-align: center;
 }
 
+.input {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
 #user_input {
 	float: left;
 	margin-left: 5%;
-	margin-top: 20px;
-	height: 500px;
+	margin-top: 50px;
+	height: 400px;
 	width: 300px;
 	background-color: #F1F0FF;
-
+	padding-top: 30px;
 }
+
+#input-form {
+	display: flex;
+	justify-content: center;
+}
+
 #search_bar {
 	margin: auto;
-	height: 50px;
 	width: 80%;
-/*	border: 1px solid #618afd;*/
 	padding: 5px;
 }
 /*input[type=text] {
@@ -72,13 +80,15 @@ body {
 	border-radius: 10px;
 	color: #8C489F;
 }
-
-
-
 #results {
+	margin-top: 50px;
 	width: 70%;
 	float: right;
 	background-color: white;
+}
+
+#send_button {
+	margin-top: 10px;
 }
 
 input[type=range] {
@@ -108,7 +118,7 @@ input[type=range]::-webkit-slider-runnable-track {
 	width: 900px;
 }
 
-table{
+table {
     border: 1px solid black;
     table-layout: fixed;
     width: 200px;
