@@ -94,11 +94,11 @@ app.get('/home', function(request, response) {
 	// console.log("code: " + code);
 	// headers.host = 'github.com';
 	
-	// var req = new XMLHttpRequest();
+	var req = new XMLHttpRequest();
 
-	// var params = '?client_id=f112d8966964169f6ebb' + 
-	// 			 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
-	// 			 '&code=' + code;
+	var params = '?client_id=f112d8966964169f6ebb' + 
+				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
+				 '&code=' + code;
 
 	// var opts = {
 	// 	hostname:'github.com',
@@ -123,8 +123,8 @@ app.get('/home', function(request, response) {
  // //        }
 	// // };
 
-	// req.open('POST', 'https://github.com/login/oauth/access_token', true);
- //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.open('POST', 'https://github.com/login/oauth/access_token', true);
+ 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 });
 
