@@ -9,18 +9,30 @@
     <script type="text/javascript" src="data.js"></script>
 </head>
 <body>
-	<div id="content">
+	<header>
+		<h1>Gitbuddy</h1>
+	</header>
+	<div id="user_input">
 	<div id="search_bar">
 		<form id="input_form">
-			<input type="text" list="input_content" name = "url" id="input_url">
+			<input type="text" list="input_content" name = "url" id="org_url" placeholder="organization" class="form-control" />
+				<datalist id="input_content">
+					<option value="Teradata">
+				</datalist>	
+			<input type="text" list="input_content" name = "url" id="repo_url" placeholder="repo" class="form-control">
 				<datalist id="input_content">
 					<option value="presto">
 				</datalist>	
-    		<input type="submit" value="Search" id="send_button" min="0" max="100">
+			
+			 <input type="radio" name="status" value="open" checked> Open
+			 <input type="radio" name="status" value="closed" checked> Closed
+			 <input type="radio" name="status" value="both" checked> Both
+
+			<input type="range" id="time-range">
+			
+    		<input type="submit" value="Search" id="send_button" class="btn btn-primary btn-block">
 		</form>
 	</div>
-	<div id="user_input">
-		<input type="range" id="time-range">
 	</div>
 	<div id="results">
 	</div>
