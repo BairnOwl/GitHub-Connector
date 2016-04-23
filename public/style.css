@@ -5,15 +5,17 @@ header {
 }
 
 body {
-	text-align: center;
+	/*text-align: center;*/
 	background-color: #8C489F;
+}
+.radio{
+	text-align: center;
 }
 
 .head {
 	height: 30px;
 	width: 500px;
 	font-size: 15px;
-/*	background-color: ;*/
 	text-align: center;
 }
 
@@ -109,12 +111,12 @@ input[type=range]::-webkit-slider-runnable-track {
 	border: 1px solid #cecccc;
 }
 
-.pull-request {
+.pull_request {
 	background-color: white;
-	width: 900px;
+	/*width: 1200px;*/
 }
 
-table {
+/*table {
     table-layout: fixed;
     width: 200px;
 }
@@ -128,6 +130,23 @@ th, td {
 td {
     height: 100px;
     width: 50px;
+}*/
+.single_request {
+	width: 800px;
+	height: 200px;
+	background-color: pink;
+}
+.profile_img {
+	width:50px;
+	height:50px;
+	position: relative;
+	top: 5px;
+	left: 5px;
+}
+.user_login {
+	position: relative;
+	top:-30px;
+	left: 70px;
 }
 
 tr:hover{background-color:#f5f5f5}
