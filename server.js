@@ -28,9 +28,13 @@ function randomString(length, chars) {
     return result;
 }
 
+app.post('/data/:org/:repo', function(request, response) {
+	var org = request.params.org;
+	var repo = request.params.repo;
 
-app.post('/data/:inputurl', function(request, response) {
-	url = 'https://api.github.com/repos/Teradata/' + request.params.inputurl + '/pulls';
+	console.log(org);
+	console.log(repo);
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls';
 	req.open('GET', url, true);
 
 	var token = '7f9be1a12a655c6ce0d94e413c06759d6223b6dc'; // PUT YOUR PERSONAL TOKEN HERE!!!

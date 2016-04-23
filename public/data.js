@@ -1,12 +1,17 @@
 function handleInput(e) {
     e.preventDefault();
-    var inputurl = document.getElementById("input_url").value;
-    sendMessage(inputurl);
+
+    var org = document.getElementById("org_url").value;
+    var repo = document.getElementById("repo_url").value;
+    console.log("input");
+    sendMessage(org, repo);
 }
 
-function sendMessage(inputurl) {
+function sendMessage(org, repo) {
     var fd = new FormData(document.getElementById('input_form'));
-    fd.append("company", inputurl);
+    fd.append("org", org);
+    fd.append("repo", repo);
+    console.log("sending message");
 
     var req = new XMLHttpRequest();
     // req.open('GET', '/data', true);
@@ -74,7 +79,7 @@ function sendMessage(inputurl) {
         }
     };
 
-    req.open('POST', '/data/' + inputurl, true);
+    req.open('POST', '/data/' + org + '/' + repo, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
