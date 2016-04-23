@@ -85,33 +85,41 @@ app.get('/login', function(request, response) {
 
 //var url = 'https://gitbuddy.herokuapp.com/home?';
 
+
+//refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
 app.get('/home', function(request, response) {
 	var code = request.param('code');
 	var state = request.param('state');
-	response.render('dummy.html', {code: code, state: state});
-	// var headers = request.headers;
+	//response.render('dummy.html', {code: code, state: state});
+	var headers = request.headers;
 	// console.log('state: ' + state);
 	// console.log("code: " + code);
-	// headers.host = 'github.com';
+	path = '/login/oauth/access_token';
+	headers.host = 'github.com';
 	
-	var req = new XMLHttpRequest();
+	//var req = new XMLHttpRequest();
 
 	var params = '?client_id=f112d8966964169f6ebb' + 
 				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
 				 '&code=' + code;
 
-	// var opts = {
-	// 	hostname:'github.com',
-	// 	port:'8080',
-	// 	path: params,
-	// 	headers: headers,
-	// 	method: 'POST'
-	// }
-	// var req = https.request(opts, function(response){
-	// 	console.log('in http');
-	// 	response.setEncoding('utf8');
-	// 	console.log(response.param('access_toke'));
-	// });
+	path += params;
+
+	var opts = {
+		hostname:'github.com',
+		port:'8080',
+		path: path,
+		headers: headers,
+		method: 'POST'
+	}
+	var req = https.request(opts, function(response){
+		//console.log('in http');
+		response.setEncoding('utf8');
+		res.on('data', function(data)) {
+			response.render('dummy.html', {code: code, state: state, data: data});
+		}
+		//console.log(response.param('access_toke'));
+	});
 	// // req.onreadystatechange = function() {
 	// // 	//console.log(req.readyState);
 	// // 	//console.log(req.status);
@@ -123,10 +131,12 @@ app.get('/home', function(request, response) {
  // //        }
 	// // };
 
-	req.open('POST', 'https://github.com/login/oauth/access_token', true);
- 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
+ // 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 });
+
+app.get('')
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
