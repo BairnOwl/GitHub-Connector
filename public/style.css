@@ -8,10 +8,7 @@ body {
 	text-align: center;
 	background-color: #8C489F;
 }
-.pull-request {
-	border: 5px solid gray;
 
-}
 .head {
 	height: 30px;
 	width: 500px;
@@ -82,7 +79,7 @@ body {
 }
 #results {
 	margin-top: 50px;
-	width: 70%;
+	margin-right: 5%;
 	float: right;
 	background-color: white;
 }
@@ -114,12 +111,10 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .pull-request {
 	background-color: white;
-	/*width: 50%;*/
 	width: 900px;
 }
 
 table {
-    border: 1px solid black;
     table-layout: fixed;
     width: 200px;
 }
