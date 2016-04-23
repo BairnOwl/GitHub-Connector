@@ -64,6 +64,27 @@ body {
 	background-color: white;
 }
 
+input[type=range] {
+	-webkit-appearance: none;
+	margin: 10px 0;
+	width: 100%;
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 20px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: none;
+	background: white;
+	border-radius: 0px;
+	border: 1px solid #cecccc;
+}
+
 .pull-request {
 	background-color: white;
 	/*width: 50%;*/
