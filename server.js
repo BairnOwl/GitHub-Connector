@@ -85,48 +85,72 @@ app.get('/login', function(request, response) {
 
 //var url = 'https://gitbuddy.herokuapp.com/home?';
 
+
+//refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
 app.get('/home', function(request, response) {
 	var code = request.param('code');
 	var state = request.param('state');
-	response.render('dummy.html', {code: code, state: state});
-	// var headers = request.headers;
-	// console.log('state: ' + state);
-	// console.log("code: " + code);
-	// headers.host = 'github.com';
+	//response.render('dummy.html', {code: code, state: state});
+	var headers = request.headers;
+	path = '/login/oauth/access_token';
+	headers.host = 'github.com';
 	
-	// var req = new XMLHttpRequest();
+	var req = new XMLHttpRequest();
 
-	// var params = '?client_id=f112d8966964169f6ebb' + 
-	// 			 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
-	// 			 '&code=' + code;
+	var params = '?client_id=f112d8966964169f6ebb' + 
+				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
+				 '&code=' + code;
 
-	// var opts = {
-	// 	hostname:'github.com',
-	// 	port:'8080',
-	// 	path: params,
-	// 	headers: headers,
-	// 	method: 'POST'
-	// }
-	// var req = https.request(opts, function(response){
-	// 	console.log('in http');
-	// 	response.setEncoding('utf8');
-	// 	console.log(response.param('access_toke'));
+	path += params;
+
+	var opts = {
+		hostname:'github.com',
+		port:'443',
+		path: path,
+		headers: headers,
+		method: 'POST'
+	}
+	var token;
+	var args = 'args';
+	// var req = https.request(opts, function(res){
+	// 	//console.log('in http');
+	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
+	// 	res.setEncoding('utf8');
+	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
+	// 	res.on('data', function(data){
+	// 		args = data;
+	// 		console.log('data in data: ' + data);
+	// 		// var tokenInfo = args[0].split('=');
+	// 		// token = tokenInfo[1];
+	// 		//response.render('dummy.html', {code: code, state: state});
+	// 	});
 	// });
-	// // req.onreadystatechange = function() {
-	// // 	//console.log(req.readyState);
-	// // 	//console.log(req.status);
-	// // 	if (req.readyState == 4 && req.status == 200) {
-	// // 		console.log(req.responseText.access_token);
- // //            console.log(req.responseText);
- // //        } else {
- // //        	//console.log(req);
- // //        }
-	// // };
+	// response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + args});
+	// 	//console.log(response.param('access_toke'));
+	// });
+	var data;
+	req.onreadystatechange = function() {
+		console.log(req.readyState);
+		console.log(req.status);
+		//response.render('dummy.html', {code: req.responseText, state: 'state'});
+		if (req.readyState == 4 && req.status == 200) {
+			data = req.responseText;
+			//response.render('dummy.html', {code: 'code', state: 'state'});
+			//console.log(req.responseText.access_token);
+        } else {
+        	//console.log(req);
+        }
+	};
+	//response.render('dummy.html', {code: 'code', state: 'state', data: data});
 
-	// req.open('POST', 'https://github.com/login/oauth/access_token', true);
- //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
- //    req.send(params);
+	req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + data});
+    req.send(params);
 });
+
+console.log('outside');
+// app.get('')
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
