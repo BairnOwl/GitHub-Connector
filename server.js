@@ -124,7 +124,7 @@ app.get('/home', function(request, response) {
 	req.onreadystatechange = function() {
 		//console.log(req.readyState);
 		//console.log(req.status);
-		//response.render('dummy.html', {code: 'code', state: 'state'});
+		response.render('dummy.html', {code: req.responseText, state: 'state'});
 		if (req.readyState == 4 && req.status == 200) {
 			response.render('dummy.html', {code: 'code', state: 'state'});
 			//console.log(req.responseText.access_token);
