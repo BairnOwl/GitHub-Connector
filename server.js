@@ -87,7 +87,7 @@ app.get('/login', function(request, response) {
 	var qs = require('querystring')
 	  , oauth =
 	    { client_id: 'f112d8966964169f6ebb'
-	    , state: random
+	    , state: random.toString()
 	    }
 	  , url = 'https://github.com/login/oauth/authorize'
 	  ;
