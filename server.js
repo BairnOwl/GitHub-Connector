@@ -105,45 +105,48 @@ app.get('/home', function(request, response) {
 
 	//response.render('dummy.html', {code: code, state: state, data: path});
 
-	var opts = {
-		hostname:'github.com',
-		port:'443',
-		path: path,
-		headers: headers,
-		method: 'POST'
-	}
-	var token;
-	var args;
-	var req = https.request(opts, function(res){
-		//console.log('in http');
-		//res.render('dummy.html', {code: 'code', state: 'state'});
-		res.setEncoding('utf8');
-		//res.render('dummy.html', {code: 'code', state: 'state'});
-		res.on('data', function(data){
-			args = data;
-			// var tokenInfo = args[0].split('=');
-			// token = tokenInfo[1];
-			//response.render('dummy.html', {code: code, state: state});
-		});
-	});
-	response.render('dummy.html', {code: 'code', state: 'state', data: args});
+	// var opts = {
+	// 	hostname:'github.com',
+	// 	port:'443',
+	// 	path: path,
+	// 	headers: headers,
+	// 	method: 'POST'
+	// }
+	// var token;
+	// var args;
+	// var req = https.request(opts, function(res){
+	// 	//console.log('in http');
+	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
+	// 	res.setEncoding('utf8');
+	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
+	// 	res.on('data', function(data){
+	// 		args = data;
+	// 		// var tokenInfo = args[0].split('=');
+	// 		// token = tokenInfo[1];
+	// 		//response.render('dummy.html', {code: code, state: state});
+	// 	});
+	// });
+	// response.render('dummy.html', {code: 'code', state: 'state', data: args});
 	// 	//console.log(response.param('access_toke'));
 	// });
-	// req.onreadystatechange = function() {
-	// 	//console.log(req.readyState);
-	// 	//console.log(req.status);
-	// 	//response.render('dummy.html', {code: req.responseText, state: 'state'});
-	// 	if (req.readyState == 4 && req.status == 200) {
-	// 		//response.render('dummy.html', {code: 'code', state: 'state'});
-	// 		//console.log(req.responseText.access_token);
- //            //console.log(req.responseText);
- //        } else {
- //        	//console.log(req);
- //        }
-	// };
+	var data;
+	req.onreadystatechange = function() {
+		//console.log(req.readyState);
+		//console.log(req.status);
+		//response.render('dummy.html', {code: req.responseText, state: 'state'});
+		if (req.readyState == 4 && req.status == 200) {
+			data = req.responseText;
+			//response.render('dummy.html', {code: 'code', state: 'state'});
+			//console.log(req.responseText.access_token);
+            //console.log(req.responseText);
+        } else {
+        	//console.log(req);
+        }
+	};
+	response.render('dummy.html', {code: 'code', state: 'state', data: data});
 
-	// req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
- //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 });
 
