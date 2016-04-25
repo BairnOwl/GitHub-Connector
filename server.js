@@ -121,6 +121,7 @@ app.get('/home', function(request, response) {
 		//res.render('dummy.html', {code: 'code', state: 'state'});
 		res.on('data', function(data){
 			args = data;
+			console.log('data in data: ' + data);
 			// var tokenInfo = args[0].split('=');
 			// token = tokenInfo[1];
 			//response.render('dummy.html', {code: code, state: state});
