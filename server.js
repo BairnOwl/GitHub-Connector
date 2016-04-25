@@ -37,7 +37,7 @@ app.post('/data/:org/:repo', function(request, response) {
 	req.open('GET', url, true);
 
 
-	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '174b490e8d6d79ea483af3d5fa6f0f0d34e91e4e'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -90,18 +90,20 @@ app.get('/login', function(request, response) {
 app.get('/home', function(request, response) {
 	var code = request.param('code');
 	var state = request.param('state');
-	response.render('dummy.html', {code: code, state: state});
-	// var headers = request.headers;
-	// path = '/login/oauth/access_token';
-	// headers.host = 'github.com';
+	//response.render('dummy.html', {code: code, state: state});
+	var headers = request.headers;
+	path = '/login/oauth/access_token';
+	headers.host = 'github.com';
 	
 	// //var req = new XMLHttpRequest();
 
-	// var params = '?client_id=f112d8966964169f6ebb' + 
-	// 			 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
-	// 			 '&code=' + code;
+	var params = '?client_id=f112d8966964169f6ebb' + 
+				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
+				 '&code=' + code;
 
-	// path += params;
+	path += params;
+
+	response.render('dummy.html', {code: code, state: state, data: path});
 
 	// var opts = {
 	// 	hostname:'github.com',
