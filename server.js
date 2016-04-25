@@ -33,11 +33,10 @@ app.post('/data/:org/:repo', function(request, response) {
 	var org = request.params.org;
 	var repo = request.params.repo;
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls';
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
 	req.open('GET', url, true);
 
-
-	var token = '174b490e8d6d79ea483af3d5fa6f0f0d34e91e4e'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -158,8 +157,3 @@ console.log('outside');
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
 });
-
-// app.listen(8080, function(){
-//     console.log('- Server listening on port 8080');
-// });
-
