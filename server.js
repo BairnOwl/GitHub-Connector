@@ -131,7 +131,7 @@ app.get('/login', function(request, response) {
 	    //   ;
 	    // request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
 	    //   console.log(user)
-	    })
+	    //})
 	  })
 	})
 });
