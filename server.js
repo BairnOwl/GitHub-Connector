@@ -55,7 +55,7 @@ app.get('/', function(request, response){
 });
 
 app.get('/login', function(request, response) {
-	var req = new XMLHttpRequest();
+	//var req = new XMLHttpRequest();
 
 	var random = randomString(32, chars);
 	//var uri = 'localhost:8080/home';
@@ -68,17 +68,17 @@ app.get('/login', function(request, response) {
 	path += params;
 	response.redirect(path);
 
-	req.onreadystatechange = function() {
-		console.log('in req');
-		//console.log(req.param);
-		if (req.readyState == 4 && req.status == 200) {
-			var code = req.responseText;
-            console.log("response: " + req.responseText);
-        }
-	};
+	// req.onreadystatechange = function() {
+	// 	console.log('in req');
+	// 	//console.log(req.param);
+	// 	if (req.readyState == 4 && req.status == 200) {
+	// 		var code = req.responseText;
+ //            console.log("response: " + req.responseText);
+ //        }
+	// };
 
-	req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
+ //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 
 });
