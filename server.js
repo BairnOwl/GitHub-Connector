@@ -113,19 +113,20 @@ app.get('/home', function(request, response) {
 		method: 'POST'
 	}
 	var token;
+	var args;
 	var req = https.request(opts, function(res){
 		//console.log('in http');
 		//res.render('dummy.html', {code: 'code', state: 'state'});
 		res.setEncoding('utf8');
 		//res.render('dummy.html', {code: 'code', state: 'state'});
 		res.on('data', function(data){
-			var args = data.split('&');
-			var tokenInfo = args[0].split('=');
-			token = tokenInfo[1];
+			args = data;
+			// var tokenInfo = args[0].split('=');
+			// token = tokenInfo[1];
 			//response.render('dummy.html', {code: code, state: state});
 		});
 	});
-	response.render('dummy.html', {code: 'code', state: 'state', data: token});
+	response.render('dummy.html', {code: 'code', state: 'state', data: args});
 	// 	//console.log(response.param('access_toke'));
 	// });
 	// req.onreadystatechange = function() {
