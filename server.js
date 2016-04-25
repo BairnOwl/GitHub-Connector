@@ -151,6 +151,7 @@ app.get('/home', function(request, response) {
  //    req.send(params);
 });
 
+console.log('outside');
 // app.get('')
 
 app.listen(process.env.PORT, function(){
