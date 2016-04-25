@@ -90,7 +90,7 @@ app.get('/login', function(request, response) {
 app.get('/home', function(request, response) {
 	var code = request.param('code');
 	var state = request.param('state');
-	//response.render('dummy.html', {code: code, state: state});
+	
 	var headers = request.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'github.com';
@@ -140,13 +140,15 @@ app.get('/home', function(request, response) {
         } else {
         	//console.log(req);
         }
+        response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + data});
+
 	};
 	//response.render('dummy.html', {code: 'code', state: 'state', data: data});
 
-	req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
+	req.open('POST', 'https://github.com/login/oauth/access_token', true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + data});
     req.send(params);
+
 });
 
 console.log('outside');
