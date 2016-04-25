@@ -97,7 +97,6 @@ app.get('/home', function(request, response) {
 	
 	// //var req = new XMLHttpRequest();
 
-	console.log('id + secret: ' + gitConfig.clientId + ' ' + gitConfig.clientSecret);
 	var params = '?client_id=f112d8966964169f6ebb' + 
 				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
 				 '&code=' + code;
