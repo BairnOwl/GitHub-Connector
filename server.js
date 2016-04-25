@@ -105,35 +105,36 @@ app.get('/home', function(request, response) {
 
 	//response.render('dummy.html', {code: code, state: state, data: path});
 
-	var opts = {
-		hostname:'github.com',
-		port:'443',
-		path: path,
-		headers: headers,
-		method: 'POST'
-	}
-	var req = https.request(opts, function(response){
-		//console.log('in http');
-		response.setEncoding('utf8');
-		response.on('data', function(data){
-			response.render('dummy.html', {code: code, state: state});
-		});
-	});
+	// var opts = {
+	// 	hostname:'github.com',
+	// 	port:'443',
+	// 	path: path,
+	// 	headers: headers,
+	// 	method: 'POST'
+	// }
+	// var req = https.request(opts, function(response){
+	// 	//console.log('in http');
+	// 	response.setEncoding('utf8');
+	// 	response.on('data', function(data){
+	// 		response.render('dummy.html', {code: code, state: state});
+	// 	});
+	// });
 	// 	//console.log(response.param('access_toke'));
 	// });
-	// // req.onreadystatechange = function() {
-	// // 	//console.log(req.readyState);
-	// // 	//console.log(req.status);
-	// // 	if (req.readyState == 4 && req.status == 200) {
-	// // 		console.log(req.responseText.access_token);
- // //            console.log(req.responseText);
- // //        } else {
- // //        	//console.log(req);
- // //        }
-	// // };
+	req.onreadystatechange = function() {
+		//console.log(req.readyState);
+		//console.log(req.status);
+		response.render('dummy.html', {code: 'code', state: 'state'});
+		if (req.readyState == 4 && req.status == 200) {
+			//console.log(req.responseText.access_token);
+            //console.log(req.responseText);
+        } else {
+        	//console.log(req);
+        }
+	};
 
-	// req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
- // 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 });
 
