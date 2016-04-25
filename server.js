@@ -115,8 +115,8 @@ app.get('/home', function(request, response) {
 	var req = https.request(opts, function(response){
 		//console.log('in http');
 		response.setEncoding('utf8');
-		res.on('data', function(data){
-			response.render('dummy.html', {code: code, state: state, data: data});
+		response.on('data', function(data){
+			response.render('dummy.html', {code: code, state: state});
 		});
 	});
 	// 	//console.log(response.param('access_toke'));
