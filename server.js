@@ -4,6 +4,8 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
+var Cookie = require('js-cookie');
+
 var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
 app.set('views', __dirname + '/templates');
@@ -161,16 +163,23 @@ app.get('/home', function(req, response) {
 
  	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    console.log('returned token: ' + body.access_token) // Show the HTML for the Google homepage. 
+	    //console.log('returned token: ' + body.access_token) // Show the HTML for the Google homepage. 
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
+
+	  	// Cookie.set('')
 	  }
 	});
+
+	// request('https://api.github.com/user?access_token=' + userToken, function(error, response, body) {
+	// 	if (!error && response.statusCode == 200) {
+			
+	// 	}
+	// });
 });
 
 console.log('outside');
-// app.get('')
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
