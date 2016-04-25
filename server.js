@@ -80,8 +80,8 @@ app.get('/login', function(request, response) {
 
 });
 
-OAuth1.0 - 3-legged server side flow (Twitter example) 
-step 1 
+//OAuth1.0 - 3-legged server side flow (Twitter example) 
+//step 1 
 app.get('/login', function(request, response) {
 	var random = randomString(32, chars);
 	var qs = require('querystring')
