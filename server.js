@@ -115,9 +115,10 @@ app.get('/home', function(request, response) {
 	var req = https.request(opts, function(response){
 		//console.log('in http');
 		response.setEncoding('utf8');
-		res.on('data', function(data)) {
+		res.on('data', function(data){
 			response.render('dummy.html', {code: code, state: state, data: data});
-		}
+		});
+	});
 	// 	//console.log(response.param('access_toke'));
 	// });
 	// // req.onreadystatechange = function() {
