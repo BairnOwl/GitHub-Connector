@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var url;
+var userToken;
 var bodyParser = require('body-parser');
 
 var engines = require('consolidate');
@@ -38,6 +39,7 @@ app.post('/data/:org/:repo', function(request, response) {
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
 	req.open('GET', url, true);
 
+	console.log('usertoken: ' + userToken);
 	var token = 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
@@ -162,6 +164,7 @@ app.get('/home', function(req, response) {
 	    console.log('returned token: ' + body.access_token) // Show the HTML for the Google homepage. 
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
+	  	userToken = parsed.access_token;
 	  }
 	});
 });
