@@ -103,21 +103,21 @@ app.get('/home', function(request, response) {
 
 	path += params;
 
-	response.render('dummy.html', {code: code, state: state, data: path});
+	//response.render('dummy.html', {code: code, state: state, data: path});
 
-	// var opts = {
-	// 	hostname:'github.com',
-	// 	port:'8080',
-	// 	path: path,
-	// 	headers: headers,
-	// 	method: 'POST'
-	// }
-	// var req = https.request(opts, function(response){
-	// 	//console.log('in http');
-	// 	response.setEncoding('utf8');
-	// 	res.on('data', function(data)) {
-	// 		response.render('dummy.html', {code: code, state: state, data: data});
-	// 	}
+	var opts = {
+		hostname:'github.com',
+		port:'443',
+		path: path,
+		headers: headers,
+		method: 'POST'
+	}
+	var req = https.request(opts, function(response){
+		//console.log('in http');
+		response.setEncoding('utf8');
+		res.on('data', function(data)) {
+			response.render('dummy.html', {code: code, state: state, data: data});
+		}
 	// 	//console.log(response.param('access_toke'));
 	// });
 	// // req.onreadystatechange = function() {
