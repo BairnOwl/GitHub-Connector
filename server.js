@@ -172,9 +172,11 @@ app.get('/home', function(req, response) {
 	  }
 	});
 
+	response.redirect('/');
+
 	// request('https://api.github.com/user?access_token=' + userToken, function(error, response, body) {
 	// 	if (!error && response.statusCode == 200) {
-			
+
 	// 	}
 	// });
 });
