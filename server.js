@@ -125,7 +125,7 @@ app.get('/home', function(request, response) {
 			//response.render('dummy.html', {code: code, state: state});
 		});
 	});
-	response.render('dummy.html', {code: 'code', state: 'state'});
+	response.render('dummy.html', {code: 'code', state: 'state', data: token});
 	// 	//console.log(response.param('access_toke'));
 	// });
 	// req.onreadystatechange = function() {
