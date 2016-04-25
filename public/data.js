@@ -3,25 +3,24 @@ function handleInput(e) {
 
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
-    console.log("input");
-    sendMessage(org, repo);
+    var state = document.querySelector('input[name="status"]:checked').value;
+
+    sendMessage(org, repo, state);
 }
 
-function sendMessage(org, repo) {
+function sendMessage(org, repo, state) {
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
-    console.log("sending message");
+    fd.append("state", state);
+
+    console.log(state);
 
     var req = new XMLHttpRequest();
-    // req.open('GET', '/data', true);
-    // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // req.send();
 
     req.onreadystatechange = function() {
-        console.log("received");
-        console.log(req.readyState);
-        console.log(req.status);
+        console.log("received " + req.readyState + ", " + req.status);
+       
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
             console.log(data);
@@ -43,12 +42,14 @@ function sendMessage(org, repo) {
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
 
 window.addEventListener('load', function(){
+
+    $("#slider").dateRangeSlider();
 	// var req = new XMLHttpRequest();
 
 	// req.onreadystatechange = function() {

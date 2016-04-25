@@ -29,14 +29,15 @@ function randomString(length, chars) {
     return result;
 }
 
-app.post('/data/:org/:repo', function(request, response) {
+app.post('/data/:org/:repo/:state', function(request, response) {
 	var org = request.params.org;
 	var repo = request.params.repo;
+	var state = request.params.state;
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
 
-	var token = '891cb4de24f2ac671e125465beb7679c4967a3e9'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = 'c8773a4f8d9168b41118bcfa68ea660a88b21894'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
