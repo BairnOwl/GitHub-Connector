@@ -112,14 +112,20 @@ app.get('/home', function(request, response) {
 		headers: headers,
 		method: 'POST'
 	}
-	var req = https.request(opts, function(response){
+	var token;
+	var req = https.request(opts, function(res){
 		//console.log('in http');
-		response.render('dummy.html', {code: 'code', state: 'state'});
-		response.setEncoding('utf8');
-		response.on('data', function(data){
+		//res.render('dummy.html', {code: 'code', state: 'state'});
+		res.setEncoding('utf8');
+		//res.render('dummy.html', {code: 'code', state: 'state'});
+		res.on('data', function(data){
+			var args = data.split('&');
+			var tokenInfo = args[0].split('=');
+			token = tokenInfo[1];
 			//response.render('dummy.html', {code: code, state: state});
 		});
 	});
+	response.render('dummy.html', {code: 'code', state: 'state'});
 	// 	//console.log(response.param('access_toke'));
 	// });
 	// req.onreadystatechange = function() {
@@ -140,7 +146,7 @@ app.get('/home', function(request, response) {
  //    req.send(params);
 });
 
-app.get('')
+// app.get('')
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
