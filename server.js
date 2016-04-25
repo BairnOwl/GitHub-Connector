@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-//var req = new XMLHttpRequest();
+var req = new XMLHttpRequest();
 var request = require('request');
 
 //This function is credit to http://jsfiddle.net/wSQBx/
