@@ -51,90 +51,90 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.send(null); 
 });
 
-// app.get('/login', function(request, response) {
-// 	var req = new XMLHttpRequest();
+app.get('/login', function(request, response) {
+	var req = new XMLHttpRequest();
 
-// 	var random = randomString(32, chars);
-// 	//var uri = 'localhost:8080/home';
-// 	console.log("random: " + random);
-// 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
-// 		random + 'scope=user,public_repo';
-// 	console.log("params: " + params);
+	var random = randomString(32, chars);
+	//var uri = 'localhost:8080/home';
+	console.log("random: " + random);
+	var params = '?client_id=f112d8966964169f6ebb&state=' + 
+		random + 'scope=user,public_repo';
+	console.log("params: " + params);
 	
-// 	var path = 'https://github.com/login/oauth/authorize';
-// 	path += params;
-// 	response.redirect(path);
+	var path = 'https://github.com/login/oauth/authorize';
+	path += params;
+	response.redirect(path);
 
-// 	req.onreadystatechange = function() {
-// 		console.log('in req');
-// 		//console.log(req.param);
-// 		if (req.readyState == 4 && req.status == 200) {
-// 			var code = req.responseText;
-//             console.log("response: " + req.responseText);
-//         }
-// 	};
+	req.onreadystatechange = function() {
+		console.log('in req');
+		//console.log(req.param);
+		if (req.readyState == 4 && req.status == 200) {
+			var code = req.responseText;
+            console.log("response: " + req.responseText);
+        }
+	};
 
-// 	req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
-//     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//  //    req.send(params);
+	req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+ //    req.send(params);
 
-// });
+});
 
-// OAuth1.0 - 3-legged server side flow (Twitter example) 
-// step 1 
-// app.get('/login', function(request, response) {
-// 	var random = randomString(32, chars);
-// 	var qs = require('querystring')
-// 	  , oauth =
-// 	    { client_id: 'f112d8966964169f6ebb'
-// 	    , state: random
-// 	    }
-// 	  , url = 'https://github.com/login/oauth/authorize'
-// 	  ;
-// 	request.post({url:url, oauth:oauth}, function (e, r, body) {
-// 	  console.log('in authorize: ');
-// 	  // Ideally, you would take the body in the response 
-// 	  // and construct a URL that a user clicks on (like a sign in button). 
-// 	  // The verifier is only available in the response after a user has 
-// 	  // verified with twitter that they are authorizing your app. 
+OAuth1.0 - 3-legged server side flow (Twitter example) 
+step 1 
+app.get('/login', function(request, response) {
+	var random = randomString(32, chars);
+	var qs = require('querystring')
+	  , oauth =
+	    { client_id: 'f112d8966964169f6ebb'
+	    , state: random
+	    }
+	  , url = 'https://github.com/login/oauth/authorize'
+	  ;
+	request.post({url:url, oauth:oauth}, function (e, r, body) {
+	  console.log('in authorize: ');
+	  // Ideally, you would take the body in the response 
+	  // and construct a URL that a user clicks on (like a sign in button). 
+	  // The verifier is only available in the response after a user has 
+	  // verified with twitter that they are authorizing your app. 
 	 
-// 	  // step 2 
-// 	  // var req_data = qs.parse(body)
-// 	  // var uri = 'https://api.github.com/user'
-// 	  //   + '?' + qs.stringify({access_token: req_data.code})
-// 	  // redirect the user to the authorize uri 
+	  // step 2 
+	  // var req_data = qs.parse(body)
+	  // var uri = 'https://api.github.com/user'
+	  //   + '?' + qs.stringify({access_token: req_data.code})
+	  // redirect the user to the authorize uri 
 	 
-// 	  // step 3 
-// 	  // after the user is redirected back to your server 
-// 	  var auth_data = qs.parse(body)
-// 	    , oauth =
-// 	      { client_id: 'f112d8966964169f6ebb'
-// 	      , client_secret: '538d16b411d8a82ba90e26a298a8c40345fab874'
-// 	      , code: auth_data.code
-// 	      }
-// 	    , url = 'https://github.com/login/oauth/access_token'
-// 	    ;
-// 	   console.log("auth_data.code: " + auth_data.code);
-// 	  request.post({url:url, oauth:oauth}, function (e, r, body) {
-// 	  	console.log('get token');
-// 	  	//console.log('body: ' +);
-// 	    // ready to make signed requests on behalf of the user 
-// 	    // var perm_data = qs.parse(body)
-// 	    //   , oauth =
-// 	    //     { access_token: perm_data.access_token;
-// 	    //     }
-// 	    //   , url = 'https://api.github.com/user'
-// 	    //   , qs =
-// 	    //     { screen_name: perm_data.screen_name
-// 	    //     , user_id: perm_data.user_id
-// 	    //     }
-// 	    //   ;
-// 	    // request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
-// 	    //   console.log(user)
-// 	    //})
-// 	  })
-// 	})
-// });
+	  // step 3 
+	  // after the user is redirected back to your server 
+	  var auth_data = qs.parse(body)
+	    , oauth =
+	      { client_id: 'f112d8966964169f6ebb'
+	      , client_secret: '538d16b411d8a82ba90e26a298a8c40345fab874'
+	      , code: auth_data.code
+	      }
+	    , url = 'https://github.com/login/oauth/access_token'
+	    ;
+	   console.log("auth_data.code: " + auth_data.code);
+	  request.post({url:url, oauth:oauth}, function (e, r, body) {
+	  	console.log('get token');
+	  	//console.log('body: ' +);
+	    // ready to make signed requests on behalf of the user 
+	    // var perm_data = qs.parse(body)
+	    //   , oauth =
+	    //     { access_token: perm_data.access_token;
+	    //     }
+	    //   , url = 'https://api.github.com/user'
+	    //   , qs =
+	    //     { screen_name: perm_data.screen_name
+	    //     , user_id: perm_data.user_id
+	    //     }
+	    //   ;
+	    // request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
+	    //   console.log(user)
+	    //})
+	  })
+	})
+});
 
 app.get('/', function(request, response){
 	response.render('home.html');
