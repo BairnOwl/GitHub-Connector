@@ -238,7 +238,7 @@ app.get('/', function(request, response){
 //  //    req.send(params);
 // });
 
-// console.log('outside');
+console.log('outside');
 // app.get('')
 
 app.listen(process.env.PORT, function(){
