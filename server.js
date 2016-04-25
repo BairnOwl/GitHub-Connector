@@ -138,7 +138,7 @@ app.get('/home', function(request, response) {
 			data = req.responseText;
 			//response.render('dummy.html', {code: 'code', state: 'state'});
 			//console.log(req.responseText.access_token);
-            //console.log(req.responseText);
+            console.log('owls');
         } else {
         	//console.log(req);
         }
