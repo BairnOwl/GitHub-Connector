@@ -12,6 +12,7 @@ var finalhandler = require('finalhandler');
 var http = require('http');
 var https = require('https');
 var Router = require('router');
+const queryString = require('query-string');
 
 var router = Router();
 
@@ -158,7 +159,9 @@ app.get('/home', function(req, response) {
 
  	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    console.log('returned token: ' + body) // Show the HTML for the Google homepage. 
+	    console.log('returned token: ' + body.access_token) // Show the HTML for the Google homepage. 
+	  	var parsed = queryString.parse(body);
+	  	console.log('token: ' + parsed.access_token);
 	  }
 	});
 });
