@@ -51,34 +51,34 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.send(null); 
 });
 
-app.get('/login', function(request, response) {
-	var req = new XMLHttpRequest();
+// app.get('/login', function(request, response) {
+// 	var req = new XMLHttpRequest();
 
-	var random = randomString(32, chars);
-	//var uri = 'localhost:8080/home';
-	console.log("random: " + random);
-	var params = '?client_id=f112d8966964169f6ebb&state=' + 
-		random + 'scope=user,public_repo';
-	console.log("params: " + params);
+// 	var random = randomString(32, chars);
+// 	//var uri = 'localhost:8080/home';
+// 	console.log("random: " + random);
+// 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
+// 		random + 'scope=user,public_repo';
+// 	console.log("params: " + params);
 	
-	var path = 'https://github.com/login/oauth/authorize';
-	path += params;
-	response.redirect(path);
+// 	var path = 'https://github.com/login/oauth/authorize';
+// 	path += params;
+// 	response.redirect(path);
 
-	req.onreadystatechange = function() {
-		console.log('in req');
-		//console.log(req.param);
-		if (req.readyState == 4 && req.status == 200) {
-			var code = req.responseText;
-            console.log("response: " + req.responseText);
-        }
-	};
+// 	req.onreadystatechange = function() {
+// 		console.log('in req');
+// 		//console.log(req.param);
+// 		if (req.readyState == 4 && req.status == 200) {
+// 			var code = req.responseText;
+//             console.log("response: " + req.responseText);
+//         }
+// 	};
 
-	req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
- //    req.send(params);
+// 	req.open('GET', 'https://github.com/login/oauth/authorize?' + params, true);
+//     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//  //    req.send(params);
 
-});
+// });
 
 //OAuth1.0 - 3-legged server side flow (Twitter example) 
 //step 1 
@@ -91,7 +91,7 @@ app.get('/login', function(request, response) {
 	    }
 	  , url = 'https://github.com/login/oauth/authorize'
 	  ;
-	request.post({url:url, oauth:oauth}, function (e, r, body) {
+	request.get({url:url, oauth:oauth}, function (e, r, body) {
 	  console.log('in authorize: ');
 	  // Ideally, you would take the body in the response 
 	  // and construct a URL that a user clicks on (like a sign in button). 
