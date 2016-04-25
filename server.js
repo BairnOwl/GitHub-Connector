@@ -143,10 +143,11 @@ app.get('/home', function(request, response) {
         	//console.log(req);
         }
 	};
-	response.render('dummy.html', {code: 'code', state: 'state', data: data});
+	//response.render('dummy.html', {code: 'code', state: 'state', data: data});
 
 	req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    response.render('dummy.html', {code: 'code', state: 'state', data: data});
  //    req.send(params);
 });
 
