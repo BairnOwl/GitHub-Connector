@@ -113,16 +113,22 @@ app.get('/home', function(req, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	request('https://api.github.com/user?access_token=' + userToken, function (error, resp, body) {
-	  		if (!error && resp.statusCode == 200) {
-	  			console.log("responsebody: " + body);
-	  		}
-	  	});
+	  	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
+	  	// 	if (!err && resp.statusCode == 200) {
+	  	// 		console.log("responsebody: " + bo);
+	  	// 	}
+	  	// });
 	  	// .on('response', function(response) {
 	  	// 	console.log("responsebody: " + response.data);
 	  	// });
 	  }
 	});
+
+	request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
+  		if (!err && resp.statusCode == 200) {
+  			console.log("responsebody: " + bo);
+  		}
+  	});
 
 	response.redirect('/');
 
