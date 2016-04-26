@@ -152,7 +152,7 @@ app.get('/home', function(requ, response) {
   //   	};
 
   		var options = {
-  			host: 'api.github.com'
+  			host: 'api.github.com',
   			hostname: 'api.github.com',
   			path: '/user',
   			method: 'GET',
