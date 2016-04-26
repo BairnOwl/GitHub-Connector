@@ -197,7 +197,7 @@ app.get('/home', function(requ, response) {
 		        access_token: userToken // -> uri + '?access_token=xxxxx%20xxxxx' 
 		    },
 		    headers: {
-		        'User-Agent': 'Request-Promise'
+		        'User-Agent': 'gitbuddy'
 		    },
 		    json: true // Automatically parses the JSON string in the response 
 		};
