@@ -161,7 +161,7 @@ app.get('/home', function(requ, response) {
   				'token': userToken
   			}
   		}
-  		console.log('options: ' + options.headers);
+  		console.log('options: ' + options.headers.token);
 
     	var reque = https.request(options, function(res){
     		//res.setEncoding('utf8');
@@ -211,7 +211,7 @@ app.get('/home', function(requ, response) {
 	// 	}
 	// }, false);
 
-	response.redirect('/');
+	//response.redirect('/');
 
 });
 
