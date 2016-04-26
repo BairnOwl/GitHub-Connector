@@ -142,28 +142,28 @@ app.get('/home', function(requ, response) {
 		// }, false);
 		//req.setRequestHeader('Authorization', 'User-Agent lmhly');
 
-		var options = {  
-			hostname: 'api.github.com',
-			path: 'user?access_token=' + userToken,
-     		headers: {
-        		'Authorization': 'User-Agent BairnOwl'
-    		},
-    		method: 'GET'
-    	};
+		// var options = {  
+		// 	hostname: 'api.github.com',
+		// 	path: 'user?access_token=' + userToken,
+  //    		headers: {
+  //       		'Authorization': 'User-Agent BairnOwl'
+  //   		},
+  //   		method: 'GET'
+  //   	};
 
-    	var reque = https.request(options, function(res){
-    		res.setEncoding('utf8');
-    		res.on('data', function(userData){
-    			console.log('userdata: ' + userData);
-    		});
-    	});
+  //   	var reque = https.request(options, function(res){
+  //   		res.setEncoding('utf8');
+  //   		res.on('data', function(userData){
+  //   			console.log('userdata: ' + userData);
+  //   		});
+  //   	});
 
-		// https.get(userUrl + userToken, function(res) {
-		// 	res.headers = {'Authorization': 'User-Agent BairnOwl'};
-		// 	res.on('data', function(userData) {
-		// 		console.log('userData: ' + userData);
-		// 	});
-		// })
+		https.get(userUrl + userToken + '&User-Agent=BairnOwl', function(res) {
+			//res.headers = {'Authorization': 'User-Agent BairnOwl'};
+			res.on('data', function(userData) {
+				console.log('userData: ' + userData);
+			});
+		});
 
 	  }
 	});
