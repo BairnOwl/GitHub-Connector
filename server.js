@@ -101,6 +101,7 @@ request('/home', function (error, response, body) {
 app.get('/home', function(requ, response) {
 	var code = requ.param('code');
 	var state = requ.param('state');
+	var userLogin;
 	headers = requ.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'api.github.com';
@@ -133,13 +134,14 @@ app.get('/home', function(requ, response) {
 		 
 		rp(options)
 		    .then(function (user) {
+		    	userLogin = user.login;
 		        console.log('User login meeeeee: ' +  user.login);
 		        console.log('User token meeeeee: ' +  userToken);
 		        //response.redirect('/');
 		        //Cookies.set('lmhly', userToken, { expires: 7 });
-		        cookies.set('lmhly', userToken);
+		        //cookies.set('lmhly', userToken);
 		        userToken = '';
-		        console.log('user cookie: ' + cookies.get('lmhly'));
+		        console.log('user cookie: ' + user.login);
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -148,7 +150,7 @@ app.get('/home', function(requ, response) {
 
 	  }
 	});
-	response.render('dummy.html', {data: cookies.get('lmhly')});
+	response.render('dummy.html', {data: userLogin});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
