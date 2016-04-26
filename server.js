@@ -124,22 +124,22 @@ app.get('/home', function(requ, response) {
 	  	// });
 
  		var userUrl = 'https://api.github.com/user?access_token=';
-		// console.log('before get: ' + userToken);
-		// //var req = new XMLHttpRequest();
-		// req.open('GET', userUrl + userToken, true);
+		console.log('before get: ' + userToken);
+		//var req = new XMLHttpRequest();
+		req.open('GET', userUrl + userToken, true);
 
-		// console.log('userUrl + userToken: ' + userUrl + userToken);
+		console.log('userUrl + userToken: ' + userUrl + userToken);
 
-		// req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
-		// req.addEventListener('load', function(e){
-		// 	console.log('response: ' + req.responseText);
-		// 	if (req.status == 200) {
-		// 		//console.log()
-		// 		var data = JSON.parse(req.responseText);
-		// 		console.log('data: ' + data);
-		// 		//response.json(data);
-		// 	}
-		// }, false);
+		req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
+		req.addEventListener('load', function(e){
+			console.log('response: ' + req.responseText);
+			if (req.status == 200) {
+				//console.log()
+				var data = JSON.parse(req.responseText);
+				console.log('data: ' + data);
+				//response.json(data);
+			}
+		}, false);
 		//req.setRequestHeader('Authorization', 'User-Agent lmhly');
 
 		// var options = {  
@@ -158,12 +158,16 @@ app.get('/home', function(requ, response) {
   //   		});
   //   	});
 
-		https.get(userUrl + userToken, function(res) {
-			res.headers = {'Authorization': 'User-Agent gitbuddy'};
-			res.on('data', function(userData) {
-				console.log('userData: ' + userData);
-			});
-		});
+		// https.get(userUrl + userToken, function(res) {
+		// 	res.headers = {'Authorization': 'User-Agent gitbuddy'};
+		// 	res.on('data', function(userData) {
+		// 		console.log('userData: ' + userData);
+		// 	});
+		// });
+
+		// request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
+	 //      console.log(user)
+	 //    });
 
 	  }
 	});
