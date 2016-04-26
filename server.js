@@ -115,7 +115,7 @@ app.get('/home', function(requ, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	console.log('token: ' + userToken);
+	  	console.log('token 2: ' + userToken);
 
  		var userUrl = 'https://api.github.com/user?access_token=';
 
@@ -133,10 +133,10 @@ app.get('/home', function(requ, response) {
 		rp(options)
 		    .then(function (user) {
 		        console.log('User login meeeeee: ' +  user.login);
-		        response.redirect('/');
+		        //response.redirect('/');
 		        Cookies.set(user.login, userToken, { expires: 7 });
 		        userToken = '';
-		        console.log('user cookie: ' + Cookies.get(user.login));
+		        //console.log('user cookie: ' + Cookies.get(user.login));
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -171,8 +171,8 @@ app.get('/home', function(requ, response) {
 	// 		//response.json(data);
 	// 	}
 	// }, false);
-
-	//response.redirect('/');
+	console.log('user cookie: ' + Cookies.get('lmhly'));
+	response.redirect('/');
 
 });
 
