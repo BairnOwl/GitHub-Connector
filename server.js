@@ -115,7 +115,7 @@ app.get('/home', function(req, response) {
 	  	userToken = parsed.access_token;
 	  	request.get('https://api.github.com/user?access_token=' + userToken)
 	  	.on('response', function(response) {
-	  		console.log("responsebody: " + response.body);
+	  		console.log("responsebody: " + response);
 	  	});
 	  }
 	});
