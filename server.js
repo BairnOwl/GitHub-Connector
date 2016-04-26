@@ -136,7 +136,7 @@ app.get('/home', function(requ, response) {
 		        //response.redirect('/');
 		        Cookies.set(user.login, userToken, { expires: 7 });
 		        userToken = '';
-		        //console.log('user cookie: ' + Cookies.get(user.login));
+		        console.log('user cookie: ' + Cookies.get(user.login));
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -145,6 +145,7 @@ app.get('/home', function(requ, response) {
 
 	  }
 	});
+	response.render('dummy.html', {data: Cookies.get('lmhly')});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
@@ -171,8 +172,8 @@ app.get('/home', function(requ, response) {
 	// 		//response.json(data);
 	// 	}
 	// }, false);
-	console.log('user cookie: ' + Cookies.get('lmhly'));
-	response.redirect('/');
+	//console.log('user cookie: ' + Cookies.get('lmhly'));
+	//response.redirect('/');
 
 });
 
