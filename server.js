@@ -192,7 +192,7 @@ app.get('/home', function(requ, response) {
 	 //    });
 
 		var options = {
-		    uri: 'https://api.github.com/user/repos',
+		    uri: 'https://api.github.com/user',
 		    qs: {
 		        access_token: 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01' // -> uri + '?access_token=xxxxx%20xxxxx' 
 		    },
@@ -203,8 +203,8 @@ app.get('/home', function(requ, response) {
 		};
 		 
 		rp(options)
-		    .then(function (repos) {
-		        console.log('User has %d repos', repos.length);
+		    .then(function (user) {
+		        console.log('User login: ' +  user.login);
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
