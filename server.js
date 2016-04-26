@@ -157,14 +157,14 @@ app.get('/home', function(requ, response) {
   			path: '/user',
   			method: 'GET',
   			headers: {
-  				'Authorization': 'User-Agent BairnOwl',
+  				'User-Agent': 'BairnOwl',
   				'token': userToken
   			}
   		}
   		console.log('options: ' + options.headers.Authorization);
 
     	var reque = https.request(options, (res) => {
-    		//res.setEncoding('utf8');
+    		res.setEncoding('utf8');
     		console.log('res status: ' + res.statusCode);
     		console.log('res headers: ' + res.headers);
     		res.on('data', (userData) => {
