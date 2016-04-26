@@ -151,10 +151,14 @@ app.get('/home', function(requ, response) {
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
+		console.log('userLogin 2: ' + userLogin);
 
 	  }
+	  console.log('userLogin 3: ' + userLogin);
 	});
-	response.render('dummy.html', {data: userLogin});
+	console.log('userLogin 4: ' + userLogin);
+
+	response.render('dummy.html', {data: 'This is login' + userLogin});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
