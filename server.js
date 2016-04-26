@@ -142,6 +142,7 @@ app.get('/home', function(requ, response) {
 		        //cookies.set('lmhly', userToken);
 		        userToken = '';
 		        console.log('user cookie: ' + user.login);
+		        response.render('dummy.html', {data: user.login});
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -150,7 +151,7 @@ app.get('/home', function(requ, response) {
 
 	  }
 	});
-	response.render('dummy.html', {data: userLogin});
+	//response.render('dummy.html', {data: userLogin});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
