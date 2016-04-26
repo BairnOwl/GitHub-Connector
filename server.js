@@ -146,7 +146,7 @@ app.get('/home', function(requ, response) {
 			hostname: 'api.github.com',
 			path: 'user?access_token=' + userToken,
      		headers: {
-        		Authorization: 'User-Agent BairnOwl'
+        		'Authorization': 'User-Agent BairnOwl'
     		},
     		method: 'GET'
     	};
@@ -158,12 +158,12 @@ app.get('/home', function(requ, response) {
     		});
     	});
 
-		https.get(userUrl + userToken, function(res) {
-			res.headers = {'Authorization': 'User-Agent BairnOwl'};
-			res.on('data', function(userData) {
-				console.log('userData: ' + userData);
-			});
-		})
+		// https.get(userUrl + userToken, function(res) {
+		// 	res.headers = {'Authorization': 'User-Agent BairnOwl'};
+		// 	res.on('data', function(userData) {
+		// 		console.log('userData: ' + userData);
+		// 	});
+		// })
 
 	  }
 	});
