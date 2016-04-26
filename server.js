@@ -95,12 +95,13 @@ request('/home', function (error, response, body) {
 })
 
 //refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
+var headers;
 app.get('/home', function(requ, response) {
 	var code = requ.param('code');
 	var state = requ.param('state');
-	var headers = requ.headers;
+	headers = requ.headers;
 	path = '/login/oauth/access_token';
-	headers.host = 'github.com';
+	headers.host = 'api.github.com';
 
 	var params = '?client_id=f112d8966964169f6ebb' + 
 				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
@@ -151,22 +152,24 @@ app.get('/home', function(requ, response) {
   //   		method: 'GET'
   //   	};
 
+  		console.log('headers: ' + headers.host);
+  		headers.user_agent = 'BairnOwl';
+  		console.log('user_agent: ' + headers.user_agent);
+
   		var options = {
   			host: 'api.github.com',
   			//hostname: 'api.github.com',
   			path: '/user?access_token=' + userToken,
   			method: 'GET',
-  			headers: {
-  				'User-Agent': 'BairnOwl',
-  			}
+  			headers: headers
   		}
   		console.log('options: ' + options.headers.path);
 
-    	var reque = https.request(options, (res) => {
+    	var reque = https.request(options, function(res) {
     		res.setEncoding('utf8');
     		console.log('res status: ' + res.statusCode);
     		console.log('res headers: ' + res.headers);
-    		res.on('data', (userData) => {
+    		res.on('data', function(userData) {
     			console.log('userdata: ' + userData);
     			response.redirect('/');
     		});
