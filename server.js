@@ -124,11 +124,29 @@ app.get('/home', function(req, response) {
 	  }
 	});
 
-	request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
-  		if (!err && resp.statusCode == 200) {
-  			console.log("responsebody: " + bo);
-  		}
-  	});
+	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
+ //  		if (!err && resp.statusCode == 200) {
+ //  			console.log("responsebody: " + bo);
+ //  		}
+ //  	});
+	// app.get('https://api.github.com/user?access_token=' + userToken, function(req, res){
+	// 	console.log('in app.get');
+
+	// });
+
+	var userUrl = 'https://api.github.com/user';
+	req.open('GET', userUrl, true);
+
+	console.log('userUrl: ' + userUrl);
+
+	req.setRequestHeader('Authorization', 'token ' + token);
+	req.addEventListener('load', function(e){
+		if (req.status == 200) {
+			var data = JSON.parse(req.responseText);
+			console.log(data);
+			//response.json(data);
+		}
+	}, false);
 
 	response.redirect('/');
 
