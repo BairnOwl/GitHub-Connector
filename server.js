@@ -134,13 +134,13 @@ app.get('/home', function(requ, response) {
 
 	// });
 
-	var userUrl = 'https://api.github.com/user';
+	var userUrl = 'https://api.github.com/user?access_token=';
 	//var req = new XMLHttpRequest();
-	req.open('GET', userUrl, true);
+	req.open('GET', userUrl + userToken, true);
 
-	console.log('userUrl: ' + userUrl);
+	console.log('userUrl: ' + userUrl + userToken);
 
-	req.setRequestHeader('Authorization', 'token ' + userToken);
+	//req.setRequestHeader('Authorization', 'token ' + userToken);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
