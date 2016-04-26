@@ -146,7 +146,7 @@ app.get('/home', function(requ, response) {
 			hostname: 'api.github.com',
 			path: 'user?access_token=' + userToken,
      		headers: {
-        		'Authorization': 'User-Agent BairnOwl'
+        		Authorization: 'User-Agent BairnOwl'
     		},
     		method: 'GET'
     	};
