@@ -173,7 +173,7 @@ app.get('/home', function(requ, response) {
     		console.log('res headers: ' + res.headers);
     		res.on('data', function(userData) {
     			console.log('userdata: ' + userData);
-    			response.redirect('/');
+    			//response.redirect('/');
     		});
     	});
 
@@ -219,7 +219,7 @@ app.get('/home', function(requ, response) {
 	// 	}
 	// }, false);
 
-	//response.redirect('/');
+	response.redirect('/');
 
 });
 
