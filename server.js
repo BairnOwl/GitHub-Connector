@@ -136,6 +136,7 @@ app.get('/home', function(requ, response) {
 	// });
 
 	var userUrl = 'https://api.github.com/user?access_token=';
+	console.log('before get: ' + userToken);
 	//var req = new XMLHttpRequest();
 	req.open('GET', userUrl + userToken, true);
 
