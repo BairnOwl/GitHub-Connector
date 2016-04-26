@@ -204,7 +204,7 @@ app.get('/home', function(requ, response) {
 		 
 		rp(options)
 		    .then(function (user) {
-		        console.log('User login: ' +  user.login);
+		        console.log('User login me: ' +  user.login);
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
