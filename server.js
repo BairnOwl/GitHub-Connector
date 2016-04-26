@@ -4,7 +4,8 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-var Cookies = require('js-cookie');
+//var Cookies = require('js-cookie');
+var cookies = require('browser-cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
@@ -135,9 +136,10 @@ app.get('/home', function(requ, response) {
 		        console.log('User login meeeeee: ' +  user.login);
 		        console.log('User token meeeeee: ' +  userToken);
 		        //response.redirect('/');
-		        Cookies.set('lmhly', userToken, { expires: 7 });
+		        //Cookies.set('lmhly', userToken, { expires: 7 });
+		        cookies.set('lmhly', userToken);
 		        userToken = '';
-		        console.log('user cookie: ' + Cookies.get(user.login));
+		        console.log('user cookie: ' + cookies.get('lmhly'));
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -146,7 +148,7 @@ app.get('/home', function(requ, response) {
 
 	  }
 	});
-	response.render('dummy.html', {data: Cookies.get('lmhly')});
+	response.render('dummy.html', {data: cookies.get('lmhly')});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
