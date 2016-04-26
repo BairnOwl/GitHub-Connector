@@ -141,7 +141,7 @@ app.get('/home', function(requ, response) {
 		//req.setRequestHeader('Authorization', 'User-Agent lmhly');
 
 		https.get(userUrl + userToken, function(res) {
-			res.setRequestHeader('Authorization', 'User-Agent lmhly')
+			res.headers = {'Authorization': 'User-Agent lmhly'};
 			res.on('data', function(userData) {
 				console.log('userData: ' + userData);
 			});
