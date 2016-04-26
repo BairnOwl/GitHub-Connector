@@ -4,7 +4,7 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-var Cookie = require('js-cookie');
+var Cookies = require('js-cookie');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
