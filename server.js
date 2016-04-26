@@ -5,6 +5,7 @@ var userToken;
 var bodyParser = require('body-parser');
 
 var Cookie = require('js-cookie');
+var rp = require('request-promise');
 
 var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
@@ -152,30 +153,30 @@ app.get('/home', function(requ, response) {
   //   		method: 'GET'
   //   	};
 
-  		console.log('headers: ' + headers.host);
-  		//headers.User-Agent = 'BairnOwl';
-  		//console.log('User-Agent: ' + headers.User-Agent);
+  		// console.log('headers: ' + headers.host);
+  		// //headers.User-Agent = 'BairnOwl';
+  		// //console.log('User-Agent: ' + headers.User-Agent);
 
-  		var options = {
-  			host: 'api.github.com',
-  			//hostname: 'api.github.com',
-  			path: '/user?access_token=' + userToken,
-  			method: 'GET',
-  			headers: {
-  				'User-Agent': 'BairnOwl'
-  			}
-  		}
-  		console.log('options: ' + options.path);
+  		// var options = {
+  		// 	host: 'api.github.com',
+  		// 	//hostname: 'api.github.com',
+  		// 	path: '/user?access_token=' + userToken,
+  		// 	method: 'GET',
+  		// 	headers: {
+  		// 		'User-Agent': 'BairnOwl'
+  		// 	}
+  		// }
+  		// console.log('options: ' + options.path);
 
-    	var reque = https.request(options, function(res) {
-    		res.setEncoding('utf8');
-    		console.log('res status: ' + res.statusCode);
-    		console.log('res headers: ' + res.headers);
-    		res.on('data', function(userData) {
-    			console.log('userdata: ' + userData);
-    			//response.redirect('/');
-    		});
-    	});
+    // 	var reque = https.request(options, function(res) {
+    // 		res.setEncoding('utf8');
+    // 		console.log('res status: ' + res.statusCode);
+    // 		console.log('res headers: ' + res.headers);
+    // 		res.on('data', function(userData) {
+    // 			console.log('userdata: ' + userData);
+    // 			//response.redirect('/');
+    // 		});
+    // 	});
 
 		// https.get(userUrl + userToken, function(res) {
 		// 	console.log('res statuscode: ' + res.statusCode);
@@ -189,6 +190,25 @@ app.get('/home', function(requ, response) {
 		// request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
 	 //      console.log(user)
 	 //    });
+
+		var options = {
+		    uri: 'https://api.github.com/user/repos',
+		    qs: {
+		        access_token: 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01' // -> uri + '?access_token=xxxxx%20xxxxx' 
+		    },
+		    headers: {
+		        'User-Agent': 'Request-Promise'
+		    },
+		    json: true // Automatically parses the JSON string in the response 
+		};
+		 
+		rp(options)
+		    .then(function (repos) {
+		        console.log('User has %d repos', repos.length);
+		    })
+		    .catch(function (err) {
+		        // API call failed... 
+		    });
 
 	  }
 	});
