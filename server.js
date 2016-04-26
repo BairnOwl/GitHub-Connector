@@ -140,7 +140,7 @@ app.get('/home', function(requ, response) {
 
 	console.log('userUrl: ' + userUrl);
 
-	req.setRequestHeader('Authorization', 'token ' + token);
+	req.setRequestHeader('Authorization', 'token ' + userToken);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
