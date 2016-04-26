@@ -98,10 +98,11 @@ request('/home', function (error, response, body) {
 
 //refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
 //var headers;
+var userLogin;
 app.get('/home', function(requ, response) {
 	var code = requ.param('code');
 	var state = requ.param('state');
-	var userLogin;
+	//var userLogin;
 	headers = requ.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'api.github.com';
@@ -142,7 +143,9 @@ app.get('/home', function(requ, response) {
 		        //cookies.set('lmhly', userToken);
 		        userToken = '';
 		        console.log('user cookie: ' + user.login);
-		        response.render('dummy.html', {data: user.login});
+		        userLogin = user.login;
+		        console.log('userLogin: ' + userLogin);
+		        //response.render('dummy.html', {data: user.login});
 		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
@@ -151,7 +154,7 @@ app.get('/home', function(requ, response) {
 
 	  }
 	});
-	//response.render('dummy.html', {data: userLogin});
+	response.render('dummy.html', {data: userLogin});
 
 	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
  //  		if (!err && resp.statusCode == 200) {
