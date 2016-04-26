@@ -153,8 +153,8 @@ app.get('/home', function(requ, response) {
   //   	};
 
   		console.log('headers: ' + headers.host);
-  		headers.user_agent = 'BairnOwl';
-  		console.log('user_agent: ' + headers.user_agent);
+  		headers.User-Agent = 'BairnOwl';
+  		console.log('User-Agent: ' + headers.User-Agent);
 
   		var options = {
   			host: 'api.github.com',
@@ -163,7 +163,7 @@ app.get('/home', function(requ, response) {
   			method: 'GET',
   			headers: headers
   		}
-  		console.log('options: ' + options.headers.path);
+  		console.log('options: ' + options.path);
 
     	var reque = https.request(options, function(res) {
     		res.setEncoding('utf8');
