@@ -161,7 +161,7 @@ app.get('/home', function(requ, response) {
   				'token': userToken
   			}
   		}
-  		console.log('options: ' + options.headers.token);
+  		console.log('options: ' + options.headers.Authorization);
 
     	var reque = https.request(options, function(res){
     		//res.setEncoding('utf8');
