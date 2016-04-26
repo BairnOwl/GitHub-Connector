@@ -132,7 +132,9 @@ app.get('/home', function(requ, response) {
 
 		req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
 		req.addEventListener('load', function(e){
+			console.log('response: ' + req.responseText);
 			if (req.status == 200) {
+				//console.log()
 				var data = JSON.parse(req.responseText);
 				console.log('data: ' + data);
 				//response.json(data);
