@@ -96,7 +96,7 @@ request('/home', function (error, response, body) {
 })
 
 //refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
-var headers;
+//var headers;
 app.get('/home', function(requ, response) {
 	var code = requ.param('code');
 	var state = requ.param('state');
@@ -116,80 +116,8 @@ app.get('/home', function(requ, response) {
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
 	  	console.log('token: ' + userToken);
-	  	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
-	  	// 	if (!err && resp.statusCode == 200) {
-	  	// 		console.log("responsebody: " + bo);
-	  	// 	}
-	  	// });
-	  	// .on('response', function(response) {
-	  	// 	console.log("responsebody: " + response.data);
-	  	// });
 
  		var userUrl = 'https://api.github.com/user?access_token=';
-		// console.log('before get: ' + userToken);
-		// //var req = new XMLHttpRequest();
-		// req.open('GET', userUrl + userToken, true);
-
-		// console.log('userUrl + userToken: ' + userUrl + userToken);
-
-		// req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
-		// req.addEventListener('load', function(e){
-		// 	console.log('response: ' + req.responseText);
-		// 	if (req.status == 200) {
-		// 		//console.log()
-		// 		var data = JSON.parse(req.responseText);
-		// 		console.log('data: ' + data);
-		// 		//response.json(data);
-		// 	}
-		// }, false);
-		//req.setRequestHeader('Authorization', 'User-Agent lmhly');
-
-		// var options = {  
-		// 	hostname: 'api.github.com',
-		// 	path: 'user?access_token=' + userToken,
-  //    		headers: {
-  //       		'Authorization': 'User-Agent BairnOwl'
-  //   		},
-  //   		method: 'GET'
-  //   	};
-
-  		// console.log('headers: ' + headers.host);
-  		// //headers.User-Agent = 'BairnOwl';
-  		// //console.log('User-Agent: ' + headers.User-Agent);
-
-  		// var options = {
-  		// 	host: 'api.github.com',
-  		// 	//hostname: 'api.github.com',
-  		// 	path: '/user?access_token=' + userToken,
-  		// 	method: 'GET',
-  		// 	headers: {
-  		// 		'User-Agent': 'BairnOwl'
-  		// 	}
-  		// }
-  		// console.log('options: ' + options.path);
-
-    // 	var reque = https.request(options, function(res) {
-    // 		res.setEncoding('utf8');
-    // 		console.log('res status: ' + res.statusCode);
-    // 		console.log('res headers: ' + res.headers);
-    // 		res.on('data', function(userData) {
-    // 			console.log('userdata: ' + userData);
-    // 			//response.redirect('/');
-    // 		});
-    // 	});
-
-		// https.get(userUrl + userToken, function(res) {
-		// 	console.log('res statuscode: ' + res.statusCode);
-		// 	console.log('res headers: ' + res.headers);
-		// 	res.headers = {'Authorization': 'User-Agent gitbuddy'};
-		// 	res.on('data', function(userData) {
-		// 		console.log('userData: ' + userData);
-		// 	});
-		// });
-
-		// request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
-	 //      console.log(user)
-	 //    });
 
 		var options = {
 		    uri: 'https://api.github.com/user',
@@ -197,7 +125,7 @@ app.get('/home', function(requ, response) {
 		        access_token: userToken // -> uri + '?access_token=xxxxx%20xxxxx' 
 		    },
 		    headers: {
-		        'User-Agent': 'gitbuddy'
+		        'User-Agent': 'Request-Promise'
 		    },
 		    json: true // Automatically parses the JSON string in the response 
 		};
@@ -205,6 +133,9 @@ app.get('/home', function(requ, response) {
 		rp(options)
 		    .then(function (user) {
 		        console.log('User login me: ' +  user.login);
+		        Cookies.set(user.login, userToken, { expires: 7 });
+		        userToken = '';
+		        console.log('user cookie: ' + Cookies.get(user.login));
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
