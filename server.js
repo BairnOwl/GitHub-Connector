@@ -113,8 +113,8 @@ app.get('/home', function(req, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	request('https://api.github.com/user?access_token=' + userToken, function(error, response, body) {
-	  		if (!error && response.statusCode == 200) {
+	  	request('https://api.github.com/user?access_token=' + userToken, function (error, resp, body) {
+	  		if (!error && resp.statusCode == 200) {
 	  			console.log("responsebody: " + body);
 	  		}
 	  	});
