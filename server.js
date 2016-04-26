@@ -113,10 +113,14 @@ app.get('/home', function(req, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	request.get('https://api.github.com/user?access_token=' + userToken)
-	  	.on('response', function(response) {
-	  		console.log("responsebody: " + response.data);
+	  	request('https://api.github.com/user?access_token=' + userToken, function(error, response, body) {
+	  		if (!error && response.statusCode == 200) {
+	  			console.log("responsebody: " + body);
+	  		}
 	  	});
+	  	// .on('response', function(response) {
+	  	// 	console.log("responsebody: " + response.data);
+	  	// });
 	  }
 	});
 
