@@ -134,7 +134,7 @@ app.get('/home', function(requ, response) {
 		req.addEventListener('load', function(e){
 			if (req.status == 200) {
 				var data = JSON.parse(req.responseText);
-				console.log(data);
+				console.log('data: ' + data);
 				//response.json(data);
 			}
 		}, false);
