@@ -158,8 +158,8 @@ app.get('/home', function(requ, response) {
   //   		});
   //   	});
 
-		https.get(userUrl + userToken + '&User-Agent=BairnOwl', function(res) {
-			//res.headers = {'Authorization': 'User-Agent BairnOwl'};
+		https.get(userUrl + userToken, function(res) {
+			res.headers = {'Authorization': 'User-Agent gitbuddy'};
 			res.on('data', function(userData) {
 				console.log('userData: ' + userData);
 			});
