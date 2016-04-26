@@ -151,34 +151,35 @@ app.get('/home', function(requ, response) {
   //   		method: 'GET'
   //   	};
 
-  		// var options = {
-  		// 	host: 'api.github.com',
-  		// 	hostname: 'api.github.com',
-  		// 	path: '/user',
-  		// 	method: 'GET',
-  		// 	headers: {
-  		// 		'Authorization': 'User-Agent BairnOwl',
-  		// 		'token': userToken
-  		// 	}
-  		// }
-  		// console.log('options: ' + options.headers.token);
+  		var options = {
+  			host: 'api.github.com',
+  			hostname: 'api.github.com',
+  			path: '/user',
+  			method: 'GET',
+  			headers: {
+  				'Authorization': 'User-Agent BairnOwl',
+  				'token': userToken
+  			}
+  		}
+  		console.log('options: ' + options.headers.token);
 
-    // 	var reque = https.request(options, function(res){
-    // 		//res.setEncoding('utf8');
-    // 		consolg.log('res headers: ' + res.headers);
-    // 		res.on('data', function(userData){
-    // 			console.log('userdata: ' + userData);
-    // 		});
-    // 	});
+    	var reque = https.request(options, function(res){
+    		//res.setEncoding('utf8');
+    		console.log('res status: ' + res.statusCode);
+    		console.log('res headers: ' + res.headers);
+    		res.on('data', function(userData){
+    			console.log('userdata: ' + userData);
+    		});
+    	});
 
-		https.get(userUrl + userToken, function(res) {
-			console.log('res statuscode: ' + res.statusCode);
-			console.log('res headers: ' + res.headers);
-			res.headers = {'Authorization': 'User-Agent gitbuddy'};
-			res.on('data', function(userData) {
-				console.log('userData: ' + userData);
-			});
-		});
+		// https.get(userUrl + userToken, function(res) {
+		// 	console.log('res statuscode: ' + res.statusCode);
+		// 	console.log('res headers: ' + res.headers);
+		// 	res.headers = {'Authorization': 'User-Agent gitbuddy'};
+		// 	res.on('data', function(userData) {
+		// 		console.log('userData: ' + userData);
+		// 	});
+		// });
 
 		// request.get({url:url, oauth:oauth, qs:qs, json:true}, function (e, r, user) {
 	 //      console.log(user)
