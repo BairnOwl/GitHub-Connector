@@ -134,20 +134,20 @@ app.get('/home', function(requ, response) {
 
 	// });
 
-	// var userUrl = 'https://api.github.com/user';
-	// //var req = new XMLHttpRequest();
-	// req.open('GET', userUrl, true);
+	var userUrl = 'https://api.github.com/user';
+	//var req = new XMLHttpRequest();
+	req.open('GET', userUrl, true);
 
-	// console.log('userUrl: ' + userUrl);
+	console.log('userUrl: ' + userUrl);
 
-	// req.setRequestHeader('Authorization', 'token ' + token);
-	// req.addEventListener('load', function(e){
-	// 	if (req.status == 200) {
-	// 		var data = JSON.parse(req.responseText);
-	// 		console.log(data);
-	// 		//response.json(data);
-	// 	}
-	// }, false);
+	req.setRequestHeader('Authorization', 'token ' + token);
+	req.addEventListener('load', function(e){
+		if (req.status == 200) {
+			var data = JSON.parse(req.responseText);
+			console.log(data);
+			//response.json(data);
+		}
+	}, false);
 
 	response.redirect('/');
 
