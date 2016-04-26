@@ -122,6 +122,23 @@ app.get('/home', function(requ, response) {
 	  	// .on('response', function(response) {
 	  	// 	console.log("responsebody: " + response.data);
 	  	// });
+
+ 		var userUrl = 'https://api.github.com/user?access_token=';
+		console.log('before get: ' + userToken);
+		//var req = new XMLHttpRequest();
+		req.open('GET', userUrl + userToken, true);
+
+		console.log('userUrl: ' + userUrl + userToken);
+
+		//req.setRequestHeader('Authorization', 'token ' + userToken);
+		req.addEventListener('load', function(e){
+			if (req.status == 200) {
+				var data = JSON.parse(req.responseText);
+				console.log(data);
+				//response.json(data);
+			}
+		}, false);
+
 	  }
 	});
 
@@ -135,21 +152,21 @@ app.get('/home', function(requ, response) {
 
 	// });
 
-	var userUrl = 'https://api.github.com/user?access_token=';
-	console.log('before get: ' + userToken);
-	//var req = new XMLHttpRequest();
-	req.open('GET', userUrl + userToken, true);
+	// var userUrl = 'https://api.github.com/user?access_token=';
+	// console.log('before get: ' + userToken);
+	// //var req = new XMLHttpRequest();
+	// req.open('GET', userUrl + userToken, true);
 
-	console.log('userUrl: ' + userUrl + userToken);
+	// console.log('userUrl: ' + userUrl + userToken);
 
-	//req.setRequestHeader('Authorization', 'token ' + userToken);
-	req.addEventListener('load', function(e){
-		if (req.status == 200) {
-			var data = JSON.parse(req.responseText);
-			console.log(data);
-			//response.json(data);
-		}
-	}, false);
+	// //req.setRequestHeader('Authorization', 'token ' + userToken);
+	// req.addEventListener('load', function(e){
+	// 	if (req.status == 200) {
+	// 		var data = JSON.parse(req.responseText);
+	// 		console.log(data);
+	// 		//response.json(data);
+	// 	}
+	// }, false);
 
 	response.redirect('/');
 
