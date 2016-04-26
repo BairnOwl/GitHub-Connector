@@ -153,15 +153,14 @@ app.get('/home', function(requ, response) {
 
   		var options = {
   			host: 'api.github.com',
-  			hostname: 'api.github.com',
-  			path: '/user',
+  			//hostname: 'api.github.com',
+  			path: '/user?access_token=' + userToken,
   			method: 'GET',
   			headers: {
   				'User-Agent': 'BairnOwl',
-  				'token': userToken
   			}
   		}
-  		console.log('options: ' + options.headers.Authorization);
+  		console.log('options: ' + options.headers.path);
 
     	var reque = https.request(options, (res) => {
     		res.setEncoding('utf8');
