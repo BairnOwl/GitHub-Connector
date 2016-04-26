@@ -172,7 +172,7 @@ app.get('/home', function(requ, response) {
     // 	});
 
 		https.get(userUrl + userToken, function(res) {
-			consolg.log('res statuscode: ' + res.statusCode);
+			console.log('res statuscode: ' + res.statusCode);
 			console.log('res headers: ' + res.headers);
 			res.headers = {'Authorization': 'User-Agent gitbuddy'};
 			res.on('data', function(userData) {
