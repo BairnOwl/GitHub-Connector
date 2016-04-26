@@ -88,8 +88,6 @@ app.get('/login', function(request, response) {
 
 });
 
-//var url = 'https://gitbuddy.herokuapp.com/home?';
-
 request('/home', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log(body) // Show the HTML for the Google homepage. 
@@ -100,12 +98,9 @@ request('/home', function (error, response, body) {
 app.get('/home', function(req, response) {
 	var code = req.param('code');
 	var state = req.param('state');
-	//response.render('dummy.html', {code: code, state: state});
 	var headers = req.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'github.com';
-	
-	// //var req = new XMLHttpRequest();
 
 	var params = '?client_id=f112d8966964169f6ebb' + 
 				 '&client_secret=538d16b411d8a82ba90e26a298a8c40345fab874' + 
@@ -113,72 +108,20 @@ app.get('/home', function(req, response) {
 
 	path += params;
 
-	//response.render('dummy.html', {code: code, state: state, data: path});
-
-	// var opts = {
-	// 	hostname:'github.com',
-	// 	port:'443',
-	// 	path: path,
-	// 	headers: headers,
-	// 	method: 'POST'
-	// }
-	// var token;
-	// var args = 'args';
-	// var req = https.request(opts, function(res){
-	// 	//console.log('in http');
-	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
-	// 	res.setEncoding('utf8');
-	// 	//res.render('dummy.html', {code: 'code', state: 'state'});
-	// 	res.on('data', function(data){
-	// 		args = data;
-	// 		console.log('data in data: ' + data);
-	// 		// var tokenInfo = args[0].split('=');
-	// 		// token = tokenInfo[1];
-	// 		//response.render('dummy.html', {code: code, state: state});
-	// 	});
-	// });
-	// response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + args});
-	// 	//console.log(response.param('access_toke'));
-	// });
-	// var data;
-	// req.onreadystatechange = function() {
-	// 	//console.log(req.readyState);
-	// 	//console.log(req.status);
-	// 	//response.render('dummy.html', {code: req.responseText, state: 'state'});
-	// 	if (req.readyState == 4 && req.status == 200) {
-	// 		data = req.responseText;
-	// 		//response.render('dummy.html', {code: 'code', state: 'state'});
-	// 		//console.log(req.responseText.access_token);
- //            console.log('owls');
- //        } else {
- //        	//console.log(req);
- //        }
-	// };
-	// //response.render('dummy.html', {code: 'code', state: 'state', data: data});
-
-	// req.open('POST', 'https://github.com/login/oauth/access_token' + params, true);
- //    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
- //    response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + data});
- //    req.send(params);
-
  	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    //console.log('returned token: ' + body.access_token) // Show the HTML for the Google homepage. 
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-
-	  	// Cookie.set('')
+	  	request.get('https://api.github.com/user?access_token=' + userToken)
+	  	.on('response', function(response) {
+	  		console.log("responsebody: " + response.body);
+	  	});
 	  }
 	});
 
 	response.redirect('/');
 
-	// request('https://api.github.com/user?access_token=' + userToken, function(error, response, body) {
-	// 	if (!error && response.statusCode == 200) {
-
-	// 	}
-	// });
 });
 
 console.log('outside');
