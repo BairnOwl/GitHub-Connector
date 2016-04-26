@@ -194,7 +194,7 @@ app.get('/home', function(requ, response) {
 		var options = {
 		    uri: 'https://api.github.com/user',
 		    qs: {
-		        access_token: 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01' // -> uri + '?access_token=xxxxx%20xxxxx' 
+		        access_token: userToken // -> uri + '?access_token=xxxxx%20xxxxx' 
 		    },
 		    headers: {
 		        'User-Agent': 'Request-Promise'
