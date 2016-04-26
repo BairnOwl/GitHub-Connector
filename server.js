@@ -163,11 +163,11 @@ app.get('/home', function(requ, response) {
   		}
   		console.log('options: ' + options.headers.Authorization);
 
-    	var reque = https.request(options, function(res){
+    	var reque = https.request(options, (res) => {
     		//res.setEncoding('utf8');
     		console.log('res status: ' + res.statusCode);
     		console.log('res headers: ' + res.headers);
-    		res.on('data', function(userData){
+    		res.on('data', (userData) => {
     			console.log('userdata: ' + userData);
     			response.redirect('/');
     		});
