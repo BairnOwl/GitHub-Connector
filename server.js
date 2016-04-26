@@ -160,34 +160,6 @@ app.get('/home', function(requ, response) {
 
 	response.render('dummy.html', {data: 'This is login' + userLogin});
 
-	// request('https://api.github.com/user?access_token=' + userToken, function (err, resp, bo) {
- //  		if (!err && resp.statusCode == 200) {
- //  			console.log("responsebody: " + bo);
- //  		}
- //  	});
-	// app.get('https://api.github.com/user?access_token=' + userToken, function(req, res){
-	// 	console.log('in app.get');
-
-	// });
-
-	// var userUrl = 'https://api.github.com/user?access_token=';
-	// console.log('before get: ' + userToken);
-	// //var req = new XMLHttpRequest();
-	// req.open('GET', userUrl + userToken, true);
-
-	// console.log('userUrl: ' + userUrl + userToken);
-
-	// //req.setRequestHeader('Authorization', 'token ' + userToken);
-	// req.addEventListener('load', function(e){
-	// 	if (req.status == 200) {
-	// 		var data = JSON.parse(req.responseText);
-	// 		console.log(data);
-	// 		//response.json(data);
-	// 	}
-	// }, false);
-	//console.log('user cookie: ' + Cookies.get('lmhly'));
-	//response.redirect('/');
-
 });
 
 console.log('outside');
