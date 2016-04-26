@@ -132,10 +132,11 @@ app.get('/home', function(requ, response) {
 		 
 		rp(options)
 		    .then(function (user) {
-		        console.log('User login me: ' +  user.login);
+		        console.log('User login meeeeee: ' +  user.login);
 		        Cookies.set(user.login, userToken, { expires: 7 });
 		        userToken = '';
 		        console.log('user cookie: ' + Cookies.get(user.login));
+		        response.redirect('/');
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
@@ -170,7 +171,7 @@ app.get('/home', function(requ, response) {
 	// 	}
 	// }, false);
 
-	response.redirect('/');
+	//response.redirect('/');
 
 });
 
