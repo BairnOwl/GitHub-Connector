@@ -13,7 +13,7 @@ app.use(express.static('public'));
 
 var finalhandler = require('finalhandler');
 var http = require('http');
-var https = require('https');
+const https = require('https');
 var Router = require('router');
 const queryString = require('query-string');
 
@@ -124,22 +124,22 @@ app.get('/home', function(requ, response) {
 	  	// });
 
  		var userUrl = 'https://api.github.com/user?access_token=';
-		console.log('before get: ' + userToken);
-		//var req = new XMLHttpRequest();
-		req.open('GET', userUrl + userToken, true);
+		// console.log('before get: ' + userToken);
+		// //var req = new XMLHttpRequest();
+		// req.open('GET', userUrl + userToken, true);
 
-		console.log('userUrl + userToken: ' + userUrl + userToken);
+		// console.log('userUrl + userToken: ' + userUrl + userToken);
 
-		req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
-		req.addEventListener('load', function(e){
-			console.log('response: ' + req.responseText);
-			if (req.status == 200) {
-				//console.log()
-				var data = JSON.parse(req.responseText);
-				console.log('data: ' + data);
-				//response.json(data);
-			}
-		}, false);
+		// req.setRequestHeader('Authorization', 'User-Agent BairnOwl');
+		// req.addEventListener('load', function(e){
+		// 	console.log('response: ' + req.responseText);
+		// 	if (req.status == 200) {
+		// 		//console.log()
+		// 		var data = JSON.parse(req.responseText);
+		// 		console.log('data: ' + data);
+		// 		//response.json(data);
+		// 	}
+		// }, false);
 		//req.setRequestHeader('Authorization', 'User-Agent lmhly');
 
 		// var options = {  
@@ -151,12 +151,24 @@ app.get('/home', function(requ, response) {
   //   		method: 'GET'
   //   	};
 
-  //   	var reque = https.request(options, function(res){
-  //   		res.setEncoding('utf8');
-  //   		res.on('data', function(userData){
-  //   			console.log('userdata: ' + userData);
-  //   		});
-  //   	});
+  		var options = {
+  			hostname: 'api.github.com',
+  			port: 443,
+  			path: '/user?access_token=' + userToken,
+  			method: 'GET',
+  			headers: {
+  				'Authorization': 'User-Agent BairnOwl'
+  			}
+  		}
+  		console.log('options: ' + options.path);
+
+    	var reque = https.request(options, function(res){
+    		res.setEncoding('utf8');
+    		consolg.log('res headers: ' + res.headers);
+    		res.on('data', function(userData){
+    			console.log('userdata: ' + userData);
+    		});
+    	});
 
 		// https.get(userUrl + userToken, function(res) {
 		// 	res.headers = {'Authorization': 'User-Agent gitbuddy'};
