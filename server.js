@@ -95,10 +95,10 @@ request('/home', function (error, response, body) {
 })
 
 //refer to http://blog.csdn.net/yangnianbing110/article/details/42925987.
-app.get('/home', function(req, response) {
-	var code = req.param('code');
-	var state = req.param('state');
-	var headers = req.headers;
+app.get('/home', function(requ, response) {
+	var code = requ.param('code');
+	var state = requ.param('state');
+	var headers = requ.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'github.com';
 
@@ -134,19 +134,20 @@ app.get('/home', function(req, response) {
 
 	// });
 
-	var userUrl = 'https://api.github.com/user';
-	req.open('GET', userUrl, true);
+	// var userUrl = 'https://api.github.com/user';
+	// //var req = new XMLHttpRequest();
+	// req.open('GET', userUrl, true);
 
-	console.log('userUrl: ' + userUrl);
+	// console.log('userUrl: ' + userUrl);
 
-	req.setRequestHeader('Authorization', 'token ' + token);
-	req.addEventListener('load', function(e){
-		if (req.status == 200) {
-			var data = JSON.parse(req.responseText);
-			console.log(data);
-			//response.json(data);
-		}
-	}, false);
+	// req.setRequestHeader('Authorization', 'token ' + token);
+	// req.addEventListener('load', function(e){
+	// 	if (req.status == 200) {
+	// 		var data = JSON.parse(req.responseText);
+	// 		console.log(data);
+	// 		//response.json(data);
+	// 	}
+	// }, false);
 
 	response.redirect('/');
 
