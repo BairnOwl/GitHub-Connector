@@ -133,8 +133,9 @@ app.get('/home', function(requ, response) {
 		rp(options)
 		    .then(function (user) {
 		        console.log('User login meeeeee: ' +  user.login);
+		        console.log('User token meeeeee: ' +  userToken);
 		        //response.redirect('/');
-		        Cookies.set(user.login, userToken, { expires: 7 });
+		        Cookies.set('lmhly', userToken, { expires: 7 });
 		        userToken = '';
 		        console.log('user cookie: ' + Cookies.get(user.login));
 		        //response.redirect('/');
