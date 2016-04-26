@@ -153,15 +153,17 @@ app.get('/home', function(requ, response) {
   //   	};
 
   		console.log('headers: ' + headers.host);
-  		headers.User-Agent = 'BairnOwl';
-  		console.log('User-Agent: ' + headers.User-Agent);
+  		//headers.User-Agent = 'BairnOwl';
+  		//console.log('User-Agent: ' + headers.User-Agent);
 
   		var options = {
   			host: 'api.github.com',
   			//hostname: 'api.github.com',
   			path: '/user?access_token=' + userToken,
   			method: 'GET',
-  			headers: headers
+  			headers: {
+  				'User-Agent': 'BairnOwl'
+  			}
   		}
   		console.log('options: ' + options.path);
 
