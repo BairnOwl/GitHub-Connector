@@ -152,18 +152,19 @@ app.get('/home', function(requ, response) {
   //   	};
 
   		var options = {
+  			host: 'api.github.com'
   			hostname: 'api.github.com',
-  			port: 443,
-  			path: '/user?access_token=' + userToken,
+  			path: '/user',
   			method: 'GET',
   			headers: {
-  				'Authorization': 'User-Agent BairnOwl'
+  				'Authorization': 'User-Agent BairnOwl',
+  				'token': userToken
   			}
   		}
-  		console.log('options: ' + options.path);
+  		console.log('options: ' + options.headers);
 
     	var reque = https.request(options, function(res){
-    		res.setEncoding('utf8');
+    		//res.setEncoding('utf8');
     		consolg.log('res headers: ' + res.headers);
     		res.on('data', function(userData){
     			console.log('userdata: ' + userData);
