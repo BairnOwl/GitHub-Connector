@@ -61,7 +61,7 @@ app.get('/', function(request, response){
 	response.render('login.html');
 });
 
-app.get('init', function(request, response){
+app.get('/init', function(request, response){
 	response.render('home.html');
 })
 
