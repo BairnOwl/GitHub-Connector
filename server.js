@@ -45,9 +45,9 @@ app.post('/data/:org/:repo', function(request, response) {
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
 	req.open('GET', url, true);
 
-	console.log('usertoken: ' + users['lmhly']);
+	//console.log('usertoken: ' + users['lmhly']);
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-
+	console.log('usertoken: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
