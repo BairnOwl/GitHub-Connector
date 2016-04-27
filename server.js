@@ -148,14 +148,14 @@ app.get('/home', function(requ, response) {
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
-		//console.log('userLogin 2: ' + userLogin);
+		console.log('userLogin 2: ' + userLogin);
 
 	  }
-	  //console.log('userLogin 3: ' + userLogin);
+	  console.log('userLogin 3: ' + userLogin);
 	});
-	//console.log('userLogin 4: ' + userLogin);
+	console.log('userLogin 4: ' + userLogin);
 	while(flag = 0) {
-		
+
 	}
 	response.render('dummy.html', {data: 'This is login' + userLogin});
 
