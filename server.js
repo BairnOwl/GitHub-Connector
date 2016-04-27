@@ -107,6 +107,8 @@ app.get('/home', function(requ, response) {
 
 	path += params;
 
+	var flag = 0;
+
  	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	  	var parsed = queryString.parse(body);
@@ -139,6 +141,7 @@ app.get('/home', function(requ, response) {
 		        console.log('user cookie: ' + user.login);
 		        userLogin = user.login;
 		        console.log('userLogin: ' + userLogin);
+		        flag = 1;
 		        //response.render('dummy.html', {data: user.login});
 		        //response.redirect('/');
 		    })
@@ -151,7 +154,9 @@ app.get('/home', function(requ, response) {
 	  //console.log('userLogin 3: ' + userLogin);
 	});
 	//console.log('userLogin 4: ' + userLogin);
-
+	while(flag = 0) {
+		
+	}
 	response.render('dummy.html', {data: 'This is login' + userLogin});
 
 });
