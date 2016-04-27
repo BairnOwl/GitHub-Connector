@@ -58,7 +58,7 @@ app.post('/data/:org/:repo', function(request, response) {
 });
 
 app.get('/', function(request, response){
-	response.render('home.html');
+	response.render('login.html');
 });
 
 app.get('/login', function(request, response) {
@@ -151,12 +151,12 @@ app.get('/home', function(requ, response) {
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
-		console.log('userLogin 2: ' + userLogin);
+		//console.log('userLogin 2: ' + userLogin);
 
 	  }
-	  console.log('userLogin 3: ' + userLogin);
+	  //console.log('userLogin 3: ' + userLogin);
 	});
-	console.log('userLogin 4: ' + userLogin);
+	//console.log('userLogin 4: ' + userLogin);
 
 	response.render('dummy.html', {data: 'This is login' + userLogin});
 
