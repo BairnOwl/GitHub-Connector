@@ -88,7 +88,7 @@ app.get('/login', function(request, response) {
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
  //    req.send(params);
 	//var random = randomString(32, chars);
-	var qs = require('querystring')
+	// var qs = require('querystring')
 	  // , oauth =
 	  //   { client_id: 'f112d8966964169f6ebb'
 	  //   , state: random
@@ -110,17 +110,17 @@ app.get('/login', function(request, response) {
 	 
 	  // step 3 
 	  // after the user is redirected back to your server 
-	  var auth_data = qs.parse(body)
-	    , oauth =
-	      { client_id: 'f112d8966964169f6ebb'
-	      , client_secret: '538d16b411d8a82ba90e26a298a8c40345fab874'
-	      , code: auth_data.code
-	      }
-	    , url = 'https://github.com/login/oauth/access_token'
-	    ;
-	   console.log("auth_data.code: " + auth_data.code);
-	  request.post({url:url, oauth:oauth}, function (e, r, body) {
-	  	console.log('get token');
+	  // var auth_data = qs.parse(body)
+	  //   , oauth =
+	  //     { client_id: 'f112d8966964169f6ebb'
+	  //     , client_secret: '538d16b411d8a82ba90e26a298a8c40345fab874'
+	  //     , code: auth_data.code
+	  //     }
+	  //   , url = 'https://github.com/login/oauth/access_token'
+	  //   ;
+	  //  console.log("auth_data.code: " + auth_data.code);
+	  // request.post({url:url, oauth:oauth}, function (e, r, body) {
+	  // 	console.log('get token');
 	  	//console.log('body: ' +);
 	    // ready to make signed requests on behalf of the user 
 	    // var perm_data = qs.parse(body)
