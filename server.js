@@ -61,6 +61,10 @@ app.get('/', function(request, response){
 	response.render('login.html');
 });
 
+app.get('init', function(request, response){
+	response.render('home.html');
+})
+
 app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
