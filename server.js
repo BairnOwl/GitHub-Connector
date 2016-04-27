@@ -89,14 +89,14 @@ app.get('/login', function(request, response) {
  //    req.send(params);
 	//var random = randomString(32, chars);
 	var qs = require('querystring')
-	  , oauth =
-	    { client_id: 'f112d8966964169f6ebb'
-	    , state: random
-	    }
-	  , url = 'https://github.com/login/oauth/authorize'
-	  ;
-	request.post({url:url, oauth:oauth}, function (e, r, body) {
-	  console.log('in authorize: ');
+	  // , oauth =
+	  //   { client_id: 'f112d8966964169f6ebb'
+	  //   , state: random
+	  //   }
+	  // , url = 'https://github.com/login/oauth/authorize'
+	//   // ;
+	// request.post({url:url, oauth:oauth}, function (e, r, body) {
+	//   console.log('in authorize: ');
 	  // Ideally, you would take the body in the response 
 	  // and construct a URL that a user clicks on (like a sign in button). 
 	  // The verifier is only available in the response after a user has 
