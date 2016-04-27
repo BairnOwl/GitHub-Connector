@@ -46,7 +46,7 @@ app.post('/data/:org/:repo', function(request, response) {
 	req.open('GET', url, true);
 
 	console.log('usertoken: ' + users['lmhly']);
-	var token = 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
