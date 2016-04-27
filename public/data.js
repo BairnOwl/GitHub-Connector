@@ -51,6 +51,7 @@ window.addEventListener('load', function(){
 
     var username = $("#login-info").val();
     console.log('username: ' + username);
+    input_form.addEventListener('submit', handleInput, false);
 
     $("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
@@ -79,7 +80,7 @@ window.addEventListener('load', function(){
  //        }
  //    };
 
-    input_form.addEventListener('submit', handleInput, false);
+    //input_form.addEventListener('submit', handleInput, false);
 
     // var input = 'data';
     // req.open('POST', '/data/' + "presto", true);

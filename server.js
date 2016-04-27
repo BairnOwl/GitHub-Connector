@@ -39,6 +39,7 @@ function randomString(length, chars) {
 }
 
 app.post('/data/:org/:repo', function(request, response) {
+	console.log('gets in repo');
 	var org = request.params.org;
 	var repo = request.params.repo;
 
