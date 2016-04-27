@@ -1,4 +1,5 @@
 function handleInput(e) {
+    console.log('in handle');
     e.preventDefault();
 
     var org = document.getElementById("org_url").value;
@@ -9,6 +10,7 @@ function handleInput(e) {
 }
 
 function sendMessage(org, repo, state) {
+    console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
@@ -53,7 +55,7 @@ window.addEventListener('load', function(){
     console.log('username: ' + username);
     input_form.addEventListener('submit', handleInput, false);
 
-    $("#slider").dateRangeSlider();
+    //$("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();

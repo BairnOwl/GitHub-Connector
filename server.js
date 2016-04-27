@@ -38,7 +38,7 @@ function randomString(length, chars) {
     return result;
 }
 
-app.post('/data/:org/:repo', function(request, response) {
+app.post('/data/:org/:repo/:state', function(request, response) {
 	console.log('gets in repo');
 	var org = request.params.org;
 	var repo = request.params.repo;
@@ -48,7 +48,7 @@ app.post('/data/:org/:repo', function(request, response) {
 
 	//console.log('usertoken: ' + users['lmhly']);
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	console.log('usertoken: ' + users['lmhly']);
+	//console.log('usertoken: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
