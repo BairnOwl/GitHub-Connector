@@ -36,15 +36,17 @@ function randomString(length, chars) {
     return result;
 }
 
-app.post('/data/:org/:repo', function(request, response) {
+app.post('/data/:org/:repo/:state', function(request, response) {
+	console.log('finding data');
 	var org = request.params.org;
 	var repo = request.params.repo;
+	var state = request.params.state;
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
 
 	console.log('usertoken: ' + userToken);
-	var token = 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01'; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = '23af4a36d44ac2d3954e46aec71b935ab53571e7'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
