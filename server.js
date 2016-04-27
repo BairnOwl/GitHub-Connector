@@ -57,7 +57,7 @@ app.post('/data/:org/:repo', function(request, response) {
 	req.send(null); 
 });
 
-app.get('/', function(request, response){
+app.get('/normal', function(request, response){
 	response.render('login.html');
 });
 
