@@ -57,8 +57,12 @@ app.post('/data/:org/:repo', function(request, response) {
 	req.send(null); 
 });
 
-app.get('/normal', function(request, response){
+app.get('/', function(request, response){
 	response.render('login.html');
+});
+
+app.get('/normal', function(request, response){
+	response.render('home.html');
 });
 
 app.get('/login', function(request, response) {
