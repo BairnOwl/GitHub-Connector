@@ -157,7 +157,7 @@ app.get('/home', function(requ, response) {
 	while(flag = 0) {
 
 	}
-	response.render('dummy.html', {data: 'This is login' + userLogin});
+	response.render('home.html', {username: userLogin});
 
 });
 
