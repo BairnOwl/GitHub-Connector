@@ -28,6 +28,8 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var req = new XMLHttpRequest();
 var request = require('request');
 
+var users = {};
+
 //This function is credit to http://jsfiddle.net/wSQBx/
 var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomString(length, chars) {
@@ -134,6 +136,7 @@ app.get('/home', function(requ, response) {
 		    	userLogin = user.login;
 		        console.log('User login meeeeee: ' +  user.login);
 		        console.log('User token meeeeee: ' +  userToken);
+		        users[userLogin] = userToken;
 		        //response.redirect('/');
 		        //Cookies.set('lmhly', userToken, { expires: 7 });
 		        //cookies.set('lmhly', userToken);
@@ -141,6 +144,8 @@ app.get('/home', function(requ, response) {
 		        console.log('user cookie: ' + user.login);
 		        userLogin = user.login;
 		        console.log('userLogin: ' + userLogin);
+		        console.log('usertoken: ' + users[userLogin]);
+		        //users[userLogin] = userToken;
 		        flag = 1;
 		        //response.render('dummy.html', {data: user.login});
 		        //response.redirect('/');
@@ -157,6 +162,7 @@ app.get('/home', function(requ, response) {
 	while(flag = 0) {
 
 	}
+	//console.log
 	response.render('home.html', {username: userLogin});
 
 });

@@ -49,9 +49,12 @@ function sendMessage(org, repo, state) {
 
 window.addEventListener('load', function(){
 
-    $("#slider").dateRangeSlider();
     var username = $("#login-info").val();
     console.log('username: ' + username);
+
+    $("#slider").dateRangeSlider();
+    // var username = $("#login-info").val();
+    // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
 
 	// req.onreadystatechange = function() {
