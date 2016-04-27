@@ -45,7 +45,7 @@ app.post('/data/:org/:repo', function(request, response) {
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
 	req.open('GET', url, true);
 
-	console.log('usertoken: ' + userToken);
+	console.log('usertoken: ' + users['lmhly']);
 	var token = 'feafeb1563e2400d1a0d43126eb9ecec0ca5fd01'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	req.setRequestHeader('Authorization', 'token ' + token);
@@ -72,21 +72,21 @@ app.get('/login', function(request, response) {
 
 	var random = randomString(32, chars);
 	//var uri = 'localhost:8080/home';
-	console.log("random: " + random);
+	//console.log("random: " + random);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
 		random + 'scope=user,public_repo';
-	console.log("params: " + params);
+	//console.log("params: " + params);
 	
 	var path = 'https://github.com/login/oauth/authorize';
 	path += params;
 	response.redirect(path);
 
 	req.onreadystatechange = function() {
-		console.log('in req');
+		//console.log('in req');
 		//console.log(req.param);
 		if (req.readyState == 4 && req.status == 200) {
 			var code = req.responseText;
-            console.log("response: " + req.responseText);
+            //console.log("response: " + req.responseText);
         }
 	};
 
@@ -116,7 +116,7 @@ app.get('/home', function(requ, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	console.log('token 2: ' + userToken);
+	  	//console.log('token 2: ' + userToken);
 
  		var userUrl = 'https://api.github.com/user?access_token=';
 
@@ -141,10 +141,10 @@ app.get('/home', function(requ, response) {
 		        //Cookies.set('lmhly', userToken, { expires: 7 });
 		        //cookies.set('lmhly', userToken);
 		        userToken = '';
-		        console.log('user cookie: ' + user.login);
+		        //console.log('user cookie: ' + user.login);
 		        userLogin = user.login;
-		        console.log('userLogin: ' + userLogin);
-		        console.log('usertoken: ' + users[userLogin]);
+		        //console.log('userLogin: ' + userLogin);
+		        //console.log('usertoken: ' + users[userLogin]);
 		        //users[userLogin] = userToken;
 		        flag = 1;
 		        //response.render('dummy.html', {data: user.login});
@@ -153,12 +153,12 @@ app.get('/home', function(requ, response) {
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
-		console.log('userLogin 2: ' + userLogin);
+		//console.log('userLogin 2: ' + userLogin);
 
 	  }
-	  console.log('userLogin 3: ' + userLogin);
+	  //console.log('userLogin 3: ' + userLogin);
 	});
-	console.log('userLogin 4: ' + userLogin);
+	//console.log('userLogin 4: ' + userLogin);
 	while(flag = 0) {
 
 	}
