@@ -1,4 +1,5 @@
 function handleInput(e) {
+    console.log('in handle');
     e.preventDefault();
 
     var org = document.getElementById("org_url").value;
@@ -9,6 +10,7 @@ function handleInput(e) {
 }
 
 function sendMessage(org, repo, state) {
+    console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
@@ -49,7 +51,13 @@ function sendMessage(org, repo, state) {
 
 window.addEventListener('load', function(){
 
-    $("#slider").dateRangeSlider();
+    var username = $("#login-info").val();
+    console.log('username: ' + username);
+    input_form.addEventListener('submit', handleInput, false);
+
+    //$("#slider").dateRangeSlider();
+    // var username = $("#login-info").val();
+    // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
 
 	// req.onreadystatechange = function() {
@@ -74,7 +82,7 @@ window.addEventListener('load', function(){
  //        }
  //    };
 
-    input_form.addEventListener('submit', handleInput, false);
+    //input_form.addEventListener('submit', handleInput, false);
 
     // var input = 'data';
     // req.open('POST', '/data/' + "presto", true);
