@@ -132,27 +132,20 @@ app.get('/home', function(request, response) {
 	req.onreadystatechange = function() {
 		console.log(req.readyState);
 		console.log(req.status);
-		//response.render('dummy.html', {code: req.responseText, state: 'state'});
+		
 		if (req.readyState == 4 && req.status == 200) {
 			data = req.responseText;
-			//response.render('dummy.html', {code: 'code', state: 'state'});
-			//console.log(req.responseText.access_token);
-        } else {
-        	//console.log(req);
         }
+        
         response.render('dummy.html', {code: 'code', state: 'state', data: 'data: ' + data});
 
 	};
-	//response.render('dummy.html', {code: 'code', state: 'state', data: data});
-
+	
 	req.open('POST', 'https://github.com/login/oauth/access_token', true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(params);
 
 });
-
-console.log('outside');
-// app.get('')
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
