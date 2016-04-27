@@ -163,7 +163,8 @@ app.get('/home', function(requ, response) {
 
 	}
 	//console.log
-	response.render('home.html', {username: userLogin});
+	console.log(users[userLogin]);
+	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
