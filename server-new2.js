@@ -39,20 +39,25 @@ function randomString(length, chars) {
 }
 
 app.post('/data/:org/:repo/:state', function(request, response) {
-	console.log('gets in repo');
 	var org = request.params.org;
 	var repo = request.params.repo;
+	var state = request.params.state;
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
+	var token = '222e59be6c6c98a3a65f885afdf70143bd6af7dc'; // PUT YOUR PERSONAL TOKEN HERE!!!
+
+	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	//console.log('usertoken: ' + users['lmhly']);
-	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	//console.log('usertoken: ' + users['lmhly']);
+	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	//console.log('token in get repo 2: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
+		console.log('req status: ' + req.status);
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
+			console.log('data: ' + data);
 			response.json(data);
 		}
 	}, false);
@@ -115,7 +120,7 @@ app.get('/home', function(requ, response) {
  	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	  	var parsed = queryString.parse(body);
-	  	console.log('token: ' + parsed.access_token);
+	  	//console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
 	  	//console.log('token 2: ' + userToken);
 
@@ -135,8 +140,8 @@ app.get('/home', function(requ, response) {
 		rp(options)
 		    .then(function (user) {
 		    	userLogin = user.login;
-		        console.log('User login meeeeee: ' +  user.login);
-		        console.log('User token meeeeee: ' +  userToken);
+		        console.log('User login: ' +  user.login);
+		        console.log('User token: ' +  userToken);
 		        users[userLogin] = userToken;
 		        //response.redirect('/');
 		        //Cookies.set('lmhly', userToken, { expires: 7 });
@@ -164,12 +169,13 @@ app.get('/home', function(requ, response) {
 
 	}
 	//console.log
-	console.log(users[userLogin]);
+	//console.log(users[userLogin]);
+	//response.redirect('/init');
 	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
-console.log('outside');
+//console.log('outside');
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
