@@ -45,11 +45,9 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
-	
-	//console.log('usertoken: ' + userToken);
 	//var token = '23af4a36d44ac2d3954e46aec71b935ab53571e7'; // PUT YOUR PERSONAL TOKEN HERE!!!
 
-	//var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	//console.log('usertoken: ' + users['lmhly']);
 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
