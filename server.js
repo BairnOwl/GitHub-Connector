@@ -50,8 +50,8 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	//console.log('usertoken: ' + users['lmhly']);
-	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	console.log('usertoken in get repo: ' + users['BairnOwl']);
+	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	console.log('usertoken in get repo: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
