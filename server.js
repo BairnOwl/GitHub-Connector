@@ -170,8 +170,8 @@ app.get('/home', function(requ, response) {
 	}
 	//console.log
 	//console.log(users[userLogin]);
-	response.redirect('/init');
-	//response.render('home.html', {username: userLogin, token: users[userLogin]});
+	//response.redirect('/init');
+	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
