@@ -39,16 +39,21 @@ function randomString(length, chars) {
 }
 
 app.post('/data/:org/:repo/:state', function(request, response) {
-	console.log('gets in repo');
 	var org = request.params.org;
 	var repo = request.params.repo;
+	var state = request.params.state;
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=all';
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
+	
+	//console.log('usertoken: ' + userToken);
+	//var token = '23af4a36d44ac2d3954e46aec71b935ab53571e7'; // PUT YOUR PERSONAL TOKEN HERE!!!
+
+	//var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 	//console.log('usertoken: ' + users['lmhly']);
 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	onsole.log('usertoken in get repo: ' + users['BairnOwl']);
+	console.log('usertoken in get repo: ' + users['BairnOwl']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
