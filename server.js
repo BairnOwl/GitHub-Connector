@@ -51,7 +51,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 
 	//console.log('usertoken: ' + users['lmhly']);
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	console.log('usertoken in get repo: ' + users['lmhly']);
+	console.log('token in get repo 2: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
