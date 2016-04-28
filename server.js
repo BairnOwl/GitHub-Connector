@@ -54,8 +54,10 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	console.log('token in get repo 2: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
+		console.log('req status: ' + req.status);
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
+			console.log('data: ' + data);
 			response.json(data);
 		}
 	}, false);
@@ -168,7 +170,8 @@ app.get('/home', function(requ, response) {
 	}
 	//console.log
 	//console.log(users[userLogin]);
-	response.render('home.html', {username: userLogin, token: users[userLogin]});
+	response.redirect('/init');
+	//response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
