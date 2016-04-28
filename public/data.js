@@ -2,6 +2,7 @@ function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
+    $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
@@ -54,6 +55,9 @@ window.addEventListener('load', function(){
     var username = $("#login-info").val();
     console.log('username: ' + username);
     input_form.addEventListener('submit', handleInput, false);
+    $("#clear-btn").click(function(){
+        $("#results").css('display', 'none');
+    });
 
     //$("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
