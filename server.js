@@ -5,7 +5,7 @@ var userToken;
 var bodyParser = require('body-parser');
 
 //var Cookies = require('js-cookie');
-var cookies = require('browser-cookies');
+var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
@@ -68,7 +68,7 @@ function randomString(length, chars) {
 app.post('/data/:org/:repo/:state', function(request, response) {
 	console.log('getting cookie');
 	console.log(cookies.get('BairnOwl'));
-	
+
 	var org = request.params.org;
 	var repo = request.params.repo;
 	var state = request.params.state;
