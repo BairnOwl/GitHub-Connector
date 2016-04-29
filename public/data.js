@@ -17,8 +17,6 @@ function sendMessage(org, repo, state) {
     fd.append("repo", repo);
     fd.append("state", state);
 
-    console.log(state);
-
     var req = new XMLHttpRequest();
 
     req.onreadystatechange = function() {
