@@ -37,7 +37,7 @@ var GitHubStrategy = require('passport-github').Strategy;
 passport.use(new GitHubStrategy({
     clientID: 'f112d8966964169f6ebb',
     clientSecret: '538d16b411d8a82ba90e26a298a8c40345fab874',
-    callbackURL: '/test'
+    callbackURL: 'https://gitbuddy.herokuapp.com/test'
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ githubId: profile.id }, function (err, user) {
