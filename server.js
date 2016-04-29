@@ -178,7 +178,7 @@ app.get('/home', function(requ, response) {
 	});
 
 	console.log('getting cookie');
-	console.log(cookies.get('BairnOwl');
+	console.log(cookies.get('BairnOwl'));
 	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
