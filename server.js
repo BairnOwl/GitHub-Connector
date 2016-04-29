@@ -166,33 +166,18 @@ app.get('/home', function(requ, response) {
 		        console.log('User login meeeeee: ' +  user.login);
 		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
-		        //response.redirect('/');
-		        //Cookies.set('lmhly', userToken, { expires: 7 });
-		        //cookies.set('lmhly', userToken);
+		       
+		        cookies.set('BairnOwl', userToken, { expires: 7 });
 		        userToken = '';
-		        //console.log('user cookie: ' + user.login);
-		        userLogin = user.login;
-		        //console.log('userLogin: ' + userLogin);
-		        //console.log('usertoken: ' + users[userLogin]);
-		        //users[userLogin] = userToken;
 		        flag = 1;
-		        //response.render('dummy.html', {data: user.login});
-		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
-		//console.log('userLogin 2: ' + userLogin);
-
 	  }
-	  //console.log('userLogin 3: ' + userLogin);
 	});
-	//console.log('userLogin 4: ' + userLogin);
-	while(flag = 0) {
 
-	}
-	//console.log
-	console.log(users[userLogin]);
+	console.log('Cookie: ' + cookies.get('BairnOwl');
 	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
