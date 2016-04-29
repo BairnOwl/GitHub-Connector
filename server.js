@@ -66,7 +66,9 @@ function randomString(length, chars) {
 }
 
 app.post('/data/:org/:repo/:state', function(request, response) {
-	console.log('gets in repo');
+	console.log('getting cookie');
+	console.log(cookies.get('BairnOwl'));
+	
 	var org = request.params.org;
 	var repo = request.params.repo;
 	var state = request.params.state;
@@ -176,9 +178,6 @@ app.get('/home', function(requ, response) {
 		    });
 	  }
 	});
-
-	console.log('getting cookie');
-	console.log(cookies.get('BairnOwl'));
 	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
