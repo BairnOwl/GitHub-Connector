@@ -4,7 +4,7 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-var cookieParser() = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 
 //var cookies = require('cookies');
 var rp = require('request-promise');
