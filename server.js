@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var cookies = require('cookie-parser');
 
-var cookies = require('cookies');
+//var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
