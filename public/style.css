@@ -99,7 +99,7 @@ header {
 }
 #results {
 	margin-top: 50px;
-	margin-right: 5%;
+	margin-right: 4%;
 	float: right;
 	background-color: white;
 }
@@ -156,9 +156,10 @@ td {
     width: 50px;
 }*/
 .single_request {
-	width: 800px;
+	width: 914px;
 	height: 200px;
-	background-color: #F1F0FF;
+/*	border: 1px solid #beb8d4;*/
+	background-color: #f8f8fa;
 }
 .profile_img {
 	width:50px;
@@ -225,4 +226,9 @@ p {
 	color: white;
 	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 	font-size: 1.6em;
+}
+#user-info {
+	height: 200px;
+	width: 200px;
+	background-color: #8181ae;
 }

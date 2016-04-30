@@ -29,13 +29,13 @@ function sendMessage(org, repo, state) {
 
             for (var i in data) {
                 display = display + '<div class="single_request">' +
-                    '<img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                    '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<p class="user_login"><a href=\"' + data[i].html_url + '\">' + data[i].user.login + '</a></p>' +
                     '<p>' + data[i].state + '</p>' +
                     '<p>' + data[i].created_at + '</p>' +
                     '<p>' + data[i].updated_at + '</p>' +
                     '<p>' + data[i].closed_at + '</p>' +
-                    + '</div>';            	
+                    + '</div></div>';            	
             }
 
             display = display + '</div>'
