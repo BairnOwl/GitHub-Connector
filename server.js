@@ -34,7 +34,7 @@ var request = require('request');
 var users = {};
 
 app.get('/cookie',function(req, res){
-     res.cookie(user_name , 'BairnOwl').send('Cookie is set');
+     res.cookie('user_name' , 'BairnOwl').send('Cookie is set');
 });
 
 // GitHub Strategy module
