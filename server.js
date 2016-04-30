@@ -4,8 +4,11 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-//var Cookies = require('js-cookie');
-var cookies = require('cookies');
+var jsdom = require('jsdom');
+var window = jsdom.jsdom().parentWindow;
+var cookies = require('cookies-js');
+
+//var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
@@ -77,7 +80,9 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.open('GET', url, true);
 
 	//console.log('usertoken: ' + users['lmhly']);
+
 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
+
 	//console.log('usertoken: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -169,7 +174,7 @@ app.get('/home', function(requ, response) {
 		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
 		       
-		        cookies.set('BairnOwl', userToken, { expires: 7 });
+		        cookies.set('BairnOwl', userToken);
 		        userToken = '';
 		        flag = 1;
 		    })
