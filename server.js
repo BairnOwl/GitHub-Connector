@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var cookies = require('cookie-parser');
 
-//var cookies = require('cookies');
+var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
@@ -14,7 +14,7 @@ app.engine('html', engines.hogan); // tell Express to run .html files through Ho
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
-//app.use(cookies);
+app.use(cookies);
 
 var finalhandler = require('finalhandler');
 var http = require('http');
