@@ -4,9 +4,7 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-var jsdom = require('jsdom');
-var window = jsdom.jsdom().parentWindow;
-var cookies = require('cookies-js');
+var cookies = require('cookie-parser');
 
 //var cookies = require('cookies');
 var rp = require('request-promise');
@@ -15,6 +13,8 @@ var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
+
+app.use(cookies);
 
 var finalhandler = require('finalhandler');
 var http = require('http');
@@ -32,6 +32,10 @@ var req = new XMLHttpRequest();
 var request = require('request');
 
 var users = {};
+
+app.get('/cookie',function(req, res){
+     res.cookie(user_name , 'BairnOwl').send('Cookie is set');
+});
 
 // GitHub Strategy module
 // var passport = require('passport');
