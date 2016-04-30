@@ -14,7 +14,7 @@ app.engine('html', engines.hogan); // tell Express to run .html files through Ho
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
-app.use(cookies);
+//app.use(cookies);
 
 var finalhandler = require('finalhandler');
 var http = require('http');
@@ -33,9 +33,9 @@ var request = require('request');
 
 var users = {};
 
-app.get('/cookie',function(req, res){
-     res.cookie(user_name , 'BairnOwl').send('Cookie is set');
-});
+//app.get('/cookie',function(req, res){
+     //res.cookie(user_name , 'BairnOwl').send('Cookie is set');
+//});
 
 // GitHub Strategy module
 // var passport = require('passport');
