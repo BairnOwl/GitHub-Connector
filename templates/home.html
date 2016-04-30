@@ -14,42 +14,44 @@
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <!--><script src="jQDateRangeSlider-min.js"></script>
     <script src="jquery.mousewheel.min.js"></script>
-	<script src="jQAllRangeSliders-min.js"></script><-->
-
+	<script src="jQAllRangeSliders-min.js"></script -->
 </head>
-<body>
-	<header>
+<body id="home">
+<!-- 	<header>
 		<p id="title">Gitbuddy</p>
-	</header>
-	<div id="login-info">{{username}}</div>
-	<div id="token">{{token}}</div>
+	</header> -->
+<!-- 	<div id="login-info">{{username}}</div> -->
+<!-- 	<div id="token">{{token}}</div> -->
 	<div id="user_input">
-	<div id="search_bar">
-		<form id="input_form">
-			<input type="text" list="input_content" name = "url" id="org_url" placeholder="organization" class="form-control input" />
-				<datalist id="input_content">
-					<option value="Teradata">
-				</datalist>	
-			<input type="text" list="input_content" name = "url" id="repo_url" placeholder="repo" class="form-control input">
-				<datalist id="input_content">
-					<option value="presto">
-				</datalist>	
-			<div class="radio">
-			 <input type="radio" name="status" value="open" checked> Open <br>
-			 <input type="radio" name="status" value="closed" checked> Closed <br>
-			 <input type="radio" name="status" value="all" checked> All
-			</div>
+		<div id="search_bar">
+			<div id="logo">Gitbuddy</div>
+			<form id="input_form">
+				<input type="text" list="input_content" name = "url" id="org_url" placeholder="organization" class="form-control input" />
+					<datalist id="input_content">
+						<option value="Teradata">
+					</datalist>	
+				<input type="text" list="input_content" name = "url" id="repo_url" placeholder="repo" class="form-control input">
+					<datalist id="input_content">
+						<option value="presto">
+					</datalist>	
+				<div class="radio">
+				 <input type="radio" name="status" value="open" checked> Open <br>
+				 <input type="radio" name="status" value="closed" checked> Closed <br>
+				 <input type="radio" name="status" value="all" checked> All
+				</div>
 
-			<!--<input type="range" id="time-range">-->
-			
-    		<input type="submit" value="Search" id="send_button" class="btn btn-primary btn-block">
-		</form>
-		<button type="button" id="clear-btn">Clear</button>
-		<div id="slider"></div>
-	</div>
+				<!--<input type="range" id="time-range">-->
+				
+	    		<input type="submit" value="Search" id="send_button">
+			</form>
+<!-- 			<button type="button" id="clear-btn">Clear</button> -->
+			<div id="slider">
+			</div>
+			<div id="login-info">Logged in as: {{username}}</div>
+		</div>
 	</div>
 	<div id="results">
 	</div>
-	</div>
+<!-- 	</div> -->
 </body>
 </html>
