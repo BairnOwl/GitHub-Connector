@@ -74,7 +74,7 @@ function randomString(length, chars) {
 
 app.post('/data/:org/:repo/:state', function(request, response) {
 	console.log('getting cookie');
-	console.log(cookies.get('BairnOwl'));
+	//console.log(cookies.get('BairnOwl'));
 
 	var org = request.params.org;
 	var repo = request.params.repo;
@@ -178,7 +178,7 @@ app.get('/home', function(requ, response) {
 		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
 		       
-		        cookies.set('BairnOwl', userToken);
+		        //cookies.set('BairnOwl', userToken);
 		        userToken = '';
 		        flag = 1;
 		    })
