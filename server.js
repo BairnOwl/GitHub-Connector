@@ -14,7 +14,7 @@ app.engine('html', engines.hogan); // tell Express to run .html files through Ho
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
-app.use(cookieParser);
+//app.use(cookieParser);
 
 var finalhandler = require('finalhandler');
 var http = require('http');
