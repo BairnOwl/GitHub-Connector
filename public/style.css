@@ -149,6 +149,28 @@ td {
 	left: 70px;
 }
 
+.request_title {
+	position: relative;
+	top: -59px;
+	left: 170px;
+	font-size: 18px;
+	background-color: white;
+	width: 600px;
+	opacity: 0.8; 
+	padding-left: 6px;
+	padding-top: 2px;
+	padding-right: 6px;
+	padding-bottom: 2px;
+}
+
+
+.state {
+	position: relative;
+	top: -40px;
+	left: 10px;
+}
+
+
 tr:hover{background-color:#f5f5f5}
 
 #login-head {

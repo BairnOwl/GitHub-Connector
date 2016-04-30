@@ -32,11 +32,14 @@ function sendMessage(org, repo, state) {
             for (var i in data) {
                 display = display + '<div class="single_request">' +
                     '<img class="profile_img" src=' + data[i].user.avatar_url + '>' +
-                    '<p class="user_login"><a href=\"' + data[i].html_url + '\">' + data[i].user.login + '</a></p>' +
-                    '<p>' + data[i].state + '</p>' +
-                    '<p>' + data[i].created_at + '</p>' +
-                    '<p>' + data[i].updated_at + '</p>' +
-                    '<p>' + data[i].closed_at + '</p>' +
+                    '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
+                    '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                    '<div class="state" >state: ' + data[i].state + '</div>' +
+                    '<div class="request_body" >  ' + data[i].body + '</div>' +
+                    '<div class="request_number" >number: ' + data[i].number + '</div>' +
+                    '<div class="created_at" >created at ' + data[i].created_at + '</div>' +
+                    '<div class="updated_at" >updated at ' + data[i].updated_at + '</div>' +
+                    '<div class="closed_at" >closed at ' + data[i].closed_at + '</div>' +
                     + '</div>';            	
             }
 

@@ -47,7 +47,8 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.open('GET', url, true);
 
 	//console.log('usertoken: ' + users['lmhly']);
-	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	// var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = ''
 	console.log('usertoken: ' + token);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
