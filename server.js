@@ -75,14 +75,9 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.open('GET', url, true);
 
 	//console.log('usertoken: ' + users['lmhly']);
-
-	// var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	var token = ''
-	console.log('usertoken: ' + token);
-
-	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	//console.log('usertoken: ' + users['lmhly']);
-
+	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
+	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	console.log('usertoken: ' + users['lmhly']);
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
@@ -109,7 +104,7 @@ app.get('/login', function(request, response) {
 	//var uri = 'localhost:8080/home';
 	//console.log("random: " + random);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
-		random + 'scope=user,public_repo';
+		random + 'scopes=user,public_repo';
 	//console.log("params: " + params);
 	
 	var path = 'https://github.com/login/oauth/authorize';
