@@ -191,13 +191,14 @@ app.get('/home', function(requ, response) {
 		        //cookies.set('BairnOwl', userToken);
 		        userToken = '';
 		        flag = 1;
+		        response.render('home.html', {username: userLogin, token: users[userLogin]});
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
 	  }
 	});
-	response.render('home.html', {username: userLogin, token: users[userLogin]});
+	//response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
