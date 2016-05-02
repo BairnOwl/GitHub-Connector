@@ -87,13 +87,14 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 // <<<<<<< HEAD
 	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	//console.log('usertoken: ' + users['lmhly']);
+	console.log('usertoken: ' + token);
 // =======
 
 // 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
 
 // 	//console.log('usertoken: ' + users['lmhly']);
 // >>>>>>> ed917867fc2ce37571134e4b1a25af10ef09ade4
+
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		console.log("response",req,e);
