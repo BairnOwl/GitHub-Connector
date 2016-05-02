@@ -24,7 +24,7 @@ function sendMessage(org, repo, state) {
        
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
-            console.log(data);
+            //console.log(data);
             var display = '<div class="pull_request">' 
 
             for (var i in data) {
