@@ -4,14 +4,17 @@ var url;
 var userToken;
 var bodyParser = require('body-parser');
 
-//var Cookies = require('js-cookie');
-var cookies = require('browser-cookies');
+var cookieParser = require('cookie-parser');
+
+//var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
+
+app.use(cookieParser());
 
 var finalhandler = require('finalhandler');
 var http = require('http');
@@ -30,32 +33,36 @@ var request = require('request');
 
 var users = {};
 
-// GitHub Strategy module
-var passport = require('passport');
-var GitHubStrategy = require('passport-github').Strategy;
- 
-passport.use(new GitHubStrategy({
-    clientID: 'f112d8966964169f6ebb',
-    clientSecret: '538d16b411d8a82ba90e26a298a8c40345fab874',
-    callbackURL: 'https://gitbuddy.herokuapp.com/test'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
-
-app.get('/auth/github',
-  passport.authenticate('github'));
- 
-app.get('/test', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    console.log(res.responseText); 
-    res.redirect('/init');
+app.get('/cookie',function(req, res){
+     res.cookie('user_name' , 'BairnOwl').send('Cookie is set');
 });
+
+// GitHub Strategy module
+// var passport = require('passport');
+// var GitHubStrategy = require('passport-github').Strategy;
+ 
+// passport.use(new GitHubStrategy({
+//     clientID: 'f112d8966964169f6ebb',
+//     clientSecret: '538d16b411d8a82ba90e26a298a8c40345fab874',
+//     callbackURL: 'https://gitbuddy.herokuapp.com/test'
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({ githubId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     });
+//   }
+// ));
+
+// app.get('/auth/github',
+//   passport.authenticate('github'));
+ 
+// app.get('/test', 
+//   passport.authenticate('github', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     console.log(res.responseText); 
+//     res.redirect('/init');
+// });
 
 //This function is credit to http://jsfiddle.net/wSQBx/
 var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -66,7 +73,9 @@ function randomString(length, chars) {
 }
 
 app.post('/data/:org/:repo/:state', function(request, response) {
-	console.log('gets in repo');
+	console.log('getting cookie');
+	//console.log(cookies.get('BairnOwl'));
+
 	var org = request.params.org;
 	var repo = request.params.repo;
 	var state = request.params.state;
@@ -75,9 +84,16 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	req.open('GET', url, true);
 
 	//console.log('usertoken: ' + users['lmhly']);
+// <<<<<<< HEAD
 	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
 	console.log('usertoken: ' + users['lmhly']);
+// =======
+
+// 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
+
+// 	//console.log('usertoken: ' + users['lmhly']);
+// >>>>>>> ed917867fc2ce37571134e4b1a25af10ef09ade4
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
 		if (req.status == 200) {
@@ -167,38 +183,19 @@ app.get('/home', function(requ, response) {
 		        console.log('User login meeeeee: ' +  user.login);
 		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
-		        //response.redirect('/');
-		        //Cookies.set('lmhly', userToken, { expires: 7 });
-		        //cookies.set('lmhly', userToken);
+		       
+		        //cookies.set('BairnOwl', userToken);
 		        userToken = '';
-		        //console.log('user cookie: ' + user.login);
-		        userLogin = user.login;
-		        //console.log('userLogin: ' + userLogin);
-		        //console.log('usertoken: ' + users[userLogin]);
-		        //users[userLogin] = userToken;
 		        flag = 1;
-		        //response.render('dummy.html', {data: user.login});
-		        //response.redirect('/');
 		    })
 		    .catch(function (err) {
 		        // API call failed... 
 		    });
-		//console.log('userLogin 2: ' + userLogin);
-
 	  }
-	  //console.log('userLogin 3: ' + userLogin);
 	});
-	//console.log('userLogin 4: ' + userLogin);
-	while(flag = 0) {
-
-	}
-	//console.log
-	console.log(users[userLogin]);
 	response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
-
-console.log('outside');
 
 app.listen(process.env.PORT, function(){
     console.log('- Server listening on port ' + process.env.PORT);
