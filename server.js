@@ -81,6 +81,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	var state = request.params.state;
 
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
+	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
 	console.log("request",url,req);
