@@ -161,8 +161,8 @@ app.get('/home', function(requ, response) {
 
 	var flag = 0;
 
- 	request('https://github.com/login/oauth/access_token' + params, function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
+ 	request('https://github.com/login/oauth/access_token' + params, function (error, respon, body) {
+	  if (!error && respon.statusCode == 200) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
