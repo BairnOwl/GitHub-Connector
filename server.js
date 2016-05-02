@@ -87,7 +87,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 // <<<<<<< HEAD
 	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	console.log('usertoken: ' + users['lmhly']);
+	//console.log('usertoken: ' + users['lmhly']);
 // =======
 
 // 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
