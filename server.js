@@ -83,7 +83,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
 	req.open('GET', url, true);
 
-	//console.log('usertoken: ' + users['lmhly']);
+	console.log("request",req);
 // <<<<<<< HEAD
 	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
 	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
@@ -96,6 +96,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 // >>>>>>> ed917867fc2ce37571134e4b1a25af10ef09ade4
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
+		console.log("response",req,e);
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
 			response.json(data);
