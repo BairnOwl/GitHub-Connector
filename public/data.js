@@ -8,7 +8,7 @@ function handleInput(e) {
     //alert(words[words.length-1]);
 
     $("#results").html('<p id="wait-icon">Please Wait</p>');
-    $("#results").css('text-align', 'center');
+    //$("#results").css('text-align', 'center');
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
@@ -36,7 +36,7 @@ function sendMessage(org, repo, state, username) {
             var display = '<div class="pull_request">' 
 
             $("#results").text("");
-            $("#results").css('text-align', '');
+            //$("#results").css('text-align', '');
 
             for (var i in data) {
                 display = display + '<div class="single_request">' +
