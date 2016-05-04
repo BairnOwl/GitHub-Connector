@@ -2,7 +2,9 @@ function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
-    alert($("login-info").val());
+    var words = $("#login-info").split(" ");
+
+    alert(words[words.length-1]);
 
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
