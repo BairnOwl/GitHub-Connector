@@ -138,6 +138,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .pull_request {
 	background-color: #efeff0;
+	padding-bottom: 20px;
 	/*width: 1200px;*/
 }
 
@@ -186,20 +187,21 @@ td {
 	top: -185px;
 	left: 250px;
 	font-size: 18px;
-	background-color: white;
+	background-color: transparent;
 	width: 630px;
 	opacity: 0.8; 
 	padding-left: 6px;
 	padding-top: 2px;
 	padding-right: 6px;
 	padding-bottom: 2px;
+	color: #8181ae;
 }
 
 .request_body {
 	position: relative;
 	top: -170px;
-	left: 250px;
-	width: 630px;
+	left: 255px;
+	width: 620px;
 	height: 130px;
     overflow: scroll;
 }

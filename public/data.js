@@ -44,6 +44,28 @@ function sendMessage(org, repo, state, username) {
                 updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
                 closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
 
+                if (i == data[data.length-1]) {
+                    display = display + '<div class="single_request" style="margin-bottom: 0px">' +
+                    '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                    '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
+                    '<div class="state" >state: ' + data[i].state + '</div>' +
+                    '<div class="request_number" >number: ' + data[i].number + '</div>' +
+                    '<div class="created_at" >created at ' + created_at + '</div>' +
+                    '<div class="updated_at" >updated at ' + updated_at + '</div>';
+                
+                    if (data[i].state == "open"){
+                        display = display + '<div class="closed_at" >open till now</div></div>';
+                    }else{
+                        display = display + '<div class="closed_at" >closed at ' + closed_at + '</div></div>';
+                    }
+
+                    display = display + '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                        '<div class="request_body" >  ' + data[i].body + '</div>' +
+                        '</div>';
+                         
+                    break;
+                }
+
                 display = display + '<div class="single_request">' +
                     '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
