@@ -66,7 +66,8 @@ window.addEventListener('load', function(){
 
     var username = $("#login-info").val();
     console.log('username: ' + username);
-    input_form.addEventListener('submit', handleInput, false);
+    //input_form.addEventListener('submit', handleInput, false);
+    $("#send_button").click(handleInput);
     $("#clear-btn").click(function(){
         $("#results").css('display', 'none');
     });
