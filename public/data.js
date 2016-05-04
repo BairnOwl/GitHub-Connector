@@ -3,23 +3,25 @@ function handleInput(e) {
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
+    var username = words[words.length-1];
 
-    alert(words[words.length-1]);
+    //alert(words[words.length-1]);
 
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
 
-    sendMessage(org, repo, state);
+    sendMessage(org, repo, state, username);
 }
 
-function sendMessage(org, repo, state) {
+function sendMessage(org, repo, state, username) {
     console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
     fd.append("state", state);
+    fd.append("username", username);
 
     var req = new XMLHttpRequest();
 
@@ -50,7 +52,7 @@ function sendMessage(org, repo, state) {
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + username, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
