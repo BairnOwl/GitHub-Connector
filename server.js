@@ -87,10 +87,10 @@ app.post('/data/:org/:repo/:state/:username', function(request, response) {
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	console.log("request",url,req);
+	//console.log("request",url,req);
 // <<<<<<< HEAD
 	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
-	var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = users[username]; // PUT YOUR PERSONAL TOKEN HERE!!!
 	console.log('usertoken: ' + token);
 // =======
 
@@ -101,8 +101,8 @@ app.post('/data/:org/:repo/:state/:username', function(request, response) {
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
-		console.log("response",req,e);
-		console.log('-------------------SEPERATION------------------------------');
+		//console.log("response",req,e);
+		//console.log('-------------------SEPERATION------------------------------');
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
 			response.json(data);
