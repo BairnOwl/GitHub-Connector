@@ -77,7 +77,7 @@ app.post('/data/:org/:repo/:state', function(request, response) {
 	//console.log('usertoken: ' + users['lmhly']);
 
 	// var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!
-	var token = ''
+	var token = '';
 	console.log('usertoken: ' + token);
 
 	//var token = users['lmhly']; // PUT YOUR PERSONAL TOKEN HERE!!!

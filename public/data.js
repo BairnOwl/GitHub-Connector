@@ -26,19 +26,30 @@ function sendMessage(org, repo, state) {
             var data = jQuery.parseJSON(req.responseText);
             console.log(data);
             var display = '<div class="pull_request">' 
+            var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
             for (var i in data) {
+                created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
+                updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
+                closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
+
                 display = display + '<div class="single_request">' +
-                    '<img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                    '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
-                    '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
                     '<div class="state" >state: ' + data[i].state + '</div>' +
-                    '<div class="request_body" >  ' + data[i].body + '</div>' +
                     '<div class="request_number" >number: ' + data[i].number + '</div>' +
-                    '<div class="created_at" >created at ' + data[i].created_at + '</div>' +
-                    '<div class="updated_at" >updated at ' + data[i].updated_at + '</div>' +
-                    '<div class="closed_at" >closed at ' + data[i].closed_at + '</div>' +
-                    + '</div>';            	
+                    '<div class="created_at" >created at ' + created_at + '</div>' +
+                    '<div class="updated_at" >updated at ' + updated_at + '</div>';
+                
+                if (data[i].state == "open"){
+                    display = display + '<div class="closed_at" >open till now</div></div>';
+                }else{
+                    display = display + '<div class="closed_at" >closed at ' + closed_at + '</div></div>';
+                }
+
+                display = display + '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                    '<div class="request_body" >  ' + data[i].body + '</div>' +
+                    '</div>';            	
             }
 
             display = display + '</div>'
