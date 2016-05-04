@@ -2,6 +2,8 @@ function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
+    alert($("login-info").val());
+
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
