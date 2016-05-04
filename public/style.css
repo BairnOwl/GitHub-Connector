@@ -254,3 +254,11 @@ p {
 	width: 200px;
 	background-color: #8181ae;
 }
+
+#wait-icon {
+	background-color: transparent;
+	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+	font-size: 1.2em;
+	color: #8862b7;
+
+}

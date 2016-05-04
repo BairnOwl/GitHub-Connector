@@ -7,7 +7,8 @@ function handleInput(e) {
 
     //alert(words[words.length-1]);
 
-    $("#results").text("Please Wait");
+    $("#results").html('<p id="wait-icon">Please Wait</p>');
+    $("#results").css('text-align', 'center');
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
