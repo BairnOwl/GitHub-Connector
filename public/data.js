@@ -2,7 +2,7 @@ function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
-    var words = $("#login-info").split(" ");
+    var words = $("#login-info").text().split(" ");
 
     alert(words[words.length-1]);
 
