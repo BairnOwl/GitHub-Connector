@@ -184,7 +184,7 @@ td {
 .request_title {
 	position: relative;
 	top: -185px;
-	left: 230px;
+	left: 250px;
 	font-size: 18px;
 	background-color: white;
 	width: 630px;
@@ -198,7 +198,7 @@ td {
 .request_body {
 	position: relative;
 	top: -170px;
-	left: 230px;
+	left: 250px;
 	width: 630px;
 	height: 130px;
     overflow: scroll;
