@@ -222,19 +222,19 @@ td {
 .created_at {
 	position: relative;
 	left: 10px;
-	font-size: 8px; 
+	font-size: 3px; 
 }
 
 .updated_at {
 	position: relative;
 	left: 10px;
-	font-size: 8px; 
+	font-size: 3px; 
 }
 
 .closed_at {
 	position: relative;
 	left: 10px;
-	font-size: 8px; 
+	font-size: 3px; 
 }
 
 
