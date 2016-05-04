@@ -37,33 +37,6 @@ app.get('/cookie',function(req, res){
      res.cookie('user_name' , 'BairnOwl').send('Cookie is set');
 });
 
-// GitHub Strategy module
-// var passport = require('passport');
-// var GitHubStrategy = require('passport-github').Strategy;
- 
-// passport.use(new GitHubStrategy({
-//     clientID: 'f112d8966964169f6ebb',
-//     clientSecret: '538d16b411d8a82ba90e26a298a8c40345fab874',
-//     callbackURL: 'https://gitbuddy.herokuapp.com/test'
-//   },
-//   function(accessToken, refreshToken, profile, cb) {
-//     User.findOrCreate({ githubId: profile.id }, function (err, user) {
-//       return cb(err, user);
-//     });
-//   }
-// ));
-
-// app.get('/auth/github',
-//   passport.authenticate('github'));
- 
-// app.get('/test', 
-//   passport.authenticate('github', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     console.log(res.responseText); 
-//     res.redirect('/init');
-// });
-
 //This function is credit to http://jsfiddle.net/wSQBx/
 var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function randomString(length, chars) {
@@ -74,7 +47,6 @@ function randomString(length, chars) {
 
 app.post('/data/:org/:repo/:state/:username', function(request, response) {
 	console.log('getting cookie');
-	//console.log(cookies.get('BairnOwl'));
 
 	var org = request.params.org;
 	var repo = request.params.repo;
@@ -87,22 +59,11 @@ app.post('/data/:org/:repo/:state/:username', function(request, response) {
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	//console.log("request",url,req);
-// <<<<<<< HEAD
-	//var token = '20f1cb24cc211967fbe2082ac3f8de6bfb6e643c';
-	var token = users[username]; // PUT YOUR PERSONAL TOKEN HERE!!!
+	var token = users[username];
 	console.log('usertoken: ' + token);
-// =======
-
-// 	var token = users['BairnOwl']; // PUT YOUR PERSONAL TOKEN HERE!!!
-
-// 	//console.log('usertoken: ' + users['lmhly']);
-// >>>>>>> ed917867fc2ce37571134e4b1a25af10ef09ade4
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
-		//console.log("response",req,e);
-		//console.log('-------------------SEPERATION------------------------------');
 		if (req.status == 200) {
 			var data = JSON.parse(req.responseText);
 			response.json(data);
@@ -124,22 +85,16 @@ app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
 	var random = randomString(32, chars);
-	//var uri = 'localhost:8080/home';
-	//console.log("random: " + random);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
 		random + 'scopes=user,public_repo';
-	//console.log("params: " + params);
 	
 	var path = 'https://github.com/login/oauth/authorize';
 	path += params;
 	response.redirect(path);
 
 	req.onreadystatechange = function() {
-		//console.log('in req');
-		//console.log(req.param);
 		if (req.readyState == 4 && req.status == 200) {
 			var code = req.responseText;
-            //console.log("response: " + req.responseText);
         }
 	};
 
@@ -151,7 +106,6 @@ var userLogin;
 app.get('/home', function(requ, response) {
 	var code = requ.param('code');
 	var state = requ.param('state');
-	//var userLogin;
 	headers = requ.headers;
 	path = '/login/oauth/access_token';
 	headers.host = 'api.github.com';
@@ -169,7 +123,6 @@ app.get('/home', function(requ, response) {
 	  	var parsed = queryString.parse(body);
 	  	console.log('token: ' + parsed.access_token);
 	  	userToken = parsed.access_token;
-	  	//console.log('token 2: ' + userToken);
 
  		var userUrl = 'https://api.github.com/user?access_token=';
 
@@ -191,7 +144,6 @@ app.get('/home', function(requ, response) {
 		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
 		       
-		        //cookies.set('BairnOwl', userToken);
 		        userToken = '';
 		        flag = 1;
 		        response.render('home.html', {username: userLogin, token: users[userLogin]});
@@ -201,7 +153,6 @@ app.get('/home', function(requ, response) {
 		    });
 	  }
 	});
-	//response.render('home.html', {username: userLogin, token: users[userLogin]});
 
 });
 
