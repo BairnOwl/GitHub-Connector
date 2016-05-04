@@ -7,7 +7,7 @@ function handleInput(e) {
 
     //alert(words[words.length-1]);
 
-    $("#results").text("");
+    $("#results").text("Please Wait");
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
@@ -33,6 +33,8 @@ function sendMessage(org, repo, state, username) {
             var data = jQuery.parseJSON(req.responseText);
             //console.log(data);
             var display = '<div class="pull_request">' 
+
+            $("#results").text("");
 
             for (var i in data) {
                 display = display + '<div class="single_request">' +
