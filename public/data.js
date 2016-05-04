@@ -36,6 +36,7 @@ function sendMessage(org, repo, state, username) {
             var display = '<div class="pull_request">' 
 
             $("#results").text("");
+            $("#results").css('text-align', '');
 
             for (var i in data) {
                 display = display + '<div class="single_request">' +
@@ -65,7 +66,7 @@ window.addEventListener('load', function(){
 
     var username = $("#login-info").val();
     console.log('username: ' + username);
-    input_form.addEventListener('submit', handleInput, false);
+    $("#input_form").on('submit', handleInput, false);
     $("#clear-btn").click(function(){
         $("#results").css('display', 'none');
     });
