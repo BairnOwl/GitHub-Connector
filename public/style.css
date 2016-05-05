@@ -84,6 +84,39 @@ header {
 	position: absolute;
 	margin-left: 10px;
 }*/
+
+.navBtn {
+	height: 45px;
+	width: 150px;
+	background-color: white;
+	opacity: 0.9;
+	border: 1px solid #9696f3;
+	border-radius: 5px;
+	font-size: 1.1em;
+	color: #9696f3;
+	font-family: Arial;
+}
+
+#menu {
+	position: fixed;
+	display: block;
+	height: 50px;
+	width: 600px;
+	left: 25%;
+	margin-top: 10px;
+}
+
+ul#menu-ul li {
+	display: inline;
+	padding-left: 20px;
+	float: left;
+}
+
+#menu-ul {
+	width: 600px;
+	list-style-type: none;
+}
+
 #title {
 	background-color: white;
 	font-family: Arial, Helvetica, sans-serif;
@@ -313,6 +346,8 @@ p {
 	font-size: 1.2em;
 	color: #8862b7;
 }
+
+
 
 /*#data-page {
 	display: block;
