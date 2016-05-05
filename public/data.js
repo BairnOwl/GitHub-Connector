@@ -107,6 +107,7 @@ window.addEventListener('load', function(){
         $("#results").css('display', 'none');
     });
 
+
     //$("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
     // console.log('username: ' + username);

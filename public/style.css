@@ -113,6 +113,8 @@ header {
 	border-radius: 5px;
 	font-size: 1.1em;
 	color: #8862b7;
+	background-color: white;
+	opacity: 0.9;
 }
 
 input[type=range] {
@@ -311,3 +313,18 @@ p {
 	font-size: 1.2em;
 	color: #8862b7;
 }
+
+/*#data-page {
+	display: block;
+	position: absolute;
+	left: 25%;
+}
+
+#menu-box {
+	display: block;
+	position: fixed;
+	top: 0%;
+	height: 50px;
+	left: 25%;
+	width: 75%;
+}*/
