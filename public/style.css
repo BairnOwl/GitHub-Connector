@@ -345,6 +345,9 @@ p {
 
 #wait-icon {
 	background-color: transparent;
+	position: absolute;
+	text-align: center;
+	display: none;
 /*	background-image: url('');*/
 	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 	font-size: 1.2em;
@@ -353,8 +356,8 @@ p {
 	height: 50px;
 	top: 50%;
 	left: 60%;
-	margin-left: 25px;
-	margin-top: 25px;
+	margin-left: -25px;
+	margin-top: -25px;
 }
 
 /*#data-page {
