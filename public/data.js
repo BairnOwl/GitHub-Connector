@@ -14,15 +14,16 @@ function handleInput(e) {
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
     console.log(org + " " + repo + " ");
-    sendMessage(org, repo, state, username);
+    sendMessage(org, repo, state, 100, username);
 }
 
-function sendMessage(org, repo, state, username) {
+function sendMessage(org, repo, state, per_page, username) {
     console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
     fd.append("state", state);
+    fd.append("per_page", per_page);
     fd.append("username", username);
 
     var req = new XMLHttpRequest();
@@ -92,7 +93,7 @@ function sendMessage(org, repo, state, username) {
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + username, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
