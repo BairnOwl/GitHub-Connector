@@ -15,7 +15,7 @@ function handleInput(e) {
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
     console.log(org + " " + repo + " ");
-    sendMessage(org, repo, state, 20, username);
+    sendMessage(org, repo, state, 100, username);
 }
 
 function sendMessage(org, repo, state, per_page, username) {
