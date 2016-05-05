@@ -45,18 +45,19 @@ function randomString(length, chars) {
     return result;
 }
 
-app.post('/data/:org/:repo/:state/:per_page/:username', function(request, response) {
+app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(request, response) {
 
 	var org = request.params.org;
 	var repo = request.params.repo;
 	var state = request.params.state;
 	var per_page = request.params.per_page;
 	var username = request.params.username;
+	var page_num = request.params.page_num;
 	//var numReq = request.params.numReq;
 
 	//console.log('numReq from data.js: ' + numReq);
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state + '&per_page=' + per_page;
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state + '&per_page=' + per_page + '&page=' + page_num;
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 

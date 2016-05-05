@@ -6,7 +6,6 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-
     //alert(words[words.length-1]);
     //$("#results").css('text-align', 'center');
     //$("#results").css('display', 'block');
@@ -32,10 +31,10 @@ function handleInput(e) {
     //alert('numReq: ' + numReq);
     var state = document.querySelector('input[name="status"]:checked').value;
    
-    sendMessage(org, repo, state, numReq, username);
+    sendMessage(org, repo, state, numReq, username, 1);
 }
 
-function sendMessage(org, repo, state, per_page, username) {
+function sendMessage(org, repo, state, per_page, username, page_num) {
     console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
@@ -43,6 +42,7 @@ function sendMessage(org, repo, state, per_page, username) {
     fd.append("state", state);
     fd.append("per_page", per_page);
     fd.append("username", username);
+    fd.append("page_num", page_num);
     //fd.append("numReq", numReq);
 
     var req = new XMLHttpRequest();
@@ -133,7 +133,7 @@ function sendMessage(org, repo, state, per_page, username) {
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username + '/' + page_num, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
