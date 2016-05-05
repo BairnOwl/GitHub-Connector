@@ -1,4 +1,5 @@
 var displayPage;
+var cacheData;
 
 function handleInput(e) {
     console.log('in handle');
@@ -35,16 +36,17 @@ function sendMessage(org, repo, state, per_page, username) {
        
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
+            cacheData = data;
             //console.log(data);
             var display = '<div class="pull_request">' 
             var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
-            var visData = new Array(data.length);
+            // var visData = new Array(data.length);
 
             $("#results").text("");
             for (var i in data) {
 
-                visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at)];
+                // visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at)];
 
 
                 created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
@@ -81,12 +83,33 @@ function sendMessage(org, repo, state, per_page, username) {
             $("#menu").css('display', 'block');
             displayPage = 'user';
 
-
+            //if ()
 
             // d3 goes here
             display  = ''
 
-            var userList = [];
+            //timeline_graph(data);
+
+            
+
+        }
+    };
+
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(fd);
+}
+
+
+
+function timeline_graph(data){
+
+    var visData = new Array(data.length);
+    for (var i in data) {
+        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at)];
+    }
+
+    var userList = [];
             // var visDataUser = []
 
             var startDate = new Date(visData[0][2]);
@@ -286,13 +309,29 @@ function sendMessage(org, repo, state, per_page, username) {
         });
             
 
-        }
-    };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    req.send(fd);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
 
 var minDate;
 var maxDate;
@@ -317,6 +356,7 @@ window.addEventListener('load', function(){
         }
         displayPage = 'graph';
         $("#results").css('display', 'none');
+        timeline_graph(cacheData);
         $("graph-panel").css('display', 'block');
     });
 
@@ -329,8 +369,10 @@ window.addEventListener('load', function(){
             return;
         }
         displayPage = 'user';
+        d3.select("svg").remove();
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
+
     });
 
     $("#slider").dateRangeSlider();
