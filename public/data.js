@@ -97,6 +97,9 @@ function sendMessage(org, repo, state, username) {
     req.send(fd);
 }
 
+var minDate;
+var maxDate;
+
 window.addEventListener('load', function(){
 
     var username = $("#login-info").val();
@@ -109,6 +112,11 @@ window.addEventListener('load', function(){
 
 
     $("#slider").dateRangeSlider();
+    $("#slider").on("valuesChanging", function(e, data) {
+        minDate = data.values.min;
+        maxDate = data.values.max;
+        console.log(minDate + ", " + maxDate);
+    });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
