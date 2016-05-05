@@ -33,13 +33,11 @@ function sendMessage(org, repo, state, per_page, username) {
        
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
-            //console.log(data);
             var display = '<div class="pull_request">' 
             var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
             $("#results").text("");
-            //$("#results").css('text-align', '');
-
+           
             for (var i in data) {
                 created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
                 updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
