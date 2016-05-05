@@ -7,20 +7,35 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-
     //alert(words[words.length-1]);
-    $("#wait-icon").css('display', 'block');
-    $("#wait-icon").html('Please Wait');
     //$("#results").css('text-align', 'center');
     //$("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
+    var numReq = $("#req-num option:selected").val();
+    if (repo == "" || 
+        repo == undefined ||
+        org == "" ||
+        org == undefined ||
+        numReq == "" ||
+        numReq == undefined) {
+        $("#error").css('display','block');
+        $("#error").text('Please Fill in all Fields.');
+        return;
+    } else {
+        $("#error").css('display', 'none');
+    }
+
+    $("#results").html('');
+    $("#wait-icon").css('display', 'block');
+    //$("#wait-icon").html('Please Wait');
+    //alert('numReq: ' + numReq);
     var state = document.querySelector('input[name="status"]:checked').value;
-    console.log(org + " " + repo + " ");
-    sendMessage(org, repo, state, 100, username);
+   
+    sendMessage(org, repo, state, numReq, username, 1);
 }
 
-function sendMessage(org, repo, state, per_page, username) {
+function sendMessage(org, repo, state, per_page, username, page_num) {
     console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
@@ -28,6 +43,8 @@ function sendMessage(org, repo, state, per_page, username) {
     fd.append("state", state);
     fd.append("per_page", per_page);
     fd.append("username", username);
+    fd.append("page_num", page_num);
+    //fd.append("numReq", numReq);
 
     var req = new XMLHttpRequest();
 
@@ -37,50 +54,83 @@ function sendMessage(org, repo, state, per_page, username) {
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
             cacheData = data;
-            //console.log(data);
             var display = '<div class="pull_request">' 
             var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
-            // var visData = new Array(data.length);
-
             $("#results").text("");
+
+            var pull_request_dict = {};
+           
             for (var i in data) {
+                // created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
+                // updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
+                // closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
 
-                // visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at)];
+                created_at = Date.parse(data[i].created_at);
+                updated_at = Date.parse(data[i].updated_at);
+                closed_at = Date.parse(data[i].closed_at);
 
-
-                created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
-                updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
-                closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
+                text = ''; 
 
                 if (i == data[data.length-1]) {
-                    display = display + '<div class="single_request" style="margin-bottom: 0px">';
-                }else{
-                    display = display + '<div class="single_request">';
+                    text += '<div class="single_request" style="margin-bottom: 0px">';
+                } else { 
+                    text += '<div class="single_request">';
                 }
                 
-                display = display + '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
                     '<div class="state" >state: ' + data[i].state + '</div>' +
                     '<div class="request_number" >number: ' + data[i].number + '</div>' +
-                    '<div class="created_at" >created at ' + created_at + '</div>' +
-                    '<div class="updated_at" >updated at ' + updated_at + '</div>';
+                    '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
+                    '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
                 
                 if (data[i].state == "open"){
-                    display = display + '<div class="closed_at" >open till now</div></div>';
-                }else{
-                    display = display + '<div class="closed_at" >closed at ' + closed_at + '</div></div>';
+                    text += '<div class="closed_at" >open till now</div></div>';
+                } else {
+                    text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
                 }
 
-                display = display + '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
                     '<div class="request_body" >  ' + data[i].body + '</div>' +
-                    '</div>';            	
+                    '</div>';  
+
+                pull_request_dict[data[i].number] = {
+                    created_at: created_at,
+                    updated_at: updated_at,
+                    closed_at: closed_at,
+                    text: text
+                };
+
+                display += text;          	
             }
+
+            console.log(pull_request_dict);
             $("#wait-icon").css('display','none');
             $("#results").css('display', 'block');
             display = display + '</div>'
             $('#results').append(display);
             $("#menu").css('display', 'block');
+            
+            var minDate = getMinDate(pull_request_dict);
+            var maxDate = getMaxDate(pull_request_dict);
+
+            $("#slider").dateRangeSlider({
+                bounds: {
+                    min: new Date(minDate),
+                    max: new Date(maxDate)
+                }, 
+                defaultValues: {
+                    min: new Date(minDate),
+                    max: new Date(maxDate)
+                }
+            });
+            $("#slider").on("valuesChanged", function(e, data) {
+                minDate = data.values.min;
+                maxDate = data.values.max;
+                console.log(minDate + ", " + maxDate);
+            });
+
             displayPage = 'user';
 
             //if ()
@@ -95,11 +145,10 @@ function sendMessage(org, repo, state, per_page, username) {
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username + '/' + page_num, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
-
 
 
 function timeline_graph(data){
@@ -309,21 +358,6 @@ function timeline_graph(data){
         });
             
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -335,6 +369,28 @@ function timeline_graph(data){
 
 var minDate;
 var maxDate;
+
+function getMinDate(dict) {
+    var min = Number.MAX_SAFE_INTEGER;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] < min) {
+            min = dict[key]['created_at'];
+        }
+    }
+    return min;
+}
+
+function getMaxDate(dict) {
+    var max = 0;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] > max) {
+            max = dict[key]['created_at'];
+        }
+    }
+    return max;
+}
 
 window.addEventListener('load', function(){
 
@@ -375,12 +431,12 @@ window.addEventListener('load', function(){
 
     });
 
-    $("#slider").dateRangeSlider();
-    $("#slider").on("valuesChanged", function(e, data) {
-        minDate = data.values.min;
-        maxDate = data.values.max;
-        console.log(minDate + ", " + maxDate);
-    });
+    // $("#slider").dateRangeSlider();
+    // $("#slider").on("valuesChanged", function(e, data) {
+    //     minDate = data.values.min;
+    //     maxDate = data.values.max;
+    //     console.log(minDate + ", " + maxDate);
+    // });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
