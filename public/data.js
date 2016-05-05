@@ -98,8 +98,8 @@ function sendMessage(org, repo, state, per_page, username) {
 
             $("#slider").dateRangeSlider({
                 bounds: {
-                    min: new Date(2015, 05, 19),
-                    max: new Date(2016, 12, 31)
+                    min: new Date(minDate),
+                    max: new Date(maxDate)
                 }, 
                 defaultValues: {
                     min: new Date(2015, 05, 19),
@@ -124,22 +124,23 @@ function sendMessage(org, repo, state, per_page, username) {
 function getMinDate(dict) {
     var min = Number.MAX_SAFE_INTEGER;
 
-    console.log(min);
-
     for (var key in dict) {
-        console.log(key);
         if (dict[key]['created_at'] < min) {
-            console.log(dict[key]);
             min = dict[key]['created_at'];
         }
     }
-
-    console.log("min date: " + min);
     return min;
 }
 
 function getMaxDate(dict) {
+    var max = 0;
 
+    for (var key in dict) {
+        if (dict[key]['created_at'] > max) {
+            max = dict[key]['created_at'];
+        }
+    }
+    return max;
 }
 
 window.addEventListener('load', function(){
