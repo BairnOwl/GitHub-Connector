@@ -347,6 +347,7 @@ p {
 
 #wait-icon {
 	background-color: transparent;
+	background: url('ajax-loader.gif');
 	position: absolute;
 	text-align: center;
 	display: none;
@@ -373,6 +374,13 @@ input[type=radio] {
 
 #req-num {
 	height: 60px;
+}
+
+#error {
+	display: none;
+	color: red;
+	margin-top: 10px;
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 /*#data-page {

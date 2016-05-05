@@ -8,15 +8,31 @@ function handleInput(e) {
     var username = words[words.length-1];
 
     //alert(words[words.length-1]);
-    $("#wait-icon").css('display', 'block');
-    $("#wait-icon").html('Please Wait');
     //$("#results").css('text-align', 'center');
     //$("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
+    var numReq = $("#req-num option:selected").val();
+    if (repo == "" || 
+        repo == undefined ||
+        org == "" ||
+        org == undefined ||
+        numReq == "" ||
+        numReq == undefined) {
+        $("#error").css('display','block');
+        $("#error").text('Please Fill in all Fields.');
+        return;
+    } else {
+        $("#error").css('display', 'none');
+    }
+
+    $("#results").html('');
+    $("#wait-icon").css('display', 'block');
+    //$("#wait-icon").html('Please Wait');
+    //alert('numReq: ' + numReq);
     var state = document.querySelector('input[name="status"]:checked').value;
    
-    sendMessage(org, repo, state, 100, username);
+    sendMessage(org, repo, state, numReq, username);
 }
 
 function sendMessage(org, repo, state, per_page, username) {
@@ -27,6 +43,7 @@ function sendMessage(org, repo, state, per_page, username) {
     fd.append("state", state);
     fd.append("per_page", per_page);
     fd.append("username", username);
+    //fd.append("numReq", numReq);
 
     var req = new XMLHttpRequest();
 
@@ -177,6 +194,13 @@ window.addEventListener('load', function(){
         displayPage = 'user';
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
+    });
+
+    $("#slider").dateRangeSlider();
+    $("#slider").on("valuesChanged", function(e, data) {
+        minDate = data.values.min;
+        maxDate = data.values.max;
+        console.log(minDate + ", " + maxDate);
     });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
