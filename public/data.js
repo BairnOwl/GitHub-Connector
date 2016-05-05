@@ -128,6 +128,7 @@ function getMinDate(dict) {
 
     for (var key in dict) {
         if (dict[key][created_at] < min) {
+            console.log(dict[key]);
             min = dict[key][created_at];
         }
     }
