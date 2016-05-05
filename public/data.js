@@ -1,10 +1,11 @@
+var displayPage;
+
 function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-
     //alert(words[words.length-1]);
 
     $("#results").html('<p id="wait-icon">Please Wait</p>');
@@ -89,6 +90,8 @@ function sendMessage(org, repo, state, username) {
 
             display = display + '</div>'
             $('#results').append(display);
+            $("#menu").css('display', 'block');
+            displayPage = 'user';
         }
     };
 
@@ -107,6 +110,31 @@ window.addEventListener('load', function(){
         $("#results").css('display', 'none');
     });
 
+    $("#timeline-graph").click(function(){
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
+        $("#timeline-graph").css('color', 'white');
+        $("#timeline-graph").css('background-color', '#8181ae');
+        if (displayPage == 'graph') {
+            return;
+        }
+        displayPage = 'graph';
+        $("#results").css('display', 'none');
+        $("graph-panel").css('display', 'block');
+    });
+
+    $("#user-search").click(function(){
+        $("#user-search").css('color', 'white');
+        $("#user-search").css('background-color', '#8181ae');
+        $("#timeline-graph").css('color', '#8181ae');
+        $("#timeline-graph").css('background-color', 'white');
+        if(displayPage == 'user') {
+            return;
+        }
+        displayPage = 'user';
+        $("#results").css('display', 'block');
+        $("#graph-panel").css('display', 'none');
+    });
 
     $("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
