@@ -38,35 +38,54 @@ function sendMessage(org, repo, state, per_page, username) {
             var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
             $("#results").text("");
+
+            var pull_request_dict = {};
            
             for (var i in data) {
-                created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
-                updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
-                closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
+                // created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
+                // updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
+                // closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
+
+                created_at = Date.parse(data[i].created_at);
+                updated_at = Date.parse(data[i].updated_at);
+                closed_at = Date.parse(data[i].closed_at);
+
+                text = ''; 
 
                 if (i == data[data.length-1]) {
-                    display = display + '<div class="single_request" style="margin-bottom: 0px">';
-                }else{
-                    display = display + '<div class="single_request">';
+                    text += '<div class="single_request" style="margin-bottom: 0px">';
+                } else { 
+                    text += '<div class="single_request">';
                 }
                 
-                display = display + '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
                     '<div class="state" >state: ' + data[i].state + '</div>' +
                     '<div class="request_number" >number: ' + data[i].number + '</div>' +
-                    '<div class="created_at" >created at ' + created_at + '</div>' +
-                    '<div class="updated_at" >updated at ' + updated_at + '</div>';
+                    '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
+                    '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
                 
                 if (data[i].state == "open"){
-                    display = display + '<div class="closed_at" >open till now</div></div>';
-                }else{
-                    display = display + '<div class="closed_at" >closed at ' + closed_at + '</div></div>';
+                    text += '<div class="closed_at" >open till now</div></div>';
+                } else {
+                    text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
                 }
 
-                display = display + '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
                     '<div class="request_body" >  ' + data[i].body + '</div>' +
-                    '</div>';            	
+                    '</div>';  
+
+                pull_request_dict[data[i].number] = {
+                    created_at: created_at;
+                    updated_at: updated_at;
+                    closed_at: closed_at;
+                    text: text;
+                };
+
+                display += text;          	
             }
+
+            console.log(pull_request_dict);
             $("#wait-icon").css('display','none');
             $("#results").css('display', 'block');
             display = display + '</div>'
