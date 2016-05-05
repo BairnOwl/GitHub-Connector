@@ -76,10 +76,10 @@ function sendMessage(org, repo, state, per_page, username) {
                     '</div>';  
 
                 pull_request_dict[data[i].number] = {
-                    created_at: created_at;
-                    updated_at: updated_at;
-                    closed_at: closed_at;
-                    text: text;
+                    created_at: created_at,
+                    updated_at: updated_at,
+                    closed_at: closed_at,
+                    text: text
                 };
 
                 display += text;          	
