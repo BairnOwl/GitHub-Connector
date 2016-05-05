@@ -8,7 +8,7 @@ function handleInput(e) {
     var username = words[words.length-1];
     //alert(words[words.length-1]);
 
-    $("#results").html('<p id="wait-icon">Please Wait</p>');
+    $("#results").html('<div id="wait-icon">Please Wait</div>');
     //$("#results").css('text-align', 'center');
     $("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
