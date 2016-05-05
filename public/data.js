@@ -72,6 +72,19 @@ function sendMessage(org, repo, state, per_page, username) {
             display = display + '</div>'
             $('#results').append(display);
             $("#menu").css('display', 'block');
+            
+            $("#slider").dateRangeSlider({
+                bounds: {
+                    min: new Date(2015, 5, 19),
+                    max: new Date(2016, 12, 31)
+                }
+            });
+            $("#slider").on("valuesChanged", function(e, data) {
+                minDate = data.values.min;
+                maxDate = data.values.max;
+                console.log(minDate + ", " + maxDate);
+            });
+
             displayPage = 'user';
         }
     };
@@ -118,13 +131,6 @@ window.addEventListener('load', function(){
         displayPage = 'user';
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
-    });
-
-    $("#slider").dateRangeSlider();
-    $("#slider").on("valuesChanged", function(e, data) {
-        minDate = data.values.min;
-        maxDate = data.values.max;
-        console.log(minDate + ", " + maxDate);
     });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
