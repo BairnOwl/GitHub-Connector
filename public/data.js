@@ -112,7 +112,7 @@ window.addEventListener('load', function(){
 
 
     $("#slider").dateRangeSlider();
-    $("#slider").on("valuesChanging", function(e, data) {
+    $("#slider").on("valuesChanged", function(e, data) {
         minDate = data.values.min;
         maxDate = data.values.max;
         console.log(minDate + ", " + maxDate);
