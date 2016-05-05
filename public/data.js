@@ -32,7 +32,7 @@ function handleInput(e) {
     //alert('numReq: ' + numReq);
     var state = document.querySelector('input[name="status"]:checked').value;
    
-    sendMessage(org, repo, state, 100, username);
+    sendMessage(org, repo, state, numReq, username);
 }
 
 function sendMessage(org, repo, state, per_page, username) {
