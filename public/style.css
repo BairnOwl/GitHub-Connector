@@ -13,7 +13,8 @@ header {
 	background-color: #efeff0;
 }
 .radio{
-	text-align: center;
+	text-align: left;
+	padding-left: 100px;
 }
 
 .head {
@@ -136,7 +137,8 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .pull_request {
-	background-color: white;
+	background-color: #efeff0;
+	padding-bottom: 20px;
 	/*width: 1200px;*/
 }
 
@@ -155,11 +157,16 @@ td {
     height: 100px;
     width: 50px;
 }*/
+
 .single_request {
 	width: 914px;
 	height: 200px;
 /*	border: 1px solid #beb8d4;*/
 	background-color: #f8f8fa;
+	margin-bottom: 20px;	
+	top: 20px;
+	box-shadow: 6px 3px 5px #8181ae;
+	border-radius: 5px;
 }
 .profile_img {
 	width:50px;
@@ -167,6 +174,7 @@ td {
 	position: relative;
 	top: 5px;
 	left: 5px;
+	border-radius: 5px;
 }
 .user_login {
 	position: relative;
@@ -176,27 +184,65 @@ td {
 
 .request_title {
 	position: relative;
-	top: -59px;
-	left: 170px;
+	top: -185px;
+	left: 250px;
 	font-size: 18px;
-	background-color: white;
-	width: 600px;
+	background-color: transparent;
+	width: 630px;
 	opacity: 0.8; 
 	padding-left: 6px;
 	padding-top: 2px;
 	padding-right: 6px;
 	padding-bottom: 2px;
+	color: #8181ae;
+}
+
+.request_body {
+	position: relative;
+	top: -170px;
+	left: 255px;
+	width: 620px;
+	height: 130px;
+    overflow: scroll;
 }
 
 
 .state {
 	position: relative;
-	top: -40px;
+	top: -10px;
 	left: 10px;
+	font-size: 16px; 
+}
+
+.request_number {
+	position: relative;
+	top: -10px;
+	left: 10px;
+	font-size: 16px; 
+}
+
+.created_at {
+	position: relative;
+	left: 10px;
+	font-size: 10px; 
+}
+
+.updated_at {
+	position: relative;
+	left: 10px;
+	font-size: 10px; 
+}
+
+.closed_at {
+	position: relative;
+	left: 10px;
+	font-size: 10px; 
 }
 
 
-tr:hover{background-color:#f5f5f5}
+
+
+/*tr:hover{background-color:#f5f5f5}*/
 
 #login-head {
 	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
@@ -251,6 +297,17 @@ p {
 }
 #user-info {
 	height: 200px;
-	width: 200px;
+	width: 230px;
 	background-color: #8181ae;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	color: white;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+#wait-icon {
+	background-color: transparent;
+	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+	font-size: 1.2em;
+	color: #8862b7;
 }
