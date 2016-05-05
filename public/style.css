@@ -90,10 +90,10 @@ header {
 	width: 150px;
 	background-color: white;
 	opacity: 0.9;
-	border: 1px solid #9696f3;
+	border: 1px solid #8181ae;
 	border-radius: 5px;
 	font-size: 1.1em;
-	color: #9696f3;
+	color: #8181ae;
 	font-family: Arial;
 }
 
@@ -103,7 +103,7 @@ header {
 	height: 50px;
 	width: 78%;
 	left: 22%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(255, 255, 255, 0.5);
 	margin-top: 10px;
 }
 
