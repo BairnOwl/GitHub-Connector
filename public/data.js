@@ -6,7 +6,6 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-    //var username = 'lm';
 
     //alert(words[words.length-1]);
     $("#wait-icon").css('display', 'block');
@@ -16,7 +15,7 @@ function handleInput(e) {
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
-    console.log(org + " " + repo + " ");
+   
     sendMessage(org, repo, state, 100, username);
 }
 
@@ -94,6 +93,9 @@ function sendMessage(org, repo, state, per_page, username) {
             $('#results').append(display);
             $("#menu").css('display', 'block');
             
+            var minDate = getMinDate(pull_request_dict);
+            var maxDate = getMaxDate(pull_request_dict);
+
             $("#slider").dateRangeSlider({
                 bounds: {
                     min: new Date(2015, 05, 19),
@@ -119,8 +121,24 @@ function sendMessage(org, repo, state, per_page, username) {
     req.send(fd);
 }
 
-var minDate;
-var maxDate;
+function getMinDate(dict) {
+    var min = Number.MAX_SAFE_INTEGER;
+
+    console.log(min);
+
+    for (var key in dict) {
+        if (dict[key][created_at] < min) {
+            min = dict[key][created_at];
+        }
+    }
+
+    console.log("min date: " + min);
+    return min;
+}
+
+function getMaxDate(dict) {
+
+}
 
 window.addEventListener('load', function(){
 
