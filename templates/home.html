@@ -19,7 +19,7 @@
 <body id="home">
 	<div id="menu">
 		<ul id="menu-ul" style="list-style-type: none">
-			<li><button type="button" class="navBtn" id="user-search">User-Panel</button></li>
+			<li><button type="button" style="color: white; background-color: #8181ae" class="navBtn" id="user-search">User-Panel</button></li>
 			<li><button type="button" class="navBtn" id="timeline-graph">Time-Line</button></li>
 		</ul>
 	</div>
@@ -40,18 +40,24 @@
 				 <input type="radio" name="status" value="closed" checked> Closed <br>
 				 <input type="radio" name="status" value="all" checked> All
 				</div>
+				<div id="slider">
+				</div>
 
 				<!--<input type="range" id="time-range"-->
 				
 	    		<input type="submit" value="Search" id="send_button">
 			</form>
 <!-- 			<button type="button" id="clear-btn">Clear</button> -->
-			<div id="slider">
-			</div>
+<!-- 			<div id="slider">
+			</div> -->
 			<div id="login-info">Logged in as: {{username}}</div>
 		</div>
 	</div>
 	<div id="results">
+	</div>
+	<div id="wait-icon">
+	</div>
+	<div id="graph-panel">
 	</div>
 </body>
 </html>

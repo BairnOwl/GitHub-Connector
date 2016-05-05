@@ -90,21 +90,22 @@ header {
 	width: 150px;
 	background-color: white;
 	opacity: 0.9;
-	border: 1px solid #9696f3;
+	border: 1.5px solid #8181ae;
 	border-radius: 5px;
 	font-size: 1.1em;
-	color: #9696f3;
+	color: #8181ae;
 	font-family: Arial;
 }
 
 #menu {
 	position: fixed;
-	display: block;
-	height: 50px;
+	display: none;
+	height: 62px;
 	width: 78%;
 	left: 22%;
-	background-color: rgba(0, 0, 0, 0.5);
-	margin-top: 10px;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding-top: 8px;
+	z-index: 1;
 }
 
 ul#menu-ul li {
@@ -137,6 +138,7 @@ ul#menu-ul li {
 	margin-right: 4%;
 	float: right;
 	background-color: white;
+	z-index: 0;
 }
 
 #send_button {
@@ -343,12 +345,20 @@ p {
 
 #wait-icon {
 	background-color: transparent;
+	position: absolute;
+	text-align: center;
+	display: none;
+/*	background-image: url('');*/
 	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 	font-size: 1.2em;
 	color: #8862b7;
+	width: 50px;
+	height: 50px;
+	top: 50%;
+	left: 60%;
+	margin-left: -25px;
+	margin-top: -25px;
 }
-
-
 
 /*#data-page {
 	display: block;

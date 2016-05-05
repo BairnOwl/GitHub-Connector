@@ -1,15 +1,16 @@
+var displayPage;
+
 function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-
     //alert(words[words.length-1]);
-
-    $("#results").html('<p id="wait-icon">Please Wait</p>');
+    $("#wait-icon").css('display', 'block');
+    $("#wait-icon").html('Please Wait');
     //$("#results").css('text-align', 'center');
-    $("#results").css('display', 'block');
+    //$("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
@@ -45,28 +46,9 @@ function sendMessage(org, repo, state, per_page, username) {
 
                 if (i == data[data.length-1]) {
                     display = display + '<div class="single_request" style="margin-bottom: 0px">';
-                    // '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
-                    // '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
-                    // '<div class="state" >state: ' + data[i].state + '</div>' +
-                    // '<div class="request_number" >number: ' + data[i].number + '</div>' +
-                    // '<div class="created_at" >created at ' + created_at + '</div>' +
-                    // '<div class="updated_at" >updated at ' + updated_at + '</div>';
-                
-                    // if (data[i].state == "open"){
-                    //     display = display + '<div class="closed_at" >open till now</div></div>';
-                    // }else{
-                    //     display = display + '<div class="closed_at" >closed at ' + closed_at + '</div></div>';
-                    // }
-
-                    // display = display + '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
-                    //     '<div class="request_body" >  ' + data[i].body + '</div>' +
-                    //     '</div>';
-
-                    // break;
                 }else{
                     display = display + '<div class="single_request">';
                 }
-
                 
                 display = display + '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
@@ -85,9 +67,12 @@ function sendMessage(org, repo, state, per_page, username) {
                     '<div class="request_body" >  ' + data[i].body + '</div>' +
                     '</div>';            	
             }
-
+            $("#wait-icon").css('display','none');
+            $("#results").css('display', 'block');
             display = display + '</div>'
             $('#results').append(display);
+            $("#menu").css('display', 'block');
+            displayPage = 'user';
         }
     };
 
@@ -109,6 +94,31 @@ window.addEventListener('load', function(){
         $("#results").css('display', 'none');
     });
 
+    $("#timeline-graph").click(function(){
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
+        $("#timeline-graph").css('color', 'white');
+        $("#timeline-graph").css('background-color', '#8181ae');
+        if (displayPage == 'graph') {
+            return;
+        }
+        displayPage = 'graph';
+        $("#results").css('display', 'none');
+        $("graph-panel").css('display', 'block');
+    });
+
+    $("#user-search").click(function(){
+        $("#user-search").css('color', 'white');
+        $("#user-search").css('background-color', '#8181ae');
+        $("#timeline-graph").css('color', '#8181ae');
+        $("#timeline-graph").css('background-color', 'white');
+        if(displayPage == 'user') {
+            return;
+        }
+        displayPage = 'user';
+        $("#results").css('display', 'block');
+        $("#graph-panel").css('display', 'none');
+    });
 
     $("#slider").dateRangeSlider();
     $("#slider").on("valuesChanged", function(e, data) {
