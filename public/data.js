@@ -6,6 +6,8 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
+    //var username = 'lm';
+
     //alert(words[words.length-1]);
     $("#wait-icon").css('display', 'block');
     $("#wait-icon").html('Please Wait');

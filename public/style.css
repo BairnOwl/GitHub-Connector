@@ -14,7 +14,8 @@ header {
 }
 .radio{
 	text-align: left;
-	padding-left: 100px;
+	padding-left: 90px;
+	color: white;
 }
 
 .head {
@@ -358,6 +359,19 @@ p {
 	left: 60%;
 	margin-left: -25px;
 	margin-top: -25px;
+}
+
+input[type=radio] {
+	display: inline-block;
+/*	float: center;*/
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#req-num {
+	height: 60px;
 }
 
 /*#data-page {

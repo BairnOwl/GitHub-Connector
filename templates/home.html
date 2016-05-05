@@ -15,6 +15,16 @@
     <script src="jQDateRangeSlider-min.js"></script>
     <script src="jquery.mousewheel.min.js"></script>
 	<script src="jQAllRangeSliders-min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="bootstrap-select.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="bootstrap-select.min.js"></script>
+
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+
 </head>
 <body id="home">
 	<div id="menu">
@@ -35,10 +45,24 @@
 					<datalist id="input_content">
 						<option value="presto">
 					</datalist>	
+				<div class='form-group'>
+					<label style="display: none; color: white" for="req-num">Number of Requests Displayed</label>
+					<select multiple class="form-control" id="req-num">
+						<option>20</option>
+						<option>30</option>
+						<option>40</option>
+						<option>50</option>
+					</select>
+				</div>
 				<div class="radio">
-				 <input type="radio" name="status" value="open" checked> Open <br>
-				 <input type="radio" name="status" value="closed" checked> Closed <br>
-				 <input type="radio" name="status" value="all" checked> All
+				 	<input type="radio" id="all" name="status" value="all" checked>
+				 	<label for="all">All State</label>
+				 	<br>
+				 	<input type="radio" id="open" name="status" value="open" checked> 
+				 	<label for="open">Open</label>
+				 	<br>   
+				 	<input type="radio" id="close" name="status" value="closed" checked> 
+				 	<label for="close">Closed</label>  
 				</div>
 				<div id="slider">
 				</div>
