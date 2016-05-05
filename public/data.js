@@ -196,12 +196,12 @@ window.addEventListener('load', function(){
         $("#graph-panel").css('display', 'none');
     });
 
-    $("#slider").dateRangeSlider();
-    $("#slider").on("valuesChanged", function(e, data) {
-        minDate = data.values.min;
-        maxDate = data.values.max;
-        console.log(minDate + ", " + maxDate);
-    });
+    // $("#slider").dateRangeSlider();
+    // $("#slider").on("valuesChanged", function(e, data) {
+    //     minDate = data.values.min;
+    //     maxDate = data.values.max;
+    //     console.log(minDate + ", " + maxDate);
+    // });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
