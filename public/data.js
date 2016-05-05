@@ -1,28 +1,31 @@
+var displayPage;
+
 function handleInput(e) {
     console.log('in handle');
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-    // var username = 'lm';
-    //alert(words[words.length-1]);
 
-    $("#results").html('<p id="wait-icon">Please Wait</p>');
+    //alert(words[words.length-1]);
+    $("#wait-icon").css('display', 'block');
+    $("#wait-icon").html('Please Wait');
     //$("#results").css('text-align', 'center');
-    $("#results").css('display', 'block');
+    //$("#results").css('display', 'block');
     var org = document.getElementById("org_url").value;
     var repo = document.getElementById("repo_url").value;
     var state = document.querySelector('input[name="status"]:checked').value;
     console.log(org + " " + repo + " ");
-    sendMessage(org, repo, state, username);
+    sendMessage(org, repo, state, 100, username);
 }
 
-function sendMessage(org, repo, state, username) {
+function sendMessage(org, repo, state, per_page, username) {
     console.log('in send message');
     var fd = new FormData(document.getElementById('input_form'));
     fd.append("org", org);
     fd.append("repo", repo);
     fd.append("state", state);
+    fd.append("per_page", per_page);
     fd.append("username", username);
 
     var req = new XMLHttpRequest();
@@ -53,7 +56,6 @@ function sendMessage(org, repo, state, username) {
                 }else{
                     display = display + '<div class="single_request">';
                 }
-
                 
                 display = display + '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
                     '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
@@ -72,8 +74,12 @@ function sendMessage(org, repo, state, username) {
                     '<div class="request_body" >  ' + data[i].body + '</div>' +
                     '</div>';            	
             }
-
+            $("#wait-icon").css('display','none');
+            $("#results").css('display', 'block');
             display = display + '</div>'
+            $('#results').append(display);
+            $("#menu").css('display', 'block');
+            displayPage = 'user';
 
 
 
@@ -280,40 +286,16 @@ function sendMessage(org, repo, state, username) {
         });
             
 
-
-
-
-            $('#results').append(display);
-            console.log(visData);
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     };
 
-    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + username, true);
+    req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
 }
+
+var minDate;
+var maxDate;
 
 window.addEventListener('load', function(){
 
@@ -325,7 +307,38 @@ window.addEventListener('load', function(){
         $("#results").css('display', 'none');
     });
 
-    //$("#slider").dateRangeSlider();
+    $("#timeline-graph").click(function(){
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
+        $("#timeline-graph").css('color', 'white');
+        $("#timeline-graph").css('background-color', '#8181ae');
+        if (displayPage == 'graph') {
+            return;
+        }
+        displayPage = 'graph';
+        $("#results").css('display', 'none');
+        $("graph-panel").css('display', 'block');
+    });
+
+    $("#user-search").click(function(){
+        $("#user-search").css('color', 'white');
+        $("#user-search").css('background-color', '#8181ae');
+        $("#timeline-graph").css('color', '#8181ae');
+        $("#timeline-graph").css('background-color', 'white');
+        if(displayPage == 'user') {
+            return;
+        }
+        displayPage = 'user';
+        $("#results").css('display', 'block');
+        $("#graph-panel").css('display', 'none');
+    });
+
+    $("#slider").dateRangeSlider();
+    $("#slider").on("valuesChanged", function(e, data) {
+        minDate = data.values.min;
+        maxDate = data.values.max;
+        console.log(minDate + ", " + maxDate);
+    });
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();

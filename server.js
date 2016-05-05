@@ -45,21 +45,24 @@ function randomString(length, chars) {
     return result;
 }
 
-app.post('/data/:org/:repo/:state/:username', function(request, response) {
-	console.log('getting cookie');
+app.post('/data/:org/:repo/:state/:per_page/:username', function(request, response) {
 
 	var org = request.params.org;
 	var repo = request.params.repo;
 	var state = request.params.state;
+	var per_page = request.params.per_page;
 	var username = request.params.username;
 
 	console.log('username from data.js: ' + username);
 
-	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state;
+	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state + '&per_page=' + per_page;
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	var token = '';
+
+	//var token = '259376713930ac27c9860e7a30f53a8855b8360a';
+	var token = users[username];
+
 	console.log('usertoken: ' + token);
 
 	req.setRequestHeader('Authorization', 'token ' + token);

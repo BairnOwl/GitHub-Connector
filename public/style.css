@@ -14,7 +14,8 @@ header {
 }
 .radio{
 	text-align: left;
-	padding-left: 100px;
+	padding-left: 90px;
+	color: white;
 }
 
 .head {
@@ -84,6 +85,41 @@ header {
 	position: absolute;
 	margin-left: 10px;
 }*/
+
+.navBtn {
+	height: 45px;
+	width: 150px;
+	background-color: white;
+	opacity: 0.9;
+	border: 1.5px solid #8181ae;
+	border-radius: 5px;
+	font-size: 1.1em;
+	color: #8181ae;
+	font-family: Arial;
+}
+
+#menu {
+	position: fixed;
+	display: none;
+	height: 62px;
+	width: 78%;
+	left: 22%;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding-top: 8px;
+	z-index: 1;
+}
+
+ul#menu-ul li {
+	display: inline;
+	padding-left: 20px;
+	float: left;
+}
+
+#menu-ul {
+	width: 600px;
+	list-style-type: none;
+}
+
 #title {
 	background-color: white;
 	font-family: Arial, Helvetica, sans-serif;
@@ -99,10 +135,11 @@ header {
 	color: #8C489F;
 }
 #results {
-	margin-top: 50px;
+	margin-top: 70px;
 	margin-right: 4%;
 	float: right;
 	background-color: white;
+	z-index: 0;
 }
 
 #send_button {
@@ -113,6 +150,8 @@ header {
 	border-radius: 5px;
 	font-size: 1.1em;
 	color: #8862b7;
+	background-color: white;
+	opacity: 0.9;
 }
 
 input[type=range] {
@@ -307,7 +346,45 @@ p {
 
 #wait-icon {
 	background-color: transparent;
+	position: absolute;
+	text-align: center;
+	display: none;
+/*	background-image: url('');*/
 	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 	font-size: 1.2em;
 	color: #8862b7;
+	width: 50px;
+	height: 50px;
+	top: 50%;
+	left: 60%;
+	margin-left: -25px;
+	margin-top: -25px;
 }
+
+input[type=radio] {
+	display: inline-block;
+/*	float: center;*/
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#req-num {
+	height: 60px;
+}
+
+/*#data-page {
+	display: block;
+	position: absolute;
+	left: 25%;
+}
+
+#menu-box {
+	display: block;
+	position: fixed;
+	top: 0%;
+	height: 50px;
+	left: 25%;
+	width: 75%;
+}*/
