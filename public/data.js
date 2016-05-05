@@ -75,7 +75,11 @@ function sendMessage(org, repo, state, per_page, username) {
             
             $("#slider").dateRangeSlider({
                 bounds: {
-                    min: new Date(2015, 5, 19),
+                    min: new Date(2015, 05, 19),
+                    max: new Date(2016, 12, 31)
+                }, 
+                defaultValues: {
+                    min: new Date(2015, 05, 19),
                     max: new Date(2016, 12, 31)
                 }
             });
