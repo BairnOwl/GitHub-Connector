@@ -108,7 +108,7 @@ window.addEventListener('load', function(){
     });
 
 
-    //$("#slider").dateRangeSlider();
+    $("#slider").dateRangeSlider();
     // var username = $("#login-info").val();
     // console.log('username: ' + username);
 	// var req = new XMLHttpRequest();
