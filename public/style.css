@@ -101,8 +101,9 @@ header {
 	position: fixed;
 	display: block;
 	height: 50px;
-	width: 600px;
-	left: 25%;
+	width: 78%;
+	left: 22%;
+	background-color: rgba(0, 0, 0, 0.5);
 	margin-top: 10px;
 }
 
@@ -132,7 +133,7 @@ ul#menu-ul li {
 	color: #8C489F;
 }
 #results {
-	margin-top: 50px;
+	margin-top: 70px;
 	margin-right: 4%;
 	float: right;
 	background-color: white;
