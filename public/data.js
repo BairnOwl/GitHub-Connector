@@ -102,8 +102,8 @@ function sendMessage(org, repo, state, per_page, username) {
                     max: new Date(maxDate)
                 }, 
                 defaultValues: {
-                    min: new Date(2015, 05, 19),
-                    max: new Date(2016, 12, 31)
+                    min: new Date(minDate),
+                    max: new Date(maxDate)
                 }
             });
             $("#slider").on("valuesChanged", function(e, data) {
