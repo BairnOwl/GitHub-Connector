@@ -7,6 +7,7 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
+
     //alert(words[words.length-1]);
     //$("#results").css('text-align', 'center');
     //$("#results").css('display', 'block');
@@ -56,6 +57,7 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
             cacheData = data;
             var display = '<div class="pull_request">' 
             var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
 
             $("#results").text("");
 
@@ -153,16 +155,20 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
 
 function timeline_graph(data){
 
+    var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
     var visData = new Array(data.length);
     for (var i in data) {
-        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at)];
+        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
     }
+    // console.log(visData);
 
     var userList = [];
-            // var visDataUser = []
-
+            
+            var visDataUser = []
             var startDate = new Date(visData[0][2]);
             var endDate = new Date();
+            
             for (i=0; i<visData.length; i++){
                 var createD = new Date(visData[i][2]);
                 var closedD = new Date(visData[i][4]);
@@ -172,53 +178,53 @@ function timeline_graph(data){
                 var index = userList.indexOf(visData[i][0]);
                 if (index == -1){
                     userList.push(visData[i][0]);
-                    // visDataUser.push([visData[i][0], visData[i]]);                    
-                // }else{
-                //     visDataUser[index].push(visData[i]);
+                    visDataUser.push([visData[i][0], [visData[i]]])
+                } else {
+                    visDataUser[index][1].push(visData[i]);
                 }
-                // if (endDate == "Invalid Date"){
-                //     endDate = closedD;
-                // }else{
-                //     if (endDate < closedD){
-                //         endDate = closedD;
-                //     }
-                // }
             }
 
-            // console.log(startDate);
-            // console.log(endDate);
-            // console.log(endDate - startDate);
-            console.log(userList);
+            // console.log(userList);
             // console.log(visDataUser);
 
             var range = endDate - startDate;
-            // for (i=0; i<visData.length; i++){
-            //     var s = new Date(visData[i][2]);
-            //     var u = new Date(visData[i][3]);
-            //     var c = new Date(visData[i][4]);
-            //     visData[i][2] = (s - startDate)/range;
-            //     visData[i][3] = (u - startDate)/range;
-            //     if (c == "Invalid Date"){
-            //         visData[i][4] = 1;
-            //     }else{
-            //         visData[i][4] = (c - startDate)/range;
-            //     }
-            //     // console.log(visData[i][2], visData[i][3], visData[i][4]);
-            // }
 
             //Width and height
             var w = 1000;
-            var h = 1000;
-            var t = 700;
+            var h = 750;
+            var t = 550;
             
     
             //Create SVG element
             var svg = d3.select("body")
                         .append("svg")
-                        .attr("width", w)
+                        .attr("width", w+100)
                         .attr("height", h);
 
-            
+            var backgroundPanel = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("top", "80px")
+              .style("left", "350px")
+              .style("z-index", "-10")
+              .style("width", "800px")
+              .style("height", "600px")
+              .style("background-color", "#f8f8fa")
+              .style("box-shadow", "6px 3px 5px #8181ae");
+
+            var timelinebarPanel = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("top", "170px")
+              .style("left", "480px")
+              .style("z-index", "-9")
+              .style("width", "600px")
+              .style("height", "400px")
+              .style("opacity", "0.8")
+              .style("border-radius", "5px")
+              .style("background-color", "#8181ae");
+
+
 
             var tooltip = d3.select("body")
               .append("div")
@@ -227,10 +233,11 @@ function timeline_graph(data){
               .style("visibility", "hidden")
               .text("a simple tooltip")
               .style("width", "200px")
-              .style("background-color", "yellow")
-              .style("font-size", "10px");
-
-
+              .style("background-color", "#ffffcc")
+              .style("font-size", "10px")
+              .style("border-radius", "3px")
+              .style("color", "#800080")
+              .style("opacity", "0.9");
 
 
             svg.selectAll("rectBackground")
@@ -242,9 +249,23 @@ function timeline_graph(data){
                 var i = userList.indexOf(d[0]);
                 return 190 + 30*i;
             })
-            .attr("width", 800)
+            .attr("width", t)
             .attr("height", 20)
-            .attr("fill", "pink")
+            .attr("fill", "#ffe6ff")
+            .attr("opacity", "0.9");
+
+            svg.selectAll("userBackground")
+            .data(visData)
+            .enter()
+            .append("rect")
+            .attr("x", 360)
+            .attr("y", function(d){
+                var i = userList.indexOf(d[0]);
+                return 190 + 30*i;
+            })
+            .attr("width", 100)
+            .attr("height", 20)
+            .attr("fill", "#9999ff")
             .attr("opacity", "0.9");
 
 
@@ -279,7 +300,7 @@ function timeline_graph(data){
             .attr("fill", "blue")
             .attr("opacity", "0.5")
             .on("mouseover", function(d){
-                d3.select(this).style({fill:'red',});
+                d3.select(this).style({fill:'#ff4dd2',});
                 c = new Date(d[2]).toLocaleTimeString("en-us", options);
                 e = new Date(d[4]).toLocaleTimeString("en-us", options);
                 if (e == "Invalid Date" ){
@@ -289,7 +310,7 @@ function timeline_graph(data){
                 tooltip.style("visibility", "visible");
             })
             .on("mousemove", function(d){
-                d3.select(this).style({fill:'red',});
+                d3.select(this).style({fill:'#ff4dd2',});
                 c = new Date(d[2]).toLocaleTimeString("en-us", options);
                 e = new Date(d[4]).toLocaleTimeString("en-us", options);
                 if (e == "Invalid Date" ){
@@ -303,8 +324,20 @@ function timeline_graph(data){
                 tooltip.style("visibility", "hidden");
             });
 
+            var circles = svg.selectAll("circle")
+                          .data(visDataUser)
+                          .enter()
+                          .append("circle")
+                          .attr("cx", 1063)
+                            .attr("cy", function (d, i) {
+                                return 200 + 30*i;
+                            })
+                            .attr("r", 10)
+                            .style("fill", "#ffffb3")
+                            .style("opacity", "0.7");
 
-            svg.selectAll("text")
+
+            svg.selectAll("usernametext")
                .data(userList)
                .enter()
                .append("text")
@@ -317,46 +350,59 @@ function timeline_graph(data){
                })
                .attr("font-family", "sans-serif")
                .attr("font-size", "11px")
-               .attr("fill", "red");
+               .attr("fill", "white");
+
+            svg.selectAll("number count")
+               .data(visDataUser)
+               .enter()
+               .append("text")
+               .text(function(d) {
+                    return d[1].length;
+               })
+               .attr("x", 1060)
+               .attr("y", function(d, i) {
+                    return 203 + 30*i;
+               })
+               .attr("font-family", "sans-serif")
+               .attr("font-size", "11px")
+               .attr("fill", "#660066");
             
     
 
-               var width = 800,
+            var width = 500,
             height = 160,
-            padding = 30;
+            padding = 50;
 
-                  
-        // define the x scale (horizontal)
-        var mindate = startDate,
-            maxdate = endDate;
-            
-        var xScale = d3.time.scale()
-          .domain([mindate, maxdate])    // values between for month of january
-    .range([500, 1000]);   // map these the the chart width = total width minus padding at both sides
-        
-  
-        
-        // define the y axis
-        var xAxis = d3.svg.axis()
-            .orient("bottom")
-            .scale(xScale);
-            
 
-        // draw x axis with labels and move to the bottom of the chart area
-        svg.append("g")
-            .attr("class", "xaxis")   // give it a class so it can be used to select only xaxis labels  below
-            .attr("transform", "translate(0," + (height - padding) + ")")
-            .call(xAxis);
+            //Width and height
+            var h = 180;
+            var padding = 50;
+
+            //Create scale functions
+            var xScale = d3.time.scale()
+                                 // .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+                                 .domain([startDate, endDate])
+                                 .range([500, 1050]);
+
             
-        // now rotate text on x axis
-        // solution based on idea here: https://groups.google.com/forum/?fromgroups#!topic/d3-js/heOBPQF3sAY
-        // first move the text left so no longer centered on the tick
-        // then rotate up to get 45 degrees.
-       svg.selectAll(".xaxis text")  // select all the text elements for the xaxis
+            //Define X axis
+            var xAxis = d3.svg.axis()
+                              .scale(xScale)
+                              .orient("bottom")
+                              .ticks(11);        
+            
+            
+            //Create X axis
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(0," + (h - padding) + ")")
+                .call(xAxis)
+                .attr("fill", "#8862b7");
+
+               svg.selectAll(".axis text")  // select all the text elements for the xaxis
           .attr("transform", function(d) {
-              return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-35)";
-        });
-            
+              return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+        });    
 
 }
 
@@ -431,42 +477,5 @@ window.addEventListener('load', function(){
 
     });
 
-    // $("#slider").dateRangeSlider();
-    // $("#slider").on("valuesChanged", function(e, data) {
-    //     minDate = data.values.min;
-    //     maxDate = data.values.max;
-    //     console.log(minDate + ", " + maxDate);
-    // });
-    // var username = $("#login-info").val();
-    // console.log('username: ' + username);
-	// var req = new XMLHttpRequest();
-
-	// req.onreadystatechange = function() {
- //        if (req.readyState == 4 && req.status == 200) {
- //            var data = jQuery.parseJSON(req.responseText);
-
- //            for (var i in data) {
- //            	console.log(data[i]);
- //            	$('#results').append('<div class="pull-request"><ul>' +
- //            	'<li>ID: ' + data[i].id + '</li>' +
- //            	'<li>Number: ' + data[i].number + '</li>' +
- //            	'<li>Head label: ' + data[i].head.label + '</li>' +
- //            	'<li>State: ' + data[i].state + '</li>' +
- //            	'<li>User login: ' + data[i].user.login + '</li>' +
- //            	'<li>Created at: ' + data[i].created_at + '</li>' +
- //            	'<li>Updated at: ' + data[i].updated_at + '</li>' +
- //            	'<li>Closed at: ' + data[i].closed_at + '</li>' +
- //            	'<li>Merged at: ' + data[i].merged_at + '</li>' +
- //            	'<li>HTML URL: ' + data[i].html_url + '</li>' +
- //            	'</ul></div>');
- //            }
- //        }
- //    };
-
-    //input_form.addEventListener('submit', handleInput, false);
-
-    // var input = 'data';
-    // req.open('POST', '/data/' + "presto", true);
-    // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // req.send();
+    
 }, false);
