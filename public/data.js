@@ -157,8 +157,11 @@ function timeline_graph(data){
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
     var visData = new Array(data.length);
-    for (var i in data) {
-        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
+    var i;
+    var j = 0;
+    for (i=data.length; i>-1; i--) {
+        visData[j] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
+        j++;
     }
     // console.log(visData);
 
