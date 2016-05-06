@@ -7,7 +7,6 @@ function handleInput(e) {
 
     var words = $("#login-info").text().split(" ");
     var username = words[words.length-1];
-
     //alert(words[words.length-1]);
     //$("#results").css('text-align', 'center');
     //$("#results").css('display', 'block');
