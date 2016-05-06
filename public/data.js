@@ -453,6 +453,8 @@ window.addEventListener('load', function(){
         $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', 'white');
         $("#timeline-graph").css('background-color', '#8181ae');
+        $("#graph2").css('color', '#8181ae');
+        $("#graph2").css('background-color', 'white');
         if (displayPage == 'graph') {
             return;
         }
@@ -462,11 +464,23 @@ window.addEventListener('load', function(){
         $("graph-panel").css('display', 'block');
     });
 
+    $("#graph2").click(function(){
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
+        $("#timeline-graph").css('color', '#8181ae');
+        $("#timeline-graph").css('background-color', 'white');
+        $("#graph2").css('color', 'white');
+        $("#graph2").css('background-color', '#8181ae');
+        $("#results").css('display', 'none');
+    });
+
     $("#user-search").click(function(){
         $("#user-search").css('color', 'white');
         $("#user-search").css('background-color', '#8181ae');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
+        $("#graph2").css('color', '#8181ae');
+        $("#graph2").css('background-color', 'white');
         if(displayPage == 'user') {
             return;
         }
