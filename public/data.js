@@ -636,25 +636,12 @@ function linechart(data){
             });    
 
 
-
-
-
-
-
-
-
 }
 
 
+function creativeGraph(data) {
 
-
-
-
-
-
-
-
-
+}
 
 
 
@@ -694,44 +681,66 @@ window.addEventListener('load', function(){
     });
 
     $("#timeline-graph").click(function(){
-        $("#user-search").css('color', '#8181ae');
-        $("#user-search").css('background-color', 'white');
+        $("#user-search").css('color', '#4949c0');
+        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
         $("#timeline-graph").css('color', 'white');
         $("#timeline-graph").css('background-color', '#8181ae');
         $("#graph2").css('color', '#8181ae');
         $("#graph2").css('background-color', 'white');
-        if (displayPage == 'graph') {
-            return;
-        }
-        displayPage = 'graph';
+        $("#graph3").css('color', '#8181ae');
+        $("#graph3").css('background-color', 'white');
+        // if (displayPage == 'graph') {
+        //     return;
+        // }
+        // displayPage = 'graph';
         $("#results").css('display', 'none');
+        d3.select("svg").remove();
         timeline_graph(cacheData);
         $("graph-panel").css('display', 'block');
     });
 
     $("#graph2").click(function(){
-        $("#user-search").css('color', '#8181ae');
-        $("#user-search").css('background-color', 'white');
+        $("#user-search").css('color', '#4949c0');
+        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', 'white');
         $("#graph2").css('background-color', '#8181ae');
+        $("#graph3").css('color', '#8181ae');
+        $("#graph3").css('background-color', 'white');
         $("#results").css('display', 'none');
         d3.select("svg").remove();
         linechart(cacheData);
     });
 
-    $("#user-search").click(function(){
-        $("#user-search").css('color', 'white');
-        $("#user-search").css('background-color', '#8181ae');
+    $("#graph3").click(function(){
+        $("#user-search").css('color', '#4949c0');
+        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
         $("#graph2").css('background-color', 'white');
-        if(displayPage == 'user') {
-            return;
-        }
-        displayPage = 'user';
+        $("#graph3").css('color', 'white');
+        $("#graph3").css('background-color', '#8181ae');
+        $("#results").css('display', 'none');
+        d3.select("svg").remove();
+        creativeGraph(cacheData);
+        //linechart(cacheData);
+    });
+
+    $("#user-search").click(function(){
+        $("#user-search").css('color', 'white');
+        $("#user-search").css('background-color', '#4949c0');
+        $("#timeline-graph").css('color', '#8181ae');
+        $("#timeline-graph").css('background-color', 'white');
+        $("#graph2").css('color', '#8181ae');
+        $("#graph2").css('background-color', 'white');
+        $("#graph3").css('color', '#8181ae');
+        $("#graph3").css('background-color', 'white');
+        // if(displayPage == 'user') {
+        //     return;
+        // }
+        // displayPage = 'user';
         d3.select("svg").remove();
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
