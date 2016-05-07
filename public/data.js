@@ -153,14 +153,24 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
 }
 
 
+
+
+
+
+
+
 function timeline_graph(data){
 
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
     var visData = new Array(data.length);
-    for (var i in data) {
-        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
+    var i;
+    var j = 0;
+    for (i=data.length-1; i>-1; i--) {
+        visData[j] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
+        j++;
     }
+
     // console.log(visData);
 
     var userList = [];
@@ -219,7 +229,7 @@ function timeline_graph(data){
               .style("left", "480px")
               .style("z-index", "-9")
               .style("width", "600px")
-              .style("height", "400px")
+              .style("height", "420px")
               .style("opacity", "0.8")
               .style("border-radius", "5px")
               .style("background-color", "#8181ae");
@@ -281,8 +291,13 @@ function timeline_graph(data){
             })
             // .attr("x", 0)
             .attr("y", function(d){
+                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
+                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
+                // console.log(c + e);
+
                 var i = userList.indexOf(d[0]);
                 return 190 + 30*i;
+                
             })
             .attr("width", function(d){
                 var s = new Date(d[2]);
@@ -408,6 +423,237 @@ function timeline_graph(data){
 
 
 
+function linechart(data){
+    console.log("call linechart");
+    console.log(data);
+
+    var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
+    var visData = new Array(data.length);
+    for (var i=0; i<data.length; i++) {
+        visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
+    }
+
+    // console.log(visData);
+
+    // var userList = [];
+            
+    // var visDataUser = []
+    var startDate = new Date(visData[0][2]);
+    var endDate = new Date();
+    
+    for (i=0; i<visData.length; i++){
+        var createD = new Date(visData[i][2]);
+        var closedD = new Date(visData[i][4]);
+        if (startDate > createD){
+            startDate = createD;
+        }
+        // var index = userList.indexOf(visData[i][0]);
+        // if (index == -1){
+        //     userList.push(visData[i][0]);
+        //     visDataUser.push([visData[i][0], [visData[i]]])
+        // } else {
+        //     visDataUser[index][1].push(visData[i]);
+        // }
+    }
+
+    // console.log(userList);
+    // console.log(visDataUser);
+
+    var range = endDate - startDate;
+    var oneDay = 24*60*60*1000;
+    var rangeDays = Math.round(Math.abs((endDate.getTime() - startDate.getTime())/(oneDay)));
+    // console.log(rangeDays);
+    var daysActive = new Array(rangeDays);
+    var maxq = 0;
+    
+    for (var i=0; i<rangeDays; i++) {
+        daysActive[i] = [0,[]];
+    }
+
+    for (var i=0; i<visData.length; i++) {
+        var s = new Date(visData[i][2]);
+        var e = new Date(visData[i][4]);
+        var uname = visData[i][0];
+        var sIndex = Math.round(Math.abs((s.getTime() - startDate.getTime())/(oneDay)));
+        var eIndex = Math.round(Math.abs((e.getTime() - startDate.getTime())/(oneDay)));
+        for (var j=sIndex; j<eIndex; j++) {
+            daysActive[j][0] += 1;
+            daysActive[j][1].push(uname);
+            if (daysActive[j][0]>maxq){
+                maxq = daysActive[j][0];
+            }
+        }
+
+    }
+
+    // console.log(daysActive);
+
+
+
+
+
+
+    var w = 1000;
+    var h = 750;
+    var t = 550;
+
+    var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w+100)
+                        .attr("height", h);
+
+    var height = 320;
+
+    plots = "";
+    for (var i=0; i<daysActive.length; i++) {
+        var x = 520 + t*(i/rangeDays);
+        var y = 520 - daysActive[i][0]/(maxq+1)*height;
+        plots = plots + x + "," + y;
+        if (i != daysActive.length-1) {
+            plots = plots + ", ";
+        }
+    }
+
+
+    svg.append("polyline")      
+    .style("stroke", "black")  
+    .style("fill", "none")     
+    .attr("points", plots)
+    .style("stroke", "#80dfff");
+
+
+    // var width = 500,
+    //     height = 460,
+    //     padding = 50;
+
+    var tooltip = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("z-index", "10")
+              .style("visibility", "hidden")
+              .text("a simple tooltip")
+              .style("width", "100px")
+              .style("background-color", "#ffe6ff")
+              .style("font-size", "10px")
+              .style("border-radius", "3px")
+              .style("color", "#660066")
+              .style("opacity", "0.8");
+
+    
+    var circles = svg.selectAll("circle")
+                          .data(daysActive)
+                          .enter()
+                          .append("circle")
+                          .attr("cx", function (d, i) {
+                                return 520 + t*(i/rangeDays);
+                            })
+                            .attr("cy", function (d, i) {
+                                return 520 - d[0]/(maxq+1)*height;
+                            })
+                            .attr("r", 4)
+                            .style("fill", "#ffffb3")
+                            .style("opacity", "0.9")
+                            .on("mouseover", function(d){
+                                d3.select(this).style({fill:'#000099',});
+                                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
+                                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
+                                // if (e == "Invalid Date" ){
+                                //     e = "still open now";
+                                // }
+                                // tooltip.text("created at: " + c + " " + "closed at: " + e);
+                                tooltip.style("visibility", "visible");
+                            })
+                            .on("mousemove", function(d, i){
+                                d3.select(this).style({fill:'#000099',});
+                                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
+                                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
+                                // if (e == "Invalid Date" ){
+                                //     e = "still open now";
+                                // }
+                                // tooltip.text("created at: " + c + " " + "closed at: " + e);
+                                
+                                var date = new Date(startDate.getTime() + i*oneDay).toLocaleTimeString("en-us", {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: 'numeric'});
+                                for (var j=0; j<6; j++){
+                                    date = date.substring(0, date.length - 1);
+                                }
+
+
+                                var dis = date + "\n" + "Active users: " + "\n";
+                                for (var j=0; j<d[1].length; j++){
+                                    dis = dis + d[1][j] + " \n";
+                                }
+                                tooltip.text(dis);
+                                tooltip.style("height", 30*d[1].length + "px");
+                                tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+                            })
+                            .on("mouseout", function(){
+                                d3.select(this).style({fill:'#ffffb3',});
+                                tooltip.style("visibility", "hidden");
+                            });
+
+
+
+        //Width and height
+        var h = 580;
+        var padding = 50;
+
+        //Create scale functions
+        var xScale = d3.time.scale()
+                             // .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+                             .domain([startDate, endDate])
+                             .range([515, 1050]);       
+        //Define X axis
+        var xAxis = d3.svg.axis()
+                          .scale(xScale)
+                          .orient("bottom")
+                          .ticks(11);        
+    
+        var yScale = d3.scale.linear()
+          .domain([maxq+1, 0])    // values between 0 and 100
+        .range([200, 520]);  
+
+
+        var yAxis = d3.svg.axis()
+            .orient("left")
+            .scale(yScale);
+
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + 510 + ",0)")
+            .call(yAxis)
+            .attr("fill", "white");  
+        
+        //Create X axis
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (h - padding) + ")")
+            .call(xAxis)
+            .attr("fill", "white");
+
+           svg.selectAll(".axis text")  // select all the text elements for the xaxis
+              .attr("transform", function(d) {
+                  return "translate(" + this.getBBox().height*-0.4 + "," + this.getBBox().height + ")rotate(45)";
+            });    
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -472,6 +718,8 @@ window.addEventListener('load', function(){
         $("#graph2").css('color', 'white');
         $("#graph2").css('background-color', '#8181ae');
         $("#results").css('display', 'none');
+        d3.select("svg").remove();
+        linechart(cacheData);
     });
 
     $("#user-search").click(function(){
