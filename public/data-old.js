@@ -6,7 +6,8 @@ function handleInput(e) {
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
-    var username = words[words.length-1];
+    // var username = words[words.length-1];
+    var username = 'aaaa';
 
     //alert(words[words.length-1]);
     //$("#results").css('text-align', 'center');
@@ -210,6 +211,29 @@ function timeline_graph(data){
                         .append("svg")
                         .attr("width", w+100)
                         .attr("height", h);
+
+            var backgroundPanel = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("top", "80px")
+              .style("left", "350px")
+              .style("z-index", "-10")
+              .style("width", "800px")
+              .style("height", "600px")
+              .style("background-color", "#f8f8fa")
+              .style("box-shadow", "6px 3px 5px #8181ae");
+
+            var timelinebarPanel = d3.select("body")
+              .append("div")
+              .style("position", "absolute")
+              .style("top", "170px")
+              .style("left", "480px")
+              .style("z-index", "-9")
+              .style("width", "600px")
+              .style("height", "420px")
+              .style("opacity", "0.8")
+              .style("border-radius", "5px")
+              .style("background-color", "#8181ae");
 
 
 
@@ -542,7 +566,6 @@ function linechart(data){
                                 tooltip.style("visibility", "visible");
                             })
                             .on("mousemove", function(d, i){
-                                console.log("call mousemove");
                                 d3.select(this).style({fill:'#000099',});
                                 // c = new Date(d[2]).toLocaleTimeString("en-us", options);
                                 // e = new Date(d[4]).toLocaleTimeString("en-us", options);
@@ -615,238 +638,25 @@ function linechart(data){
             });    
 
 
+
+
+
+
+
+
+
 }
 
 
-function creativeGraph(data) {
-
-
-
-
-    // var svg = d3.select("body")
-    //                     .append("svg")
-    //                     .attr("width", 1000)
-    //                     .attr("height", 1000);
-
-    // var height = 320;
-
-
-    // var backgroundPanel = d3.select("body")
-    //           .append("div")
-    //           .style("position", "absolute")
-    //           .style("top", "80px")
-    //           .style("left", "350px")
-    //           .style("width", "80px")
-    //           .style("height", "60px")
-    //           .style("background-color", "red")
-    //           .style("box-shadow", "6px 3px 5px #8181ae");
-
-
-    // d3 example 
-    // var diameter = 960,
-    // format = d3.format(",d"),
-    // color = d3.scale.category20c();
-
-    // var bubble = d3.layout.pack()
-    //     .sort(null)
-    //     .size([diameter, diameter])
-    //     .padding(1.5);
-
-    // var svg = d3.select("body").append("svg")
-    //     .attr("width", diameter)
-    //     .attr("height", diameter)
-    //     .attr("class", "bubble");
-
-    // d3.json("flare.json", function(error, root) {
-    //   if (error) throw error;
-
-    //   var node = svg.selectAll(".node")
-    //       .data(bubble.nodes(classes(root))
-    //       .filter(function(d) { return !d.children; }))
-    //     .enter().append("g")
-    //       .attr("class", "node")
-    //       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-    //   node.append("title")
-    //       .text(function(d) { return d.className + ": " + format(d.value); });
-
-    //   node.append("circle")
-    //       .attr("r", function(d) { return d.r; })
-    //       .style("fill", function(d) { return color(d.packageName); });
-
-    //   node.append("text")
-    //       .attr("dy", ".3em")
-    //       .style("text-anchor", "middle")
-    //       .text(function(d) { return d.className.substring(0, d.r / 3); });
-    // });
-
-    // // Returns a flattened hierarchy containing all leaf nodes under the root.
-    // d3.select(self.frameElement).style("height", diameter + "px");
-
-
-
-    var dimension = 900,
-    format = d3.format(",d");
-
-    var colorList = ["#F5A9A9", "#FF0000", "#B40404", "#8A0808",   
-      "#F3E2A9", "#FACC2E", "#B18904", "#886A08",     
-      "#CEF6CE", "#01DF01", "#088A08", "#0B610B",     
-      "#A9BCF5", "#2E64FE", "#013ADF", "#08298A",    
-      "ECCEF5", "CC2EFA", "A901DB", "6A0888"]
-
-    var bubble = d3.layout.pack()
-        .sort(null)
-        .size([dimension, dimension])
-        .padding(5);
-
-    var svg = d3.select("#graph_panel").append("svg")
-        .attr("width", dimension)
-        .attr("height", dimension+300)
-        .attr("class", "bubble");
-
-    // var data = [{"fund": 2074, "size": 2823, "label": "18-24 Environment"}, {"fund": 498, "size": 748, "label": "25-34 Environment"}, {"fund": 502, "size": 771, "label": "35-44 Environment"}, {"fund": 505, "size": 778, "label": "45-54 Environment"}, {"fund": 510, "size": 771, "label": "55+ Environment"}, {"fund": 2176, "size": 2816, "label": "18-24 Games"}, {"fund": 485, "size": 724, "label": "25-34 Games"}, {"fund": 545, "size": 806, "label": "35-44 Games"}, {"fund": 471, "size": 709, "label": "45-54 Games"}, {"fund": 496, "size": 727, "label": "55+ Games"}, {"fund": 2054, "size": 2766, "label": "18-24 Fashion"}, {"fund": 480, "size": 723, "label": "25-34 Fashion"}, {"fund": 538, "size": 802, "label": "35-44 Fashion"}, {"fund": 507, "size": 800, "label": "45-54 Fashion"}, {"fund": 494, "size": 773, "label": "55+ Fashion"}, {"fund": 2023, "size": 2758, "label": "18-24 Technology"}, {"fund": 526, "size": 768, "label": "25-34 Technology"}, {"fund": 561, "size": 814, "label": "35-44 Technology"}, {"fund": 523, "size": 790, "label": "45-54 Technology"}, {"fund": 511, "size": 755, "label": "55+ Technology"}, {"fund": 2112, "size": 2793, "label": "18-24 Sports"}, {"fund": 507, "size": 772, "label": "25-34 Sports"}, {"fund": 530, "size": 807, "label": "35-44 Sports"}, {"fund": 526, "size": 783, "label": "45-54 Sports"}, {"fund": 504, "size": 765, "label": "55+ Sports"}]
-
-
-    console.log(data);
-
-    // var dList = [];
-    var requestList = [];
-    var userList = []
-    data.forEach(function(d) { 
-        // dList.push({label: d.label, value: d.size, fund: d.fund}); 
-        requestList.push({label: d.user.login, value: 10, created_at: Date.parse(d.created_at), closed_at: Date.parse(d.closed_at)});
-        if (userList.indexOf(d.user.login) == -1){
-            userList.push(d.user.login);
-        }
-    });
-
-    // console.log(userList);
-
-    var graphInput = bubble.nodes({children: requestList})
-          .filter(function(d) { 
-            return !d.children; 
-          });
-
-    // console.log(graphInput);
-
-    var graph = svg.selectAll("graph")
-      .data(graphInput)
-      .enter()
-      .append("g")
-      .attr("transform", function(d) {
-        // console.log(d); 
-        return "translate(" + d.x + "," + d.y + ")"; 
-      });
-
-
-    graph.append("circle")
-      .attr("r", function(d) {
-        s = new Date(d.created_at);
-        e = new Date(d.closed_at);
-        // console.log(s);
-        // console.log(e);
-        var range = e.getTime() - s.getTime();
-        // console.log(range/10000000);
-        return Math.sqrt(range/100000);
-        // return Math.sqrt(d.value*2.5); 
-      })
-      .style("fill", function(d) {
-        // console.log(d);
-        var index = userList.indexOf(d.label);
-        return colorList[index]; 
-      })
-      .style("opacity", "0.8")
-      .on('mouseover', function (d, i){
-          d3.select(this).style("fill", "black");
-        })
-       .on('mouseout', function  (d, i){
-        var index = userList.indexOf(d.label);
-        d3.select(this).style("fill", colorList[index]); 
-        });
-
-
-    var oneDay = 24*60*60*1000;
-    var oneHour = 60*60*1000;
-
-    graph.append("title")
-      .text(function(d) {
-        s = new Date(d.created_at);
-        e = new Date(d.closed_at);
-        var range = e.getTime() - s.getTime();
-        var days = Math.floor(range/oneDay);
-        var hours = Math.round((range - days*oneDay)/oneHour);
-        return "user " + d.label + " " + days + " days " + hours + " hours opened"; 
-      });
-
-    // graph.append("circle")
-    //   .attr("r", function(d) { 
-    //     return Math.sqrt(d.fund*2.5); 
-    //   })
-    //   .style("fill", function(d, i) {
-    //     return colorList[i]; 
-    //   })
-    //   .style("opacity", 0.4)
-    //   .on('mouseover', function (d, i){
-    //       d3.select(this).style("fill", "black");
-    //     })
-    //    .on('mouseout', function  (d, i){
-    //       d3.select(this).style("fill", colorList[i]); 
-    //     });
-
-    svg.selectAll("rectUser")
-            .data(userList)
-            .enter()
-            .append("rect")
-            .attr("y", function(d, i){
-                var row = Math.floor(i/5);
-                return 900 + row*40;
-            })
-            .attr("x", function(d, i){
-                var row = Math.floor(i/5);
-                var col = i - row*5;
-                return 50 + 150*col;
-            })
-            .attr("width", 20)
-            .attr("height", 20)
-            .attr("fill", function(d, i){
-                return colorList[i];
-            })
-            .attr("opacity", "0.9");
-
-    svg.selectAll("username")
-    .data(userList)
-    .enter()
-    .append("text")
-    .attr("y", function(d, i){
-                var row = Math.floor(i/5);
-                return 915 + row*40;
-            })
-            .attr("x", function(d, i){
-                var row = Math.floor(i/5);
-                var col = i - row*5;
-                return 72 + 150*col;
-            })
-    .text(function(d) { return d; });
 
 
 
 
 
-    d3.select(self.frameElement).style("height", dimension + "px");
 
-}
 
-// function classes(root) {
-//       var classes = [];
 
-//       function recurse(name, node) {
-//         if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-//         else classes.push({packageName: name, className: node.name, value: node.size});
-//       }
 
-//       recurse(null, root);
-//       return {children: classes};
-// }
 
 
 
@@ -877,35 +687,6 @@ function getMaxDate(dict) {
 
 window.addEventListener('load', function(){
 
-    var backgroundPanel = d3.select("body")
-              .append("div")
-              .style("position", "absolute")
-              .style("top", "80px")
-              .style("left", "350px")
-              .style("z-index", "-10")
-              .style("width", "800px")
-              .style("height", "600px")
-              .style("background-color", "#f8f8fa")
-              .style("box-shadow", "6px 3px 5px #8181ae")
-              .attr("id", "backgroundPanel");
-
-            var timelinebarPanel = d3.select("body")
-              .append("div")
-              .style("position", "absolute")
-              .style("top", "170px")
-              .style("left", "480px")
-              .style("z-index", "-9")
-              .style("width", "600px")
-              .style("height", "420px")
-              .style("opacity", "0.8")
-              .style("border-radius", "5px")
-              .style("background-color", "#8181ae")
-              .attr("id", "timelinebarPanel");
-
-    $("#backgroundPanel").css('display', 'none');
-    $("#timelinebarPanel").css('display', 'none');
-
-
     var username = $("#login-info").val();
     console.log('username: ' + username);
     //input_form.addEventListener('submit', handleInput, false);
@@ -915,74 +696,44 @@ window.addEventListener('load', function(){
     });
 
     $("#timeline-graph").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', 'white');
         $("#timeline-graph").css('background-color', '#8181ae');
         $("#graph2").css('color', '#8181ae');
         $("#graph2").css('background-color', 'white');
-        $("#graph3").css('color', '#8181ae');
-        $("#graph3").css('background-color', 'white');
-        // if (displayPage == 'graph') {
-        //     return;
-        // }
-        // displayPage = 'graph';
+        if (displayPage == 'graph') {
+            return;
+        }
+        displayPage = 'graph';
         $("#results").css('display', 'none');
-        d3.select("svg").remove();
-        $("#backgroundPanel").css('display', 'block');
-        $("#timelinebarPanel").css('display', 'block');
         timeline_graph(cacheData);
         $("graph-panel").css('display', 'block');
     });
 
     $("#graph2").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#8181ae');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', 'white');
         $("#graph2").css('background-color', '#8181ae');
-        $("#graph3").css('color', '#8181ae');
-        $("#graph3").css('background-color', 'white');
         $("#results").css('display', 'none');
         d3.select("svg").remove();
-        $("#backgroundPanel").css('display', 'block');
-        $("#timelinebarPanel").css('display', 'block');
         linechart(cacheData);
-    });
-
-    $("#graph3").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
-        $("#timeline-graph").css('color', '#8181ae');
-        $("#timeline-graph").css('background-color', 'white');
-        $("#graph2").css('color', '#8181ae');
-        $("#graph2").css('background-color', 'white');
-        $("#graph3").css('color', 'white');
-        $("#graph3").css('background-color', '#8181ae');
-        $("#results").css('display', 'none');
-        d3.select("svg").remove();
-        // d3.select("div").remove();
-        $("#backgroundPanel").css('display', 'none');
-        $("#timelinebarPanel").css('display', 'none');
-        
-        creativeGraph(cacheData);
-        //linechart(cacheData);
     });
 
     $("#user-search").click(function(){
         $("#user-search").css('color', 'white');
-        $("#user-search").css('background-color', '#4949c0');
+        $("#user-search").css('background-color', '#8181ae');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
         $("#graph2").css('background-color', 'white');
-        $("#graph3").css('color', '#8181ae');
-        $("#graph3").css('background-color', 'white');
-        // if(displayPage == 'user') {
-        //     return;
-        // }
-        // displayPage = 'user';
+        if(displayPage == 'user') {
+            return;
+        }
+        displayPage = 'user';
         d3.select("svg").remove();
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
