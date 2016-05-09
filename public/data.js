@@ -119,6 +119,10 @@ function redisplayData(minDate, maxDate, data) {
     console.log("in redisplay data");
     for (var i in data) {
         var date = Date.parse(data[i].created_at);
+        console.log(date);
+
+        console.log("min date: " + minDate);
+        console.log("max date: " + maxDate); 
         if (date >= minDate && date <= maxDate) {
             console.log("pushing data at date: " + date);
             toDisplay.push(data[i]);
