@@ -126,6 +126,7 @@ function redisplayData(minDate, maxDate, data) {
         if (date >= minDate && date <= maxDate) {
             console.log("pushing data at date: " + date);
             toDisplay.push(data[i]);
+            console.log(toDisplay);
         }
     }
 
