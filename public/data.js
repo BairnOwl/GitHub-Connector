@@ -55,65 +55,9 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
             cacheData = data;
-            var display = '<div class="pull_request">' 
-            var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
-
-
-            $("#results").text("");
-
-            var pull_request_dict = {};
-           
-            for (var i in data) {
-                // created_at = new Date(Date.parse(data[i].created_at)).toLocaleTimeString("en-us", options);
-                // updated_at = new Date(Date.parse(data[i].updated_at)).toLocaleTimeString("en-us", options);
-                // closed_at = new Date(Date.parse(data[i].closed_at)).toLocaleTimeString("en-us", options);
-
-                created_at = Date.parse(data[i].created_at);
-                updated_at = Date.parse(data[i].updated_at);
-                closed_at = Date.parse(data[i].closed_at);
-
-                text = ''; 
-
-                if (i == data[data.length-1]) {
-                    text += '<div class="single_request" style="margin-bottom: 0px">';
-                } else { 
-                    text += '<div class="single_request">';
-                }
-                
-                text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
-                    '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
-                    '<div class="state" >state: ' + data[i].state + '</div>' +
-                    '<div class="request_number" >number: ' + data[i].number + '</div>' +
-                    '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
-                    '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
-                
-                if (data[i].state == "open"){
-                    text += '<div class="closed_at" >open till now</div></div>';
-                } else {
-                    text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
-                }
-
-                text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
-                    '<div class="request_body" >  ' + data[i].body + '</div>' +
-                    '</div>';  
-
-                pull_request_dict[data[i].number] = {
-                    created_at: created_at,
-                    updated_at: updated_at,
-                    closed_at: closed_at,
-                    text: text
-                };
-
-                display += text;          	
-            }
-
-            console.log(pull_request_dict);
-            $("#wait-icon").css('display','none');
-            $("#results").css('display', 'block');
-            display = display + '</div>'
-            $('#results').append(display);
-            $("#menu").css('display', 'block');
             
+            displayData(data);
+
             var minDate = getMinDate(pull_request_dict);
             var maxDate = getMaxDate(pull_request_dict);
 
@@ -131,18 +75,14 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
                 minDate = data.values.min;
                 maxDate = data.values.max;
                 console.log(minDate + ", " + maxDate);
+                redisplayData(minDate, maxDate, data);
             });
 
-            displayPage = 'user';
-
-            //if ()
+            //displayPage = 'user';
 
             // d3 goes here
-            display  = ''
 
             //timeline_graph(data);
-
-            
 
         }
     };
@@ -152,11 +92,109 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
     req.send(fd);
 }
 
+function getMinDate(dict) {
+    var min = Number.MAX_SAFE_INTEGER;
 
+    for (var key in dict) {
+        if (dict[key]['created_at'] < min) {
+            min = dict[key]['created_at'];
+        }
+    }
+    return min;
+}
 
+function getMaxDate(dict) {
+    var max = 0;
 
+    for (var key in dict) {
+        if (dict[key]['created_at'] > max) {
+            max = dict[key]['created_at'];
+        }
+    }
+    return max;
+}
 
+function redisplayData(minDate, maxDate, data) {
+    toDisplay = [];
+    for (var i in data) {
+        var date = Date.parse(data[i].created_at);
+        if (date >= minDate && date <= maxDate) {
+            toDisplay.push(data[i]);
+        }
+    }
 
+    toDisplay = sort(toDisplay);
+    displayData(toDisplay);
+}
+
+function sort(toDisplay) {
+    for (var i = 0; i < toDisplay.length; i++) { // Number of passes
+        for (var j = 0; j < (toDisplay.length - i - 1); j++) {
+          if (toDisplay[j] > toDisplay[j+1]) {
+            var temp = toDisplay[j];
+            toDisplay[j] = toDisplay[j+1];
+            toDisplay[j+1] = temp;
+          }
+        }        
+    }
+}
+
+function displayData(data) {
+    var display = '<div class="pull_request">' 
+    var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
+    $("#results").text("");
+
+    pull_request_dict = {};
+           
+    for (var i in data) {
+        created_at = Date.parse(data[i].created_at);
+        updated_at = Date.parse(data[i].updated_at);
+        closed_at = Date.parse(data[i].closed_at);
+
+        text = ''; 
+
+        if (i == data[data.length-1]) {
+            text += '<div class="single_request" style="margin-bottom: 0px">';
+        } else { 
+            text += '<div class="single_request">';
+        }
+        
+        text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+            '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
+            '<div class="state" >state: ' + data[i].state + '</div>' +
+            '<div class="request_number" >number: ' + data[i].number + '</div>' +
+            '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
+            '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
+        
+        if (data[i].state == "open"){
+            text += '<div class="closed_at" >open till now</div></div>';
+        } else {
+            text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
+        }
+
+        text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+            '<div class="request_body" >  ' + data[i].body + '</div>' +
+            '</div>';  
+
+        pull_request_dict[data[i].number] = {
+            created_at: created_at,
+            updated_at: updated_at,
+            closed_at: closed_at,
+            text: text
+        };
+
+        display += text;            
+    }
+
+    $("#wait-icon").css('display','none');
+    $("#results").css('display', 'block');
+    display = display + '</div>'
+    $('#results').append(display);
+    $("#menu").css('display', 'block');
+
+    display  = '';
+}
 
 
 function timeline_graph(data){
@@ -847,33 +885,6 @@ function creativeGraph(data) {
 //       recurse(null, root);
 //       return {children: classes};
 // }
-
-
-
-var minDate;
-var maxDate;
-
-function getMinDate(dict) {
-    var min = Number.MAX_SAFE_INTEGER;
-
-    for (var key in dict) {
-        if (dict[key]['created_at'] < min) {
-            min = dict[key]['created_at'];
-        }
-    }
-    return min;
-}
-
-function getMaxDate(dict) {
-    var max = 0;
-
-    for (var key in dict) {
-        if (dict[key]['created_at'] > max) {
-            max = dict[key]['created_at'];
-        }
-    }
-    return max;
-}
 
 window.addEventListener('load', function(){
 
