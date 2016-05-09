@@ -116,9 +116,11 @@ function getMaxDate(dict) {
 
 function redisplayData(minDate, maxDate, data) {
     toDisplay = [];
+    console.log("in redisplay data");
     for (var i in data) {
         var date = Date.parse(data[i].created_at);
         if (date >= minDate && date <= maxDate) {
+            console.log("pushing data at date: " + date);
             toDisplay.push(data[i]);
         }
     }
@@ -140,6 +142,7 @@ function sort(toDisplay) {
 }
 
 function displayData(data) {
+    console.log("displaying data");
     var display = '<div class="pull_request">' 
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
