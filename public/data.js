@@ -72,8 +72,8 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
                 }
             });
             $("#slider").on("valuesChanged", function(e, dates) {
-                minDate = dates.values.min;
-                maxDate = dates.values.max;
+                minDate = new Date(dates.values.min);
+                maxDate = new Date(dates.values.max);
                 console.log(minDate + ", " + maxDate);
                 redisplayData(minDate, maxDate, data);
             });
