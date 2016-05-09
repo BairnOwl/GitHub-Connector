@@ -144,6 +144,7 @@ function sort(toDisplay) {
           }
         }        
     }
+    return toDisplay;
 }
 
 function displayData(data) {
