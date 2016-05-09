@@ -153,6 +153,8 @@ function displayData(data) {
     $("#results").text("");
 
     pull_request_dict = {};
+
+    console.log(data);
            
     for (var i in data) {
         created_at = Date.parse(data[i].created_at);
