@@ -61,8 +61,8 @@ app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(reque
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	var token = users[username];
-	
+
+
 	console.log('usertoken: ' + token);
 
 	req.setRequestHeader('Authorization', 'token ' + token);
