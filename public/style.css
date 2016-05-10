@@ -143,7 +143,19 @@ ul#menu-ul li {
 	z-index: 0;
 }
 
-#send_button {
+/*#send_button {
+	margin-top: 10px;
+	height: 40px;
+	width: 240px;
+	border: 1px solid white;
+	border-radius: 5px;
+	font-size: 1.1em;
+	color: #8862b7;
+	background-color: white;
+	opacity: 0.9;
+}*/
+
+.leftbar-btn {
 	margin-top: 10px;
 	height: 40px;
 	width: 240px;
@@ -418,6 +430,42 @@ input[type=radio] {
 	opacity: 0.8;
 	z-index: -1;
 }
+
+#next-btn {
+/*	position: inline-block;*/
+/*	display: block;
+	top: 400px;*/
+	color: #fd7da1;
+	height: 60px;
+	width: 45%;
+	margin-right: 10px;
+	float: left;
+
+}
+
+#prev-btn {
+/*	position: inline-block;*/
+	display: block;
+	top: 450px;
+	color: #fd7da1;
+	height: 60px;
+	width: 45%;
+	float: right;
+
+}
+
+#next-prev-div {
+	position: absolute;
+/*	display: block;*/
+	top: 460px;
+/*	width: 18%;*/
+	text-align: center;
+}
+
+
+
+
+
 
 /*#data-page {
 	display: block;

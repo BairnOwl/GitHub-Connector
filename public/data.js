@@ -1,5 +1,6 @@
 var displayPage;
 var cacheData;
+var currPageNum = 1;
 
 function handleInput(e) {
     console.log('in handle');
@@ -32,9 +33,13 @@ function handleInput(e) {
     //$("#wait-icon").html('Please Wait');
     //alert('numReq: ' + numReq);
     var state = document.querySelector('input[name="status"]:checked').value;
+
+    console.log(org + ' ' + repo + ' ' + state + ' ' + numReq + ' ' + username + ' ' + currPageNum);
    
-    sendMessage(org, repo, state, numReq, username, 1);
+    sendMessage(org, repo, state, numReq, username, currPageNum);
 }
+
+var hasSlider = false;
 
 function sendMessage(org, repo, state, per_page, username, page_num) {
     console.log('in send message');
@@ -53,15 +58,27 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
         console.log("received " + req.readyState + ", " + req.status);
        
         if (req.readyState == 4 && req.status == 200) {
+            if (hasSlider == true) {
+                $("#slider").dateRangeSlider('destroy');
+                hasSlider = false;
+            }
             var data = jQuery.parseJSON(req.responseText);
             cacheData = data;
+
+            console.log('data size: ' + data.length);
             
             displayData(data);
 
             var minDate = getMinDate(pull_request_dict);
             var maxDate = getMaxDate(pull_request_dict);
 
+            console.log('min max date: ' + minDate + ' ' + maxDate);
+            var min = new Date(minDate);
+            var max = new Date(maxDate);
+            console.log('min max date 2: ' + min + ' ' + max);
+
             $("#slider").dateRangeSlider({
+                //console.log('in range slider');
                 bounds: {
                     min: new Date(minDate),
                     max: new Date(maxDate)
@@ -71,12 +88,17 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
                     max: new Date(maxDate)
                 }
             });
+            hasSlider = true;
+            //$("#slider").dateRangeSlider('disable');
+            //$("#slider").dateRangeSlider('enable');
             $("#slider").on("valuesChanged", function(e, dates) {
+                console.log('triggered slider');
                 minDate = new Date(dates.values.min);
                 maxDate = new Date(dates.values.max);
                 console.log(minDate + ", " + maxDate);
                 redisplayData(minDate, maxDate, data);
             });
+            $("#next-prev-div").css('display', 'block');
 
             //displayPage = 'user';
 
@@ -117,6 +139,7 @@ function getMaxDate(dict) {
 function redisplayData(minDate, maxDate, data) {
     toDisplay = [];
     console.log("in redisplay data");
+    console.log('minDate: ' + minDate + ' maxDate: ' + maxDate + ' data: ' + data.length);
     for (var i in data) {
         var date = Date.parse(data[i].created_at);
         console.log(date);
@@ -1011,5 +1034,9 @@ window.addEventListener('load', function(){
 
     });
 
+    $("#next-btn").click(function(e){
+        currPageNum += 1;
+        handleInput(e);
+    });
     
 }, false);
