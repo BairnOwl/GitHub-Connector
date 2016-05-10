@@ -111,6 +111,8 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
             $('#results').append(display);
             $("#menu").css('display', 'block');
             
+            displayData(data);
+
             var minDate = getMinDate(pull_request_dict);
             var maxDate = getMaxDate(pull_request_dict);
 
@@ -124,10 +126,11 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
                     max: new Date(maxDate)
                 }
             });
-            $("#slider").on("valuesChanged", function(e, data) {
-                minDate = data.values.min;
-                maxDate = data.values.max;
+            $("#slider").on("valuesChanged", function(e, dates) {
+                minDate = new Date(dates.values.min);
+                maxDate = new Date(dates.values.max);
                 console.log(minDate + ", " + maxDate);
+                redisplayData(minDate, maxDate, data);
             });
 
             displayPage = 'user';
@@ -139,6 +142,121 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
     req.open('POST', '/data/' + org + '/' + repo + '/' + state + '/' + per_page + '/' + username + '/' + page_num, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(fd);
+}
+
+function getMinDate(dict) {
+    var min = Number.MAX_SAFE_INTEGER;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] < min) {
+            min = dict[key]['created_at'];
+        }
+    }
+    return min;
+}
+
+function getMaxDate(dict) {
+    var max = 0;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] > max) {
+            max = dict[key]['created_at'];
+        }
+    }
+    return max;
+}
+
+function redisplayData(minDate, maxDate, data) {
+    toDisplay = [];
+    console.log("in redisplay data");
+    for (var i in data) {
+        var date = Date.parse(data[i].created_at);
+        console.log(date);
+
+        console.log("min date: " + minDate);
+        console.log("max date: " + maxDate); 
+        if (date >= minDate && date <= maxDate) {
+            console.log("pushing data at date: " + date);
+            toDisplay.push(data[i]);
+        }
+    }
+
+    toDisplay = sort(toDisplay);
+    console.log(toDisplay);
+    displayData(toDisplay);
+}
+
+function sort(toDisplay) {
+    for (var i = 0; i < toDisplay.length; i++) { // Number of passes
+        for (var j = 0; j < (toDisplay.length - i - 1); j++) {
+          if (toDisplay[j] > toDisplay[j+1]) {
+            var temp = toDisplay[j];
+            toDisplay[j] = toDisplay[j+1];
+            toDisplay[j+1] = temp;
+          }
+        }        
+    }
+    return toDisplay;
+}
+
+function displayData(data) {
+    console.log("displaying data");
+    var display = '<div class="pull_request">' 
+    var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
+    $("#results").text("");
+
+    pull_request_dict = {};
+
+    console.log(data);
+           
+    for (var i in data) {
+        created_at = Date.parse(data[i].created_at);
+        updated_at = Date.parse(data[i].updated_at);
+        closed_at = Date.parse(data[i].closed_at);
+
+        text = ''; 
+
+        if (i == data[data.length-1]) {
+            text += '<div class="single_request" style="margin-bottom: 0px">';
+        } else { 
+            text += '<div class="single_request">';
+        }
+        
+        text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+            '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
+            '<div class="state" >state: ' + data[i].state + '</div>' +
+            '<div class="request_number" >number: ' + data[i].number + '</div>' +
+            '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
+            '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
+        
+        if (data[i].state == "open"){
+            text += '<div class="closed_at" >open till now</div></div>';
+        } else {
+            text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
+        }
+
+        text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+            '<div class="request_body" >  ' + data[i].body + '</div>' +
+            '</div>';  
+
+        pull_request_dict[data[i].number] = {
+            created_at: created_at,
+            updated_at: updated_at,
+            closed_at: closed_at,
+            text: text
+        };
+
+        display += text;            
+    }
+
+    $("#wait-icon").css('display','none');
+    $("#results").css('display', 'block');
+    display = display + '</div>'
+    $('#results').append(display);
+    $("#menu").css('display', 'block');
+
+    display  = '';
 }
 
 
@@ -695,6 +813,7 @@ function getMaxDate(dict) {
     return max;
 }
 
+
 window.addEventListener('load', function(){
 
     var backgroundPanel = d3.select("body")
@@ -736,8 +855,8 @@ window.addEventListener('load', function(){
     });
 
     $("#timeline-graph").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', 'white');
         $("#timeline-graph").css('background-color', '#8181ae');
         $("#graph2").css('color', '#8181ae');
@@ -758,8 +877,8 @@ window.addEventListener('load', function(){
     });
 
     $("#graph2").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', 'white');
@@ -775,8 +894,8 @@ window.addEventListener('load', function(){
     });
 
     $("#graph3").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
@@ -796,7 +915,7 @@ window.addEventListener('load', function(){
 
     $("#user-search").click(function(){
         $("#user-search").css('color', 'white');
-        $("#user-search").css('background-color', '#4949c0');
+        $("#user-search").css('background-color', '#fd7da1');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
