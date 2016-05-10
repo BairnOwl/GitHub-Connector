@@ -982,5 +982,9 @@ window.addEventListener('load', function(){
         currPageNum += 1;
         handleInput(e);
     });
+    $("#prev-btn").click(function(e){
+        currPageNum -= 1;
+        handleInput(e);
+    });
     
 }, false);
