@@ -433,7 +433,7 @@ input[type=radio] {
 	border-radius: 10px;
 }
 
-#next-btn {
+#prev-btn {
 /*	position: inline-block;*/
 /*	display: block;
 	top: 400px;*/
@@ -445,7 +445,7 @@ input[type=radio] {
 
 }
 
-#prev-btn {
+#next-btn {
 /*	position: inline-block;*/
 	display: block;
 	top: 450px;
@@ -457,7 +457,7 @@ input[type=radio] {
 }
 
 #next-prev-div {
-	position: absolute;
+	position: relative;
 /*	display: block;*/
 	top: 460px;
 /*	width: 18%;*/
