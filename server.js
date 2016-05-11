@@ -32,13 +32,6 @@ var request = require('request');
 
 var users = {};
 
-var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-function randomString(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-    return result;
-}
-
 app.get('/cookie',function(req, res){
      res.cookie('user_name' , 'BairnOwl').send('Cookie is set');
 });
@@ -58,7 +51,7 @@ app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(reque
 
 	var token = users[username];
 
-	//console.log('usertoken: ' + token);
+	console.log('usertoken: ' + token);
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -82,7 +75,6 @@ app.get('/init', function(request, response){
 app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
-	var random = randomString(32, chars);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
 		random + 'scopes=user,public_repo';
 	
