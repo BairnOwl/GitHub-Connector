@@ -119,18 +119,13 @@ function redisplayData(minDate, maxDate, data) {
     console.log("in redisplay data");
     for (var i in data) {
         var date = Date.parse(data[i].created_at);
-        console.log(date);
 
-        console.log("min date: " + minDate);
-        console.log("max date: " + maxDate); 
         if (date >= minDate && date <= maxDate) {
-            console.log("pushing data at date: " + date);
             toDisplay.push(data[i]);
         }
     }
 
     toDisplay = sort(toDisplay);
-    console.log(toDisplay);
     displayData(toDisplay);
 }
 
@@ -148,15 +143,12 @@ function sort(toDisplay) {
 }
 
 function displayData(data) {
-    console.log("displaying data");
     var display = '<div class="pull_request">' 
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
     $("#results").text("");
 
     pull_request_dict = {};
-
-    console.log(data);
            
     for (var i in data) {
         created_at = Date.parse(data[i].created_at);
