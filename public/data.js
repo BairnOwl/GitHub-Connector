@@ -2,7 +2,7 @@ var displayPage;
 var cacheData;
 
 function handleInput(e) {
-    console.log('in handle');
+    // console.log('in handle');
     e.preventDefault();
 
     var words = $("#login-info").text().split(" ");
@@ -55,6 +55,61 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
         if (req.readyState == 4 && req.status == 200) {
             var data = jQuery.parseJSON(req.responseText);
             cacheData = data;
+            var display = '<div class="pull_request">' 
+            var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
+
+
+            $("#results").text("");
+
+            var pull_request_dict = {};
+           
+            for (var i in data) {
+
+                created_at = Date.parse(data[i].created_at);
+                updated_at = Date.parse(data[i].updated_at);
+                closed_at = Date.parse(data[i].closed_at);
+
+                text = ''; 
+
+                if (i == data[data.length-1]) {
+                    text += '<div class="single_request" style="margin-bottom: 0px">';
+                } else { 
+                    text += '<div class="single_request">';
+                }
+                
+                text += '<div id="user-info"><img class="profile_img" src=' + data[i].user.avatar_url + '>' +
+                    '<div class="user_login"><a href=\"' + data[i].user.html_url + '\">' + data[i].user.login + '</a></div>' +
+                    '<div class="state" >state: ' + data[i].state + '</div>' +
+                    '<div class="request_number" >number: ' + data[i].number + '</div>' +
+                    '<div class="created_at" >created at ' + new Date(created_at).toLocaleTimeString("en-us", options) + '</div>' +
+                    '<div class="updated_at" >updated at ' + new Date(updated_at).toLocaleTimeString("en-us", options) + '</div>';
+                
+                if (data[i].state == "open"){
+                    text += '<div class="closed_at" >open till now</div></div>';
+                } else {
+                    text += '<div class="closed_at" >closed at ' + new Date(closed_at).toLocaleTimeString("en-us", options) + '</div></div>';
+                }
+
+                text += '<div class="request_title" ><a href=\"' + data[i].html_url + '\">' +  data[i].title + '</a></div>' +
+                    '<div class="request_body" >  ' + data[i].body + '</div>' +
+                    '</div>';  
+
+                pull_request_dict[data[i].number] = {
+                    created_at: created_at,
+                    updated_at: updated_at,
+                    closed_at: closed_at,
+                    text: text
+                };
+
+                display += text;          	
+            }
+
+            console.log(pull_request_dict);
+            $("#wait-icon").css('display','none');
+            $("#results").css('display', 'block');
+            display = display + '</div>'
+            $('#results').append(display);
+            $("#menu").css('display', 'block');
             
             displayData(data);
 
@@ -78,11 +133,8 @@ function sendMessage(org, repo, state, per_page, username, page_num) {
                 redisplayData(minDate, maxDate, data);
             });
 
-            //displayPage = 'user';
-
-            // d3 goes here
-
-            //timeline_graph(data);
+            displayPage = 'user';
+            display  = ''        
 
         }
     };
@@ -201,7 +253,6 @@ function displayData(data) {
 
 
 function timeline_graph(data){
-
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
     var visData = new Array(data.length);
@@ -214,45 +265,40 @@ function timeline_graph(data){
 
     // console.log(visData);
 
-    var userList = [];
-            
-            var visDataUser = []
-            var startDate = new Date(visData[0][2]);
-            var endDate = new Date();
-            
-            for (i=0; i<visData.length; i++){
-                var createD = new Date(visData[i][2]);
-                var closedD = new Date(visData[i][4]);
-                if (startDate > createD){
-                    startDate = createD;
-                }
-                var index = userList.indexOf(visData[i][0]);
-                if (index == -1){
-                    userList.push(visData[i][0]);
-                    visDataUser.push([visData[i][0], [visData[i]]])
-                } else {
-                    visDataUser[index][1].push(visData[i]);
-                }
-            }
+    var userList = [];            
+    var visDataUser = []
+    var startDate = new Date(visData[0][2]);
+    var endDate = new Date();
+    
+    for (i=0; i<visData.length; i++){
+        var createD = new Date(visData[i][2]);
+        var closedD = new Date(visData[i][4]);
+        if (startDate > createD){
+            startDate = createD;
+        }
+        var index = userList.indexOf(visData[i][0]);
+        if (index == -1){
+            userList.push(visData[i][0]);
+            visDataUser.push([visData[i][0], [visData[i]]])
+        } else {
+            visDataUser[index][1].push(visData[i]);
+        }
+    }
 
-            // console.log(userList);
-            // console.log(visDataUser);
-
+    var panel_height = 40 + 30*userList.length;
+    $("#timelinebarPanel").css('height', panel_height + 'px');
+    panel_height = panel_height + 130;
+    $("#backgroundPanel").css('height', panel_height + 'px');
             var range = endDate - startDate;
 
-            //Width and height
             var w = 1000;
             var h = 750;
             var t = 550;
             
-    
-            //Create SVG element
             var svg = d3.select("body")
                         .append("svg")
                         .attr("width", w+100)
                         .attr("height", h);
-
-
 
             var tooltip = d3.select("body")
               .append("div")
@@ -260,13 +306,13 @@ function timeline_graph(data){
               .style("z-index", "10")
               .style("visibility", "hidden")
               .text("a simple tooltip")
-              .style("width", "200px")
+              .style("width", "190px")
               .style("background-color", "#ffffcc")
               .style("font-size", "10px")
               .style("border-radius", "3px")
               .style("color", "#800080")
-              .style("opacity", "0.9");
-
+              .style("opacity", "0.9")
+              .style("padding", "2px");
 
             svg.selectAll("rectBackground")
             .data(visData)
@@ -280,7 +326,7 @@ function timeline_graph(data){
             .attr("width", t)
             .attr("height", 20)
             .attr("fill", "#ffe6ff")
-            .attr("opacity", "0.9");
+            .attr("opacity", "0.8");
 
             svg.selectAll("userBackground")
             .data(visData)
@@ -296,8 +342,6 @@ function timeline_graph(data){
             .attr("fill", "#9999ff")
             .attr("opacity", "0.9");
 
-
-
             svg.selectAll("rectTime")
             .data(visData)
             .enter()
@@ -307,12 +351,7 @@ function timeline_graph(data){
                 var s2 = (s - startDate)/range;
                 return 500 + s2 * t;
             })
-            // .attr("x", 0)
             .attr("y", function(d){
-                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
-                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
-                // console.log(c + e);
-
                 var i = userList.indexOf(d[0]);
                 return 190 + 30*i;
                 
@@ -377,12 +416,12 @@ function timeline_graph(data){
                .text(function(d) {
                     return d;
                })
-               .attr("x", 380)
+               .attr("x", 370)
                .attr("y", function(d, i) {
-                    return 200 + 30*i;
+                    return 204 + 30*i;
                })
                .attr("font-family", "sans-serif")
-               .attr("font-size", "11px")
+               .attr("font-size", "13px")
                .attr("fill", "white");
 
             svg.selectAll("number count")
@@ -400,14 +439,10 @@ function timeline_graph(data){
                .attr("font-size", "11px")
                .attr("fill", "#660066");
             
-    
-
             var width = 500,
             height = 160,
             padding = 50;
 
-
-            //Width and height
             var h = 180;
             var padding = 50;
 
@@ -416,15 +451,13 @@ function timeline_graph(data){
                                  // .domain([0, d3.max(dataset, function(d) { return d[0]; })])
                                  .domain([startDate, endDate])
                                  .range([500, 1050]);
-
             
             //Define X axis
             var xAxis = d3.svg.axis()
                               .scale(xScale)
                               .orient("bottom")
                               .ticks(11);        
-            
-            
+                    
             //Create X axis
             svg.append("g")
                 .attr("class", "axis")
@@ -436,15 +469,15 @@ function timeline_graph(data){
           .attr("transform", function(d) {
               return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
         });    
-
 }
 
 
 
 function linechart(data){
-    console.log("call linechart");
-    console.log(data);
 
+    $("#timelinebarPanel").css('height', '420px');
+    $("#backgroundPanel").css('height', '600px');
+    
     var options = {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"};
 
     var visData = new Array(data.length);
@@ -452,11 +485,6 @@ function linechart(data){
         visData[i] = [data[i].user.login, data[i].number, Date.parse(data[i].created_at), Date.parse(data[i].updated_at), Date.parse(data[i].closed_at), data[i].user.avatar_url];
     }
 
-    // console.log(visData);
-
-    // var userList = [];
-            
-    // var visDataUser = []
     var startDate = new Date(visData[0][2]);
     var endDate = new Date();
     
@@ -466,17 +494,7 @@ function linechart(data){
         if (startDate > createD){
             startDate = createD;
         }
-        // var index = userList.indexOf(visData[i][0]);
-        // if (index == -1){
-        //     userList.push(visData[i][0]);
-        //     visDataUser.push([visData[i][0], [visData[i]]])
-        // } else {
-        //     visDataUser[index][1].push(visData[i]);
-        // }
     }
-
-    // console.log(userList);
-    // console.log(visDataUser);
 
     var range = endDate - startDate;
     var oneDay = 24*60*60*1000;
@@ -505,13 +523,6 @@ function linechart(data){
 
     }
 
-    // console.log(daysActive);
-
-
-
-
-
-
     var w = 1000;
     var h = 750;
     var t = 550;
@@ -533,17 +544,11 @@ function linechart(data){
         }
     }
 
-
     svg.append("polyline")      
     .style("stroke", "black")  
     .style("fill", "none")     
     .attr("points", plots)
     .style("stroke", "#80dfff");
-
-
-    // var width = 500,
-    //     height = 460,
-    //     padding = 50;
 
     var tooltip = d3.select("body")
               .append("div")
@@ -551,78 +556,66 @@ function linechart(data){
               .style("z-index", "10")
               .style("visibility", "hidden")
               .text("a simple tooltip")
-              .style("width", "100px")
+              .style("width", "90px")
               .style("background-color", "#ffe6ff")
               .style("font-size", "10px")
               .style("border-radius", "3px")
               .style("color", "#660066")
-              .style("opacity", "0.8");
-
+              .style("opacity", "0.8")
+              .style("padding", "2px");
     
     var circles = svg.selectAll("circle")
-                          .data(daysActive)
-                          .enter()
-                          .append("circle")
-                          .attr("cx", function (d, i) {
-                                return 520 + t*(i/rangeDays);
-                            })
-                            .attr("cy", function (d, i) {
-                                return 520 - d[0]/(maxq+1)*height;
-                            })
-                            .attr("r", 4)
-                            .style("fill", "#ffffb3")
-                            .style("opacity", "0.9")
-                            .on("mouseover", function(d){
-                                d3.select(this).style({fill:'#000099',});
-                                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
-                                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
-                                // if (e == "Invalid Date" ){
-                                //     e = "still open now";
-                                // }
-                                // tooltip.text("created at: " + c + " " + "closed at: " + e);
-                                tooltip.style("visibility", "visible");
-                            })
-                            .on("mousemove", function(d, i){
-                                console.log("call mousemove");
-                                d3.select(this).style({fill:'#000099',});
-                                // c = new Date(d[2]).toLocaleTimeString("en-us", options);
-                                // e = new Date(d[4]).toLocaleTimeString("en-us", options);
-                                // if (e == "Invalid Date" ){
-                                //     e = "still open now";
-                                // }
-                                // tooltip.text("created at: " + c + " " + "closed at: " + e);
-                                
-                                var date = new Date(startDate.getTime() + i*oneDay).toLocaleTimeString("en-us", {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: 'numeric'});
-                                for (var j=0; j<6; j++){
-                                    date = date.substring(0, date.length - 1);
-                                }
+          .data(daysActive)
+          .enter()
+          .append("circle")
+          .attr("cx", function (d, i) {
+                return 520 + t*(i/rangeDays);
+            })
+            .attr("cy", function (d, i) {
+                return 520 - d[0]/(maxq+1)*height;
+            })
+            .attr("r", 4)
+            .style("fill", "#ffffb3")
+            .style("opacity", "0.9")
+            .on("mouseover", function(d){
+                d3.select(this).style({fill:'#000099',});
+                tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function(d, i){
+                console.log("call mousemove");
+                d3.select(this).style({fill:'#000099',});
+                var date = new Date(startDate.getTime() + i*oneDay).toLocaleTimeString("en-us", {weekday: "short", year: "numeric", month: "short", day: "numeric", hour: 'numeric'});
+                for (var j=0; j<6; j++){
+                    date = date.substring(0, date.length - 1);
+                }
 
+                var dis = date;
+                if (d[1].length == 0){
+                    dis = dis + "  No active users";
+                } else {
+                    dis = dis + "\n" + "Active users: " + "\n";
+                    for (var j=0; j<d[1].length-1; j++){
+                        dis = dis + d[1][j] + ", \n";
+                    }
+                    dis = dis + d[1][d[1].length-1];
+                }
+                tooltip.text(dis);
+                tooltip.style("height", 50 + 13*d[1].length + "px");
+                tooltip.style("padding-bottom","3px");
+                tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+            })
+            .on("mouseout", function(){
+                d3.select(this).style({fill:'#ffffb3',});
+                tooltip.style("visibility", "hidden");
+            });
 
-                                var dis = date + "\n" + "Active users: " + "\n";
-                                for (var j=0; j<d[1].length; j++){
-                                    dis = dis + d[1][j] + " \n";
-                                }
-                                tooltip.text(dis);
-                                tooltip.style("height", 30*d[1].length + "px");
-                                tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
-                            })
-                            .on("mouseout", function(){
-                                d3.select(this).style({fill:'#ffffb3',});
-                                tooltip.style("visibility", "hidden");
-                            });
-
-
-
-        //Width and height
         var h = 580;
         var padding = 50;
 
         //Create scale functions
         var xScale = d3.time.scale()
-                             // .domain([0, d3.max(dataset, function(d) { return d[0]; })])
                              .domain([startDate, endDate])
                              .range([515, 1050]);       
-        //Define X axis
         var xAxis = d3.svg.axis()
                           .scale(xScale)
                           .orient("bottom")
@@ -643,7 +636,6 @@ function linechart(data){
             .call(yAxis)
             .attr("fill", "white");  
         
-        //Create X axis
         svg.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(0," + (h - padding) + ")")
@@ -661,72 +653,7 @@ function linechart(data){
 
 function creativeGraph(data) {
 
-
-
-
-    // var svg = d3.select("body")
-    //                     .append("svg")
-    //                     .attr("width", 1000)
-    //                     .attr("height", 1000);
-
-    // var height = 320;
-
-
-    // var backgroundPanel = d3.select("body")
-    //           .append("div")
-    //           .style("position", "absolute")
-    //           .style("top", "80px")
-    //           .style("left", "350px")
-    //           .style("width", "80px")
-    //           .style("height", "60px")
-    //           .style("background-color", "red")
-    //           .style("box-shadow", "6px 3px 5px #8181ae");
-
-
-    // d3 example 
-    // var diameter = 960,
-    // format = d3.format(",d"),
-    // color = d3.scale.category20c();
-
-    // var bubble = d3.layout.pack()
-    //     .sort(null)
-    //     .size([diameter, diameter])
-    //     .padding(1.5);
-
-    // var svg = d3.select("body").append("svg")
-    //     .attr("width", diameter)
-    //     .attr("height", diameter)
-    //     .attr("class", "bubble");
-
-    // d3.json("flare.json", function(error, root) {
-    //   if (error) throw error;
-
-    //   var node = svg.selectAll(".node")
-    //       .data(bubble.nodes(classes(root))
-    //       .filter(function(d) { return !d.children; }))
-    //     .enter().append("g")
-    //       .attr("class", "node")
-    //       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-    //   node.append("title")
-    //       .text(function(d) { return d.className + ": " + format(d.value); });
-
-    //   node.append("circle")
-    //       .attr("r", function(d) { return d.r; })
-    //       .style("fill", function(d) { return color(d.packageName); });
-
-    //   node.append("text")
-    //       .attr("dy", ".3em")
-    //       .style("text-anchor", "middle")
-    //       .text(function(d) { return d.className.substring(0, d.r / 3); });
-    // });
-
-    // // Returns a flattened hierarchy containing all leaf nodes under the root.
-    // d3.select(self.frameElement).style("height", diameter + "px");
-
-
-
-    var dimension = 900,
+    var dimension = 850,
     format = d3.format(",d");
 
     var colorList = ["#F5A9A9", "#FF0000", "#B40404", "#8A0808",   
@@ -741,12 +668,9 @@ function creativeGraph(data) {
         .padding(5);
 
     var svg = d3.select("#graph_panel").append("svg")
-        .attr("width", dimension)
+        .attr("width", dimension+100)
         .attr("height", dimension+300)
         .attr("class", "bubble");
-
-    // var data = [{"fund": 2074, "size": 2823, "label": "18-24 Environment"}, {"fund": 498, "size": 748, "label": "25-34 Environment"}, {"fund": 502, "size": 771, "label": "35-44 Environment"}, {"fund": 505, "size": 778, "label": "45-54 Environment"}, {"fund": 510, "size": 771, "label": "55+ Environment"}, {"fund": 2176, "size": 2816, "label": "18-24 Games"}, {"fund": 485, "size": 724, "label": "25-34 Games"}, {"fund": 545, "size": 806, "label": "35-44 Games"}, {"fund": 471, "size": 709, "label": "45-54 Games"}, {"fund": 496, "size": 727, "label": "55+ Games"}, {"fund": 2054, "size": 2766, "label": "18-24 Fashion"}, {"fund": 480, "size": 723, "label": "25-34 Fashion"}, {"fund": 538, "size": 802, "label": "35-44 Fashion"}, {"fund": 507, "size": 800, "label": "45-54 Fashion"}, {"fund": 494, "size": 773, "label": "55+ Fashion"}, {"fund": 2023, "size": 2758, "label": "18-24 Technology"}, {"fund": 526, "size": 768, "label": "25-34 Technology"}, {"fund": 561, "size": 814, "label": "35-44 Technology"}, {"fund": 523, "size": 790, "label": "45-54 Technology"}, {"fund": 511, "size": 755, "label": "55+ Technology"}, {"fund": 2112, "size": 2793, "label": "18-24 Sports"}, {"fund": 507, "size": 772, "label": "25-34 Sports"}, {"fund": 530, "size": 807, "label": "35-44 Sports"}, {"fund": 526, "size": 783, "label": "45-54 Sports"}, {"fund": 504, "size": 765, "label": "55+ Sports"}]
-
 
     console.log(data);
 
@@ -768,8 +692,6 @@ function creativeGraph(data) {
             return !d.children; 
           });
 
-    // console.log(graphInput);
-
     var graph = svg.selectAll("graph")
       .data(graphInput)
       .enter()
@@ -784,8 +706,6 @@ function creativeGraph(data) {
       .attr("r", function(d) {
         s = new Date(d.created_at);
         e = new Date(d.closed_at);
-        // console.log(s);
-        // console.log(e);
         var range = e.getTime() - s.getTime();
         // console.log(range/10000000);
         return Math.sqrt(range/100000);
@@ -818,21 +738,6 @@ function creativeGraph(data) {
         var hours = Math.round((range - days*oneDay)/oneHour);
         return "user " + d.label + " " + days + " days " + hours + " hours opened"; 
       });
-
-    // graph.append("circle")
-    //   .attr("r", function(d) { 
-    //     return Math.sqrt(d.fund*2.5); 
-    //   })
-    //   .style("fill", function(d, i) {
-    //     return colorList[i]; 
-    //   })
-    //   .style("opacity", 0.4)
-    //   .on('mouseover', function (d, i){
-    //       d3.select(this).style("fill", "black");
-    //     })
-    //    .on('mouseout', function  (d, i){
-    //       d3.select(this).style("fill", colorList[i]); 
-    //     });
 
     svg.selectAll("rectUser")
             .data(userList)
@@ -869,25 +774,37 @@ function creativeGraph(data) {
             })
     .text(function(d) { return d; });
 
-
-
-
-
     d3.select(self.frameElement).style("height", dimension + "px");
 
 }
 
-// function classes(root) {
-//       var classes = [];
 
-//       function recurse(name, node) {
-//         if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-//         else classes.push({packageName: name, className: node.name, value: node.size});
-//       }
 
-//       recurse(null, root);
-//       return {children: classes};
-// }
+var minDate;
+var maxDate;
+
+function getMinDate(dict) {
+    var min = Number.MAX_SAFE_INTEGER;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] < min) {
+            min = dict[key]['created_at'];
+        }
+    }
+    return min;
+}
+
+function getMaxDate(dict) {
+    var max = 0;
+
+    for (var key in dict) {
+        if (dict[key]['created_at'] > max) {
+            max = dict[key]['created_at'];
+        }
+    }
+    return max;
+}
+
 
 window.addEventListener('load', function(){
 
@@ -903,21 +820,22 @@ window.addEventListener('load', function(){
               .style("box-shadow", "6px 3px 5px #8181ae")
               .attr("id", "backgroundPanel");
 
-            var timelinebarPanel = d3.select("body")
-              .append("div")
-              .style("position", "absolute")
-              .style("top", "170px")
-              .style("left", "480px")
-              .style("z-index", "-9")
-              .style("width", "600px")
-              .style("height", "420px")
-              .style("opacity", "0.8")
-              .style("border-radius", "5px")
-              .style("background-color", "#8181ae")
-              .attr("id", "timelinebarPanel");
+    var timelinebarPanel = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("top", "170px")
+      .style("left", "480px")
+      .style("z-index", "-9")
+      .style("width", "600px")
+      .style("height", "420px")
+      .style("opacity", "0.8")
+      .style("border-radius", "5px")
+      .style("background-color", "#8181ae")
+      .attr("id", "timelinebarPanel");
 
     $("#backgroundPanel").css('display', 'none');
     $("#timelinebarPanel").css('display', 'none');
+    $("#graph_panel").css('display', 'none');
 
 
     var username = $("#login-info").val();
@@ -929,8 +847,8 @@ window.addEventListener('load', function(){
     });
 
     $("#timeline-graph").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', 'white');
         $("#timeline-graph").css('background-color', '#8181ae');
         $("#graph2").css('color', '#8181ae');
@@ -947,11 +865,12 @@ window.addEventListener('load', function(){
         $("#timelinebarPanel").css('display', 'block');
         timeline_graph(cacheData);
         $("graph-panel").css('display', 'block');
+        $("#graph_panel").css('display', 'none');
     });
 
     $("#graph2").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', 'white');
@@ -962,12 +881,13 @@ window.addEventListener('load', function(){
         d3.select("svg").remove();
         $("#backgroundPanel").css('display', 'block');
         $("#timelinebarPanel").css('display', 'block');
+        $("#graph_panel").css('display', 'none');
         linechart(cacheData);
     });
 
     $("#graph3").click(function(){
-        $("#user-search").css('color', '#4949c0');
-        $("#user-search").css('background-color', 'rgba(73, 73, 192, 0.2)');
+        $("#user-search").css('color', '#fd7da1');
+        $("#user-search").css('background-color', 'white');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
@@ -979,6 +899,7 @@ window.addEventListener('load', function(){
         // d3.select("div").remove();
         $("#backgroundPanel").css('display', 'none');
         $("#timelinebarPanel").css('display', 'none');
+        $("#graph_panel").css('display', 'block');
         
         creativeGraph(cacheData);
         //linechart(cacheData);
@@ -986,7 +907,7 @@ window.addEventListener('load', function(){
 
     $("#user-search").click(function(){
         $("#user-search").css('color', 'white');
-        $("#user-search").css('background-color', '#4949c0');
+        $("#user-search").css('background-color', '#fd7da1');
         $("#timeline-graph").css('color', '#8181ae');
         $("#timeline-graph").css('background-color', 'white');
         $("#graph2").css('color', '#8181ae');
@@ -1000,6 +921,7 @@ window.addEventListener('load', function(){
         d3.select("svg").remove();
         $("#results").css('display', 'block');
         $("#graph-panel").css('display', 'none');
+        $("#graph_panel").css('display', 'none');
 
     });
 

@@ -90,12 +90,12 @@ header {
 .navBtn {
 	height: 45px;
 	width: 150px;
-	background-color: rgba(73, 73, 192, 0.2);
+	background-color: #fd7da1;
 	opacity: 0.9;
-	border: 1.5px solid #4949c0;
+	border: 1.5px solid #fd7da1;
 	border-radius: 5px;
 	font-size: 1.1em;
-	color: #4949c0;
+	color: white;
 	font-family: Arial;
 }
 
@@ -405,17 +405,20 @@ input[type=radio] {
 	font-size: 1.1em;
 	color: #8181ae;
 	font-family: Arial;
+/*	margin-left: 30;*/
 }
 
 #graph_panel {
-	background-color: transparent;
+	background-color: white;
 	height: 1100px;
-	width: 1100px;
+	width: 950px;
 	position: absolute;
 	top: 100px;
 	left: 300px;
 	opacity: 0.8;
 	z-index: -1;
+	box-shadow: 12px 6px 5px #8181ae;
+	border-radius: 10px;
 }
 
 /*#data-page {
