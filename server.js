@@ -49,7 +49,7 @@ app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(reque
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	var token = users[username];
+	var token = 'f8e043c23b5b00eaf6cf2cb047bd4d8878af7a4c';
 
 	console.log('usertoken: ' + token);
 
