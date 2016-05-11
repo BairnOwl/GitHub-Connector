@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var cookieParser = require('cookie-parser');
 
-//var cookies = require('cookies');
+
 var rp = require('request-promise');
 
 var engines = require('consolidate');
@@ -53,17 +53,13 @@ app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(reque
 	var per_page = request.params.per_page;
 	var username = request.params.username;
 	var page_num = request.params.page_num;
-	//var numReq = request.params.numReq;
-
-	//console.log('numReq from data.js: ' + numReq);
 
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state + '&per_page=' + per_page + '&page=' + page_num;
 	req = new XMLHttpRequest();
 	req.open('GET', url, true);
 
-	var token = users[username];
-
-	console.log('usertoken: ' + token);
+	//var token = users[username];
+	var token = 'da6ea803d4eef70138c6f479f31c6b8892dd26ca'; 		// PUT YOUR PERSONAL TOKEN HERE
 
 	req.setRequestHeader('Authorization', 'token ' + token);
 	req.addEventListener('load', function(e){
@@ -143,8 +139,7 @@ app.get('/home', function(requ, response) {
 		rp(options)
 		    .then(function (user) {
 		    	userLogin = user.login;
-		        console.log('User login meeeeee: ' +  user.login);
-		        console.log('User token meeeeee: ' +  userToken);
+
 		        users[userLogin] = userToken;
 		       
 		        userToken = '';
