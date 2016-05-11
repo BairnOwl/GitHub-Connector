@@ -6,10 +6,11 @@ var bodyParser = require('body-parser');
 
 var cookieParser = require('cookie-parser');
 
+//var cookies = require('cookies');
 var rp = require('request-promise');
 
 var engines = require('consolidate');
-app.engine('html', engines.hogan);
+app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
 app.set('views', __dirname + '/templates');
 app.use(express.static('public'));
 
@@ -36,6 +37,14 @@ app.get('/cookie',function(req, res){
      res.cookie('user_name' , 'BairnOwl').send('Cookie is set');
 });
 
+//This function is credit to http://jsfiddle.net/wSQBx/
+var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+}
+
 app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(request, response) {
 
 	var org = request.params.org;
@@ -44,6 +53,9 @@ app.post('/data/:org/:repo/:state/:per_page/:username/:page_num', function(reque
 	var per_page = request.params.per_page;
 	var username = request.params.username;
 	var page_num = request.params.page_num;
+	//var numReq = request.params.numReq;
+
+	//console.log('numReq from data.js: ' + numReq);
 
 	url = 'https://api.github.com/repos/' + org + '/' + repo + '/pulls?state=' + state + '&per_page=' + per_page + '&page=' + page_num;
 	req = new XMLHttpRequest();
@@ -75,6 +87,7 @@ app.get('/init', function(request, response){
 app.get('/login', function(request, response) {
 	var req = new XMLHttpRequest();
 
+	var random = randomString(32, chars);
 	var params = '?client_id=f112d8966964169f6ebb&state=' + 
 		random + 'scopes=user,public_repo';
 	
@@ -119,17 +132,19 @@ app.get('/home', function(requ, response) {
 		var options = {
 		    uri: 'https://api.github.com/user',
 		    qs: {
-		        access_token: userToken 
+		        access_token: userToken // -> uri + '?access_token=xxxxx%20xxxxx' 
 		    },
 		    headers: {
 		        'User-Agent': 'Request-Promise'
 		    },
-		    json: true
+		    json: true // Automatically parses the JSON string in the response 
 		};
 		 
 		rp(options)
 		    .then(function (user) {
 		    	userLogin = user.login;
+		        console.log('User login meeeeee: ' +  user.login);
+		        console.log('User token meeeeee: ' +  userToken);
 		        users[userLogin] = userToken;
 		       
 		        userToken = '';
@@ -137,7 +152,7 @@ app.get('/home', function(requ, response) {
 		        response.render('home.html', {username: userLogin, token: users[userLogin]});
 		    })
 		    .catch(function (err) {
-				console.log('Get User data failed.'); 
+		        // API call failed... 
 		    });
 	  }
 	});
